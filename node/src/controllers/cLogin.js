@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 
 const User = require('../models/mUsers'); // user schema
-
+const Config = require('../config/cfLogin');
 // Given a request create a new user 
 async function HandleSignup(req,res,next)
 {
@@ -11,11 +13,18 @@ async function HandleSignup(req,res,next)
     var pass  = res.locals.bodyData.pass;
     var user  = (res.locals.bodyData.user) ? res.locals.bodyData.user : "";
 
-    var newUser = new User({email:email,password:pass,username:user});
+    const hashPass = await bcrypt.hash(pass, 10);
+    console.log(`${pass} to ${hashPass}`);
+
+    var newUser = new User({email:email,password:hashPass,username:user});
     
     await newUser.save();
 
     res.send("New User Created");
+}
+
+async function HandleLogin(req,res,next){
+    var {email, pass} = res.locals.bodyData;
 }
 
 async function GetAllUsers(req,res,next){
