@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  react:
+    build: ./re_react
+    ports: 
+      - 3000:3000
+  node: #node service
+    build: ./node #check for the node folder containing our docker file 
+    ports:
+      - 3001:3001
+    environment: #env vars 
+      MONGO_URL: mongodb://db-mongo:27017
+    depends_on:
+      db-mongo:
+        condition: service_started
+  db-mongo: #MongoDB Service
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes: #volume 
+      - mongo_store:/data/db
+    healthcheck: #healthcheck also very unsure if its working
+      test: ["CMD", "/etc/init.d/mongodb", "status"]
+      timeout: 30s
+      retries: 5
+volumes:
+  mongo_store:
