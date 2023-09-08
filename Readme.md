@@ -6,6 +6,16 @@ The Node container has access to the mongo connection string via a environment v
 In order to change the packages contained in the node directory cd into the the directory and use your npm commands before running the container.
 You can type `npm i --package-lock-only <package_name>` to add the dependency to the `package-lock.json` file only and Docker will install the package for you. Same applies to the react container
 
+## Running
+In order to run the program I recommend having make or mingw32-make installed. You can then do `make start` or `make stop` to control the execution. 
+`start` : builds and runs containers
+`stop`  : stops running containers
+`clean` : removes containers from docker
+`buildc`: builds the containers ignoring cached information
+`build` : build containers using cached information
+
+If you have `mingw32-make` and Powershell you can alias it to `make` via `Set-Alias -Name make -Value mingw32-make`
+
 ## Exercise Log
 General plan Trello : https://trello.com/b/Ft4qThw4/exlog
 Sprint 1 Trello : https://trello.com/b/8lXIDQ55/exlogs1
