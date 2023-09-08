@@ -1,5 +1,7 @@
 start:
 	echo "Starting Exercise Log Containers"
+	docker-compose up --build
+startd:
 	docker-compose up --build -d
 
 stop:
