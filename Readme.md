@@ -17,9 +17,9 @@ In order to run the program I recommend having make or mingw32-make installed. Y
 If you have `mingw32-make` and Powershell you can alias it to `make` via `Set-Alias -Name make -Value mingw32-make`
 
 ## Exercise Log
-General plan Trello : https://trello.com/b/Ft4qThw4/exlog
-Sprint 1 Trello : https://trello.com/b/8lXIDQ55/exlogs1
-Notion : https://www.notion.so/Exercise-Log-d2a877039f5f4333b6b188be37c59342?pvs=4
+* General plan Trello : https://trello.com/b/Ft4qThw4/exlog
+* Sprint 1 Trello : https://trello.com/b/8lXIDQ55/exlogs1
+* Notion : https://www.notion.so/Exercise-Log-d2a877039f5f4333b6b188be37c59342?pvs=4
 
 The general idea is to create an app that allows users to track their workouts. The app will then  process these collected workouts and display some sort of information about your training, and potential ways to improve
 
