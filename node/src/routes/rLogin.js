@@ -40,6 +40,9 @@ LoginRouter.get('/u', async (req,res,next) => {
     
 })
 
+LoginRouter.post('/login', async(req,res,next) => {
+    LoginControllers.HandleLogin(req,res,next);
+})
 
 
 

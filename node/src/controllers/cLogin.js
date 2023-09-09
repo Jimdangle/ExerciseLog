@@ -25,6 +25,25 @@ async function HandleSignup(req,res,next)
 
 async function HandleLogin(req,res,next){
     var {email, pass} = res.locals.bodyData;
+    try{
+        const user = await User.findOne({email:email});
+        if(user){
+            const comp = await bcrypt.compare(pass,user.password);
+            if(comp){
+                res.send("Logged in!");
+            }
+            else{
+                res.send("Passwords not a match");
+            }
+        }
+        else{
+            res.send("There is no user with that email");
+        }
+    }
+    catch(e)
+    {
+        res.status(401).send(e.message);
+    }
 }
 
 async function GetAllUsers(req,res,next){
@@ -35,4 +54,4 @@ async function GetAllUsers(req,res,next){
 }
 
 
-module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers}
+module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers, HandleLogin: HandleLogin}
