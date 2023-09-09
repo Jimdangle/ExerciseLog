@@ -18,12 +18,16 @@ async function HandleSignup(req,res,next)
     const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
     console.log(`${pass} to ${hashPass}`);
 
-    var newUser = new User({email:email,password:hashPass,username:user});//Generate a new User based on the User Schema
-    //This will probably need to be situated inside a try catch block for any sort of validation errors
+    try{
+        var newUser = new User({email:email,password:hashPass,username:user});//Generate a new User based on the User Schema
+        
+        await newUser.save(); // save it to our db
 
-    await newUser.save(); // save it to our db
-
-    res.send("New User Created");
+        res.send("New User Created");
+    }
+    catch(e){
+        res.send(e.message);
+    }
 }
 
 //Validate credentials to sign a user in
