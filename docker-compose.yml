@@ -15,9 +15,16 @@ services:
       - 27017:27017
     volumes: #volume 
       - mongo_store:/data/db
-    healthcheck: #healthcheck also very unsure if its working
-      test: ["CMD", "/etc/init.d/mongodb", "status"]
-      timeout: 30s
-      retries: 5
+    #healthcheck: #healthcheck also very unsure if its working
+    #  test: ["CMD", "/etc/init.d/mongodb", "status"]
+    #  timeout: 30s
+    #  retries: 5
+  vite_react:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/react/
+      - /react/node_modules
 volumes:
   mongo_store:
