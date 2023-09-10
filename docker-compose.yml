@@ -1,9 +1,5 @@
 version: "3.8"
 services:
-  react:
-    build: ./re_react
-    ports: 
-      - 3000:3000
   node: #node service
     build: ./node #check for the node folder containing our docker file 
     ports:
