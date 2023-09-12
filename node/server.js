@@ -11,6 +11,7 @@ require('dotenv').config();
 const app = express();
 
 const Login = require('./src/routes/rLogin').LoginRouter; // Login Routing
+const Workout = require('./src/routes/rWorkout').WorkoutRouter; 
 
 // First Entry Point
 app.use('/', (req,res,next) => {
@@ -22,6 +23,9 @@ app.use('/', (req,res,next) => {
 
 //Router Mounting
 app.use('/login/', Login);
+app.use('/workout/', Workout);
+
+
 
 app.use((err,req,res,next) => 
     handleError(err,req,res,next)

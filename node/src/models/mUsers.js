@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 //User Schema
 // Users must have a unique email, and minimum 9 char password. Username is optional
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -20,4 +20,4 @@ const userSchema = new mongoose.Schema({
      }
 })
 
-module.exports = mongoose.model("Users", userSchema);
+module.exports = mongoose.model("Users", UserSchema);

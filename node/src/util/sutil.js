@@ -19,6 +19,18 @@ function ValidateKeys(inObj, reqKeys)
 }
 
 
+function Verify (inObj, reqKeys, next)
+{
+  if(ValidateKeys(inObj, reqKeys) || reqKeys == true)
+  {
+    next() 
+  }
+  else {
+    next('missing required keys')
+  }
+
+}
+
 module.exports = {
-    ValidateKeys: ValidateKeys
+    Verify: Verify
 }

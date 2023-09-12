@@ -24,12 +24,7 @@ LoginRouter.use(bodyParser.json());
 LoginRouter.use('', (req,res,next) => {
     res.locals.bodyData = req.body; // store our data (honestly dont think i need this)
     //if we are able to validate the keys, or if the required keys is just == true call the next function
-    if(sutil.ValidateKeys(req.body, REQUIRED_KEYS[req.path]) || REQUIRED_KEYS[req.path] === true){
-        next();
-    }
-    else{
-        res.status(401).send({"error":"Missing Required Keys"});
-    }
+    sutil.Verify(req.body, REQUIRED_KEYS[req.path], next);
 })
 
 //Create a new user account
