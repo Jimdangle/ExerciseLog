@@ -2,10 +2,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Internal
 const User = require('../models/mUsers'); // user schema
 const Config = require('../config/cfLogin');
+
 
 // Given a request create a new user 
 async function HandleSignup(req,res,next)
@@ -38,7 +40,15 @@ async function HandleLogin(req,res,next){
         if(user){
             const comp = await bcrypt.compare(pass,user.password);
             if(comp){
-                res.send("Logged in!");
+                console.log(user);
+                try{
+                    var token = jwt.sign({id:user._id},Config.jwtSecret);
+                    res.send(JSON.stringify({access_token:token}));
+                }
+                catch(e){
+                    next(e.message);
+                }
+
             }
             else{
                 res.send("Passwords not a match");
