@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 export default function Login(){
     
-    const {res, setRes} = useState({});
 
     // nice function to update an object state in react, eventually would like this to be in a util file on the frontend
     const [state, setState] = useState({})
@@ -31,7 +30,7 @@ export default function Login(){
 
     return(
         <>
-        <p></p>
+        
         <div className="fixed h-full w-full flex items-center justify-center">
             <div className="z-2">
                 <div id="login-card" className="w-[32rem] h-[24rem] text-center bg-blue-300 rounded-b-lg rounded-t-md shadow-lg">
