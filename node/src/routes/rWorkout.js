@@ -23,8 +23,13 @@ WorkoutRouter.use('', (req, res, next) => {
 });
 
 // Create a new workout
-WorkoutRouter.post('/workout', async (req, res, next) => {
+WorkoutRouter.post('/workout', sutil.ValidateToken, async (req, res, next) => {
     WorkoutControllers.CreateWorkout(req, res, next); 
+})
+
+// Create a new exercise
+WorkoutRouter.post('/exercise', sutil.ValidateToken ,async (req, res, next) => {
+    WorkoutControllers.CreateExercise(req, res, next); 
 })
 
 module.exports = {WorkoutRouter: WorkoutRouter}

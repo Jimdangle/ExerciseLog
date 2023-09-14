@@ -7,9 +7,12 @@ const mongoose = require('mongoose');
 const Workout = require('../models/mWorkout'); // workout schema
 const Config = require('../config/cfLogin');
 
+const sutil = require('../util/sutil.js');
+
 //create workout
 async function CreateWorkout(req, res, next) {
     var username = req.body.user;
+    //const userfromDB = await User.findOne({username:}); // search for our user
    
     try {
         var newWorkout = new Workout({username: username});
@@ -23,11 +26,20 @@ async function CreateWorkout(req, res, next) {
 }
 
 // create exercise 
+async function CreateExercise(req, res, next) {
+    try {
 
+    } 
+    catch(e) {
+        res.send(e.message);        
+    }
+}
 // add execise 
 
 // remove workout 
 
 // remove exercise 
 
-module.exports = {CreateWorkout: CreateWorkout, }
+// maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
+
+module.exports = {CreateWorkout: CreateWorkout, CreateExercise: CreateExercise}
