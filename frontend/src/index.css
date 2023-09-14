@@ -2,3 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+    .form-nonactive-input{
+        @apply text-center scale-100 bg-slate-100;
+    }
+
+    .form-active-input{
+        @apply text-left scale-125 bg-white
+    }
+
+}
