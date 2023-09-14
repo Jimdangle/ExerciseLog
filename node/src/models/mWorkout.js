@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const workoutSchema = new mongoose.Schema({
    // work: [{Type: Schema.Types.ObjectId, ref: 'Exercise'}],
     username: String, 
+    
 },
 
     {timestamps: true}
