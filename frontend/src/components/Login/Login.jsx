@@ -31,7 +31,7 @@ export default function Login(){
     return(
         <>
         
-        <div className="fixed h-full w-full flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
             <div className="z-2">
                 <div id="login-card" className="w-[32rem] h-[24rem] text-center bg-blue-300 rounded-b-lg rounded-t-md shadow-lg">
                 <h2 className="text-3xl font-bold text-white underline underline-offset-9 pt-5">BoatLog</h2>
