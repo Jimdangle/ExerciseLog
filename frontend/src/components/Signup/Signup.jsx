@@ -43,7 +43,7 @@ export default function Signup(){
                 <p className='pt-2 font-semibold text-black'>Create a new account!</p>
                 <div className='relative pt-6 top-1/5'>
                     <input name="email" onChange={handleChange}  className="px-6 py-1 focus:form-active-input form-nonactive-input duration-150"  type="email" placeholder="Email"></input>
-                    <br></br>
+                    <p className='text-red-500 pt-2'>{state["email"] && state["email"].indexOf("@")==-1 ?  "Please enter a semi valid email" : ""}</p>
                     <br></br>
                     <input name="username" onChange={handleChange}  className="px-6 py-1 focus:form-active-input form-nonactive-input duration-150"  type="text" placeholder="Username(optional)"></input>
                     <br></br>
@@ -55,7 +55,7 @@ export default function Signup(){
                     <p className='text-red-500 pt-2'>{state["pass"]!=state["cpass"] ? "Please ensure passwords match" : ""}</p>
                     <br></br>
                     <br></br>
-                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='rounded-3xl bg-slate-100 p-5 font-semibold disabled:bg-slate-300' onClick={handleLogin}>Signup</button>
+                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='rounded-3xl bg-white p-5 font-semibold disabled:bg-slate-300 disabled:bg-opacity-75 bg-opacity-100' onClick={handleLogin}>Signup</button>
                 </div>
                 
                 </div>
