@@ -18,7 +18,7 @@ async function HandleSignup(req,res,next)
     var user  = (res.locals.bodyData.user) ? res.locals.bodyData.user : "";
 
     const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
-    console.log(`${pass} to ${hashPass}`);
+    
 
     try{
         var newUser = new User({email:email,password:hashPass,username:user});//Generate a new User based on the User Schema
@@ -28,7 +28,11 @@ async function HandleSignup(req,res,next)
         res.send({"created": true});
     }
     catch(e){
-        res.send(e.message);
+        console.log(e);
+        if(e.code == 11000){ res.send({"created": false, "message": "Email already exists! try logging in"}); }
+        else{
+            res.send({"created": false, "message": e.message});
+        }
     }
 }
 
@@ -51,11 +55,11 @@ async function HandleLogin(req,res,next){
 
             }
             else{
-                res.next("Passwords not a match");
+                next("Passwords not a match");
             }
         }
         else{
-            res.next("There is no user with that email");
+            next("There is no user with that email");
         }
     }
     catch(e)

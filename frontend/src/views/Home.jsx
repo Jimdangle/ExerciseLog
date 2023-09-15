@@ -1,9 +1,9 @@
 import lsPrefix from "../config/cfUtil"
 
-export default function Home(){
+export default function Home({signout}){
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
-        location.reload();
+        signout();
     }
 
     return(<>

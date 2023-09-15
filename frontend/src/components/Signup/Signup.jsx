@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 
-export default function Signup(){
+export default function Signup({onClick}){
 
     // nice function to update an object state in react, eventually would like this to be in a util file on the frontend
     const [state, setState] = useState({})
+    const [errMessage, setErrMessage] = useState("")
 
     function handleChange(event) {
         const { name, value } = event.target
@@ -14,9 +15,10 @@ export default function Signup(){
         })
     }
 
-    async function handleLogin()
+    //Log the user in
+    async function handleSignup()
     {
-        console.log(state);
+        
         const response = await fetch("http://localhost:3001/login/signup", {
             method: "POST",
             headers: {
@@ -30,8 +32,14 @@ export default function Signup(){
         const bod = await response.json();
 
         if(response.ok){
-            console.log("Successful request!");
             console.log(bod);
+            if(bod["created"] && bod["created"]==true){
+                onClick();
+            }
+            else{
+                setErrMessage(bod["message"]);
+            }
+            
         }
         else{
             console.log("bad request");
@@ -69,7 +77,8 @@ export default function Signup(){
                     <p className='text-red-500 pt-2'>{state["pass"]!=state["cpass"] ? "Please ensure passwords match" : ""}</p>
                     <br></br>
                     <br></br>
-                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='rounded-3xl bg-slate-100 p-5 font-semibold disabled:bg-slate-300 disabled:bg-opacity-75 bg-opacity-100 hover:bg-green-400 disabled:hover:ring-4 disabled:hover:ring-red-600' onClick={handleLogin}>Signup</button>
+                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='rounded-3xl bg-slate-100 p-5 font-semibold disabled:bg-slate-300 disabled:bg-opacity-75 bg-opacity-100 hover:bg-green-400 disabled:hover:ring-4 disabled:hover:ring-red-600' onClick={handleSignup}>Signup</button>
+                    <p className='pt-2 font-semibold text-red-400'>{errMessage}</p>
                 </div>
                 
                 </div>
