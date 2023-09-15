@@ -27,7 +27,16 @@ export default function Signup(){
             mode: "cors"
         })
 
-        console.log(response);
+        const bod = await response.json();
+
+        if(response.ok){
+            console.log("Successful request!");
+            console.log(bod);
+        }
+        else{
+            console.log("bad request");
+            console.log(response.headers);
+        }
     }
 
 

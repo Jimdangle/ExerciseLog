@@ -25,7 +25,7 @@ async function HandleSignup(req,res,next)
         
         await newUser.save(); // save it to our db
 
-        res.send("New User Created");
+        res.send({"created": true});
     }
     catch(e){
         res.send(e.message);
@@ -43,7 +43,7 @@ async function HandleLogin(req,res,next){
                 console.log(user);
                 try{
                     var token = jwt.sign({id:user._id},Config.jwtSecret);
-                    res.send(JSON.stringify({access_token:token}));
+                    res.send({access_token:token});
                 }
                 catch(e){
                     next(e.message);
@@ -51,11 +51,11 @@ async function HandleLogin(req,res,next){
 
             }
             else{
-                res.send("Passwords not a match");
+                res.next("Passwords not a match");
             }
         }
         else{
-            res.send("There is no user with that email");
+            res.next("There is no user with that email");
         }
     }
     catch(e)

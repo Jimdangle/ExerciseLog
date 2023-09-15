@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import lsPrefix  from '../../config/cfUtil';
 
 export default function Login(){
     
@@ -28,7 +28,22 @@ export default function Login(){
             mode: "cors"
         })
 
-        console.log(response);
+        const bod = await response.json();
+        
+
+        if(response.ok){
+            console.log("Successful request!");
+            console.log(bod);
+            if(bod["access_token"]){
+                localStorage.setItem(lsPrefix+"actk", bod["access_token"]);
+                location.reload(); // this might actually be really terrible ? unsure lmao 
+            }
+           
+        }
+        else{
+            console.log("bad request");
+            console.log(response.headers);
+        }
     }
     
 
