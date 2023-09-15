@@ -58,5 +58,5 @@ async function load_mongo(){
 function handleError(err, req, res, next) {
     console.log(`Error on path: ${req.path} using ${req.method}`)
     console.log(err);
-    res.status(401).send();
+    res.status(200).send({"message": err});
 }
