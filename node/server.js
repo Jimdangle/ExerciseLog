@@ -4,6 +4,7 @@
 const express = require('express'); 
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
+const cors = require("cors");
 require('dotenv').config();
 
 
@@ -12,6 +13,10 @@ const app = express();
 
 const Login = require('./src/routes/rLogin').LoginRouter; // Login Routing
 const Workout = require('./src/routes/rWorkout').WorkoutRouter; 
+
+const corsOpts = require('./src/config/cfCors').corsOpts;
+
+app.use(cors(corsOpts));
 
 // First Entry Point
 app.use('/', (req,res,next) => {

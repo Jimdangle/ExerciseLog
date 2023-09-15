@@ -18,8 +18,12 @@ export default function Login(){
     async function handleLogin()
     {
         console.log(state);
-        const response = await fetch("http://localhost:3001/login/login", {
+        const response = await fetch("http://127.0.0.1:3001/login/login", {
             method: "POST",
+            headers: {
+                'Origin': 'http://127.0.0.1:3000',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(state),
             mode: "cors"
         })

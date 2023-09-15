@@ -19,6 +19,10 @@ export default function Signup(){
         console.log(state);
         const response = await fetch("http://localhost:3001/login/signup", {
             method: "POST",
+            headers: {
+                'Origin': 'http://127.0.0.1:3000',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(state),
             mode: "cors"
         })
