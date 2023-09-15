@@ -12,4 +12,16 @@
         @apply text-left scale-125 bg-white
     }
 
+    .form-gen-input{
+        @apply px-6 py-1;
+    }
+
+    .login-center-view{
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center;
+    }
+
+    .login-center-card{
+        @apply text-center bg-blue-300 rounded-b-lg rounded-t-md shadow-lg;
+    }
+
 }

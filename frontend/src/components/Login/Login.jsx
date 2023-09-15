@@ -31,18 +31,19 @@ export default function Login(){
     return(
         <>
         
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+        <div className="login-center-view">
             <div className="z-2">
-                <div id="login-card" className="w-[32rem] h-[24rem] text-center bg-blue-300 rounded-b-lg rounded-t-md shadow-lg">
+                <div  className="w-[32rem] h-[24rem] login-center-card">
                 <h2 className="text-3xl font-bold text-white underline underline-offset-9 pt-5">BoatLog</h2>
+                <p className='pt-2 font-semibold text-black'>Sign into your account!</p>
                 <div className='relative pt-6 top-1/5'>
-                    <input name="email" onChange={handleChange}  className="px-6 py-1 focus:form-active-input form-nonactive-input duration-150"  type="email" placeholder="Email"></input>
+                    <input name="email" onChange={handleChange}  className="focus:form-active-input form-nonactive-input form-gen-input duration-150"  type="email" placeholder="Email"></input>
                     <br></br>
                     <br></br>
-                    <input name="pass" onChange={handleChange} required type="password" placeholder="Password" className="px-6 py-1 focus:form-active-input form-nonactive-input duration-150"></input>
+                    <input name="pass" onChange={handleChange} required type="password" placeholder="Password" className="focus:form-active-input form-nonactive-input form-gen-input duration-150"></input>
                     <br></br>
                     <br></br>
-                    <button className='rounded-3xl bg-slate-100 p-5 font-semibold' onClick={handleLogin}>Login</button>
+                    <button disabled={state["email"] && state["email"].indexOf("@") != -1 && state["pass"] ? false : true} className='rounded-3xl bg-slate-100 p-5 font-semibold disabled:bg-slate-300 disabled:bg-opacity-75  hover:bg-green-400 disabled:hover:ring-4 disabled:hover:ring-red-600' onClick={handleLogin}>Login</button>
                 </div>
                 </div>
             </div>
