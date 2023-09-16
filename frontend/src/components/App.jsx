@@ -3,6 +3,7 @@ import { useState } from 'react'
 import LoginSignup from '../views/LoginSignup'
 import Home from '../views/Home'
 import lsPrefix from '../config/cfUtil'
+import LogList from './LogList/LogList'
 function App() {
   
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -12,12 +13,13 @@ function App() {
     setIsSignedIn(!is);
   }
 
+  
   return (
     <>
       {localStorage.getItem(lsPrefix+"actk") ? <Home signout={toggleSignedIn}></Home> : <LoginSignup signin={toggleSignedIn}></LoginSignup>}
       
     </>
-  )
+  ) 
 }
 
 export default App
