@@ -1,5 +1,9 @@
 import lsPrefix from "../config/cfUtil"
 
+//Home Show recent workouts and let user edit items in the list
+// Two Components I think
+// 1) Log List : displays a list of workout logs with edit buttons and delete buttons
+// 2) Log Adder : Let the user add a new workout log, name it and press some continue button
 export default function Home({signout}){
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
