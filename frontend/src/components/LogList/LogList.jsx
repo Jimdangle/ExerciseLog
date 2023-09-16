@@ -12,6 +12,7 @@ export default function LogList({list}){
         setDisplayList(searched);
     }
 
+    //Idk if this is even actually needed
     function resetLogs(){
         setDisplayList(list);
     }
@@ -19,9 +20,9 @@ export default function LogList({list}){
 
     return(<>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4">
-            <div className="w-full h-12 bg-green-200">
+            <div className="w-full h-12 bg-green-200 flex">
                 <h1 className="text-center font-semibold text-3xl">Recent Workouts</h1>
-                <input type="text" onChange={(value)=>{searchLogs(value.target.value)}}></input>
+                <input type="text" className='ml-6 my-2 focus:form-active-input form-nonactive-input duration-150' onChange={(value)=>{searchLogs(value.target.value)}}></input>
             </div>
             <ul>
                 {displayList.map((item) => {
