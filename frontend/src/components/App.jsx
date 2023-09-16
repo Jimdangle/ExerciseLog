@@ -13,16 +13,13 @@ function App() {
     setIsSignedIn(!is);
   }
 
-  return(<>
-    <LogList list={[{name:"t1",created_at:"1",key:1},{name:"t2",created_at:"2",key:2},{name:"t3",created_at:"3",key:3}]}></LogList>
-  </>)
-
-  /* return (
+  
+  return (
     <>
       {localStorage.getItem(lsPrefix+"actk") ? <Home signout={toggleSignedIn}></Home> : <LoginSignup signin={toggleSignedIn}></LoginSignup>}
       
     </>
-  ) */
+  ) 
 }
 
 export default App
