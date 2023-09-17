@@ -34,7 +34,7 @@ function Verify (inObj, reqKeys, next)
 }
 
 function ValidateToken(req, res, next) {
-  console.log(req.headers);
+  //console.log(req.headers);
   const token = req.headers['authorization'];
   
   if(!token) {
@@ -48,7 +48,7 @@ function ValidateToken(req, res, next) {
     // by now the token is valid and we can attatch the user to the request
     res.locals.user = user.id; //  moved this to be added into the response object, unsure if we are allowed to add to the request object at this stage
     //console.log(json.stringify(user));
-    console.log(user);
+    //console.log(user);
     next()
   })
 }
