@@ -4,20 +4,20 @@ const mongoose = require('mongoose');
 
 //Internal
 //const Exercise = require('../models/mExercise'); // exercise schema
-const Workout = require('../models/mWorkout'); // workout schema
+const {Workout} = require('../models/mWorkout'); // workout schema
 const Config = require('../config/cfLogin');
 
 const sutil = require('../util/sutil.js');
 
 //create workout
 async function CreateWorkout(req, res, next) {
-    var username = req.body.user;
+    var user = res.locals.user;
     //const userfromDB = await User.findOne({username:}); // search for our user
    
     try {
-        var newWorkout = new Workout({username: username});
+        var newWorkout = new Workout({user_id: user});
         await newWorkout.save(); 
-        res.send("new workout created");
+        res.send({created:true});
     }
     catch(e)
     {
