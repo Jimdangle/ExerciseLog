@@ -74,5 +74,17 @@ async function GetAllUsers(req,res,next){
 
 }
 
+async function DeleteUser(req,res,next){
+    const user = res.locals.user;
+    try{
+        const deleteUser = await User.deleteOne({_id:user});
+        res.send({deleted:true, count:deleteUser});
+    }
+    catch(e){
+        res.send({message:e.message});
+    }
 
-module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers, HandleLogin: HandleLogin}
+}
+
+
+module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers, HandleLogin: HandleLogin, DeleteUser:DeleteUser}

@@ -44,6 +44,12 @@ LoginRouter.get('/u', async (req,res,next) => {
 })
 
 
+//Delete account
+LoginRouter.post('/delete', sutil.ValidateToken, (req,res,next)=>{
+    LoginControllers.DeleteUser(req,res,next);
+})
+
+
 
 
 
