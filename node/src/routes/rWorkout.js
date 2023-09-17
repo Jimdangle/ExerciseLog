@@ -13,7 +13,9 @@ const WorkoutRouter = express.Router(); // create our router object
 
 const REQUIRED_KEYS = {
     "/add": true,
-    "/rm": ["name"] 
+    "/delete": ["workout_id"],
+    "ls": true,
+    "/addEx": ["motion_id", "workout_id"]
 }
 
 WorkoutRouter.use(bodyParser.json());
@@ -21,6 +23,7 @@ WorkoutRouter.use(bodyParser.json());
 
 // Verify our JWT fist on this router
 WorkoutRouter.use('', (req,res,next) => {
+    res.locals.bodyData = req.body
     sutil.ValidateToken(req,res,next);
 })
 
@@ -37,6 +40,19 @@ WorkoutRouter.post('/add', async (req, res, next) => {
     WorkoutControllers.CreateWorkout(req, res, next); 
 })
 
+
+// Delete a workout
+WorkoutRouter.post('/delete', async(req,res,next) =>{
+    WorkoutControllers.DeleteWorkout(req,res,next);
+})
+
+WorkoutRouter.get('/ls', async(req,res,next)=>{
+    WorkoutControllers.ListWorkouts(req,res,next);
+})
+
+WorkoutRouter.post('/addEx', async(req,res,next)=>{
+    WorkoutControllers.AddExercise(req,res,next);
+})
 
 
 module.exports = {WorkoutRouter: WorkoutRouter}

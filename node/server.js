@@ -22,7 +22,7 @@ app.use(cors(corsOpts));
 // First Entry Point
 app.use('/', (req,res,next) => {
     var query = (req.query) ? req.query : {};
-    console.log(`${req.method} on ${req.path} with query: ${query.toString()}`);
+    console.log(`${req.method} on ${req.path}`);
     next();
 })
 
