@@ -13,6 +13,7 @@ const app = express();
 
 const Login = require('./src/routes/rLogin').LoginRouter; // Login Routing
 const Workout = require('./src/routes/rWorkout').WorkoutRouter; 
+const Admin = require('./src/routes/rAdmin').AdminRouter;
 
 const corsOpts = require('./src/config/cfCors').corsOpts;
 
@@ -29,6 +30,7 @@ app.use('/', (req,res,next) => {
 //Router Mounting
 app.use('/login/', Login);
 app.use('/workout/', Workout);
+app.use('/admin/', Admin);
 
 
 

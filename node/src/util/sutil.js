@@ -34,9 +34,10 @@ function Verify (inObj, reqKeys, next)
 }
 
 function ValidateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  if(token == null) {
+  console.log(req.headers);
+  const token = req.headers['authorization'];
+  
+  if(!token) {
     return res.send('no token recieved');
   }
   // should have token here , time to verify
@@ -45,12 +46,14 @@ function ValidateToken(req, res, next) {
       return res.send('this token is no longer valid')
     }
     // by now the token is valid and we can attatch the user to the request
-    req.user = user;
+    res.locals.user = user.id; //  moved this to be added into the response object, unsure if we are allowed to add to the request object at this stage
     //console.log(json.stringify(user));
     console.log(user);
     next()
   })
 }
+
+
 
 module.exports = {
     Verify: Verify,
