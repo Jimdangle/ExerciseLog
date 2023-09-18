@@ -26,9 +26,6 @@ export default function LogView({token}){
                     update(bod.all)
                 }
             }
-            else{
-                update()
-            }
         }
         catch(e){
             console.log(e.message);
@@ -44,7 +41,7 @@ export default function LogView({token}){
 
     return (<>
         {console.log(Object.keys(selectedLog).length)}
-        {Object.keys(selectedLog).length !==0 ? <LogPage item={selectedLog} SelectPage={SelectPage}></LogPage> : <LogList GetList={GetList} SelectPage={SelectPage}></LogList>}
+        {Object.keys(selectedLog).length !==0 ? <LogPage item={selectedLog} SelectPage={SelectPage}></LogPage> : <LogList GetList={GetList} SelectPage={SelectPage} token={token}></LogList>}
     </>)
 
     
