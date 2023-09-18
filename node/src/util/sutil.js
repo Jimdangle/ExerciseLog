@@ -1,9 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/cfLogin');
 
-//Validate that all keys present in reqKeys are present within inObj
-//inObj can have more than just the required keys and this will return true
-//Only returns false if any keys in reqKeys are not found within inObj
+/**
+ * Validate that the keys in reqKeys are all present inside of inObj
+ * @param {*} inObj an object to look at property names
+ * @param {*} reqKeys the desired property names required for the object
+ * @returns {boolean} true if all keys are found in inObj, false if not all keys are found in inObj
+ */
 function ValidateKeys(inObj, reqKeys)
 {
   if(!inObj) return false;
@@ -20,7 +23,12 @@ function ValidateKeys(inObj, reqKeys)
   return true;
 }
 
-
+/**
+ * Wrapper call to ValidateKeys, Ensure inObj contains reqKeys, else call next with an error message
+ * @param {*} inObj object you are checking keys of
+ * @param {*} reqKeys desired required keys
+ * @param {*} next express next call
+ */
 function Verify (inObj, reqKeys, next)
 {
   if(ValidateKeys(inObj, reqKeys) || reqKeys == true)
@@ -33,6 +41,9 @@ function Verify (inObj, reqKeys, next)
 
 }
 
+/**
+ * JWT validation middleware, verify our JWT in requests
+ */
 function ValidateToken(req, res, next) {
   //console.log(req.headers);
   const token = req.headers['authorization'];

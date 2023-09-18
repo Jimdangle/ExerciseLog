@@ -51,6 +51,7 @@ const ExerciseSchema = new mongoose.Schema({
 // created at timestamp
 // updated at timestamp
 // exercises is a list of ExersiseSchema objects 
+
 const WorkoutSchema = new mongoose.Schema({
    // work: [{Type: Schema.Types.ObjectId, ref: 'Exercise'}],
     user_id: {
