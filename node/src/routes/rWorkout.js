@@ -42,14 +42,21 @@ WorkoutRouter.post('/add', async (req, res, next) => {
 
 
 // Delete a workout
-WorkoutRouter.post('/delete', async(req,res,next) =>{
+WorkoutRouter.delete('/delete', async(req,res,next) =>{
     WorkoutControllers.DeleteWorkout(req,res,next);
 })
 
+// remove Exercise from workout 
+WorkoutRouter.delete('/removeEx', async(req, res, next) => {
+    WorkoutControllers.RemoveExercise(req, res, next);
+})
+
+// list all workouts
 WorkoutRouter.get('/ls', async(req,res,next)=>{
     WorkoutControllers.ListWorkouts(req,res,next);
 })
 
+// add exercise to workout
 WorkoutRouter.post('/addEx', async(req,res,next)=>{
     WorkoutControllers.AddExercise(req,res,next);
 })

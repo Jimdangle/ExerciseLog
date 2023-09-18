@@ -86,8 +86,29 @@ async function AddExercise(req,res,next){
 }
 
 
-// remove exercise 
+// remove exercise from specific workout
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+async function RemoveExercise(req, res, next) {
+    const {workout_id, exercise_id} = res.locals.bodyData;
+    console.log(workout_id);
+    console.log(exercise_id);
 
+    try {
+        const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$pull: {"exercises" : exercise_id}});
+        res.send({deleted:true, exercises:assocWorkout.exercises});
+    }
+    catch (e) {
+        console.log('Error removing exercise from worrkout')
+        console.log(e);
+        res.send({message:e.message});
+    }
+
+}
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
-module.exports = {CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise}
+module.exports = {CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise}    
