@@ -7,7 +7,12 @@ const User = require('../models/mUsers'); // user schema
 const Config = require('../config/cfLogin');
 
 
-// Given a request create a new user 
+/**
+ * Sign up a user based on the following keys
+ * @key email:string pass:string user:string(optional)
+ * Sends a response {created:true} if a user is added
+ * Sends {created:false, message:"error message"} when unsucessful
+ */
 async function HandleSignup(req,res,next)
 {
     //Should be gauranteed to have keys at this point
@@ -34,7 +39,13 @@ async function HandleSignup(req,res,next)
     }
 }
 
-//Validate credentials to sign a user in
+/**
+ * Log a user in based on passed parameters
+ * @keys : email:string pass:string
+ * 
+ * sends {access_token:token} on login to be used in further requests for authentication
+ * sends {message: error} when failed
+ */
 async function HandleLogin(req,res,next){
     var {email, pass} = res.locals.bodyData;
     try{
@@ -66,7 +77,9 @@ async function HandleLogin(req,res,next){
     }
 }
 
-//Admin func to check for db persistance and such
+/**
+ * Get All the users from mongo
+ */
 async function GetAllUsers(req,res,next){
     const users = await User.find({});
     console.log(users);
@@ -74,6 +87,9 @@ async function GetAllUsers(req,res,next){
 
 }
 
+/**
+ * Delete a authenticated user based on their token
+ */
 async function DeleteUser(req,res,next){
     const user = res.locals.user;
     try{

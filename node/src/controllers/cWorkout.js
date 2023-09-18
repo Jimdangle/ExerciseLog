@@ -9,7 +9,9 @@ const Config = require('../config/cfLogin');
 
 const sutil = require('../util/sutil.js');
 
-//create workout
+/**
+ * Create a new workout attached to a authenticated users token
+ */
 async function CreateWorkout(req, res, next) {
     var user = res.locals.user;
     //const userfromDB = await User.findOne({username:}); // search for our user
@@ -26,7 +28,9 @@ async function CreateWorkout(req, res, next) {
     }  
 }
 
-// remove workout 
+/**
+ * Delete a workout based on the workout objects id
+ */
 async function DeleteWorkout(req,res,next){
     const {workout_id} = res.locals.bodyData;
     console.log(workout_id);
@@ -39,7 +43,9 @@ async function DeleteWorkout(req,res,next){
     }
 }
 
-//List workouts
+/**
+ * List all Workouts stored in mongo
+ */
 async function ListWorkouts(req,res,next){
     try{
         const found = await Workout.find({});
@@ -50,8 +56,10 @@ async function ListWorkouts(req,res,next){
     }
 }
 
-// add execise to a workout
-// request should send the id of the workout we are adding the exercise too, as well as the id of the motion they intend to add
+/**
+ * Attach a Exercise to a Workout by passing a workout_id and motion_id in the request
+ * 
+ */
 async function AddExercise(req,res,next){
     const {workout_id,motion_id} = res.locals.bodyData;
     try{
