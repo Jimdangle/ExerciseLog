@@ -15,7 +15,10 @@ const REQUIRED_KEYS = {
     "/add": true,
     "/delete": ["workout_id"],
     "ls": true,
-    "/addEx": ["motion_id", "workout_id"]
+    "/addEx": ["motion_id", "workout_id"],
+    "/remEx": ["exercise_id", "workout_id"],
+    "/addSet": ["rep_or_time", "weight", "exercise_id"],
+    "/remSet": ["set_id", "exercise_id"]
 }
 
 WorkoutRouter.use(bodyParser.json());
