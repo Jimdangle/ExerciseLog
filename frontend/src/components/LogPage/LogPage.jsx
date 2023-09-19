@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 
 import ExerciseAdder from '../ExerciseAdder/ExerciseAdder';
+import SetAdder from '../SetAdder/SetAdder';
 
 export default function LogPage({item, SelectPage, token}){
     
@@ -65,6 +66,7 @@ export default function LogPage({item, SelectPage, token}){
         }
     }
 
+    
     return (<>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 p-2 bg-blue-300 overflow-scroll">
             <h2>{logData.name}</h2>
@@ -77,19 +79,20 @@ export default function LogPage({item, SelectPage, token}){
                            <div key={index}>
                             <button className='inline general-button scale-50' onClick={()=>{RemoveExercise(item._id)}}>-</button>
                             <p className='inline'>{item.motion.name}</p>
+                            
                             {
-                                item.motion.sets ? 
-                                item.motions.sets.map( (set, subindex) => {
+                                item.sets ? 
+                                item.sets.map( (set, subindex) => {
                                     return(
                                         <div key={index+subindex*100}>
-                                        <p>Reps/Time:{set.rep_or_time}</p>
-                                        <p>Weight:{set.added_weight}</p>
+                                            <p>Reps/Time:{set.rep_or_time}, Weight:{set.added_weight}</p>
                                         </div>);
                                 })
                                 :
                                 <></>
                             }
-                            <button className='inline general-button scale-50'>+</button>
+                            <SetAdder exercise_id={item._id}></SetAdder>
+                            
                            </div>
                         )
                     })
