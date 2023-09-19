@@ -32,17 +32,25 @@ export default function LogPage({item, SelectPage, token}){
     }
 
     
+
     const [logData, setLogData] = useState({})
     const [addingExercise, setAddingExercise] = useState(false);
+
+    function AddedExercise(){
+        setAddingExercise(false);
+        GetWorkoutInfo();
+    }
 
     return (<>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 p-2 bg-blue-300">
             <h2>{logData.name}</h2>
+            {console.log(logData.exercises)}
             {
+                
                 logData.exercises ? 
                     logData.exercises.map((item, index) =>{
                         return (
-                            <p key={index}>Exercise: {item}</p>
+                            <p key={index}>Exercise: {item.motion.name}</p>
                         )
                     })
                     :
@@ -50,7 +58,7 @@ export default function LogPage({item, SelectPage, token}){
                 
             }
             <button className='general-button' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
-            {addingExercise ? <ExerciseAdder workout_id={item}></ExerciseAdder> : <></>}
+            {addingExercise ? <ExerciseAdder workout_id={item} complete={AddedExercise}></ExerciseAdder> : <></>}
             <button className='my-2 absolute top-3/4 left-1/2 -translate-x-1/2 translate-y-10 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage({})}}>Return</button>
             </div>
         </>)
