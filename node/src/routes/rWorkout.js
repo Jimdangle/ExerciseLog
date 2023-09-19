@@ -18,7 +18,8 @@ const REQUIRED_KEYS = {
     "/addEx": ["motion_id", "workout_id"],
     "/remEx": ["exercise_id", "workout_id"],
     "/addSet": ["rep_or_time", "weight", "exercise_id"],
-    "/remSet": ["set_id", "exercise_id"]
+    "/remSet": ["set_id", "exercise_id"],
+    "/get": ["workout_id"]
 }
 
 WorkoutRouter.use(bodyParser.json());
@@ -48,6 +49,9 @@ WorkoutRouter.post('/add', async (req, res, next) => {
 WorkoutRouter.delete('/delete', async(req,res,next) =>{
     WorkoutControllers.DeleteWorkout(req,res,next);
 })
+
+// Get a specified workout
+WorkoutRouter.get('/get', WorkoutControllers.GetWorkout);
 
 // remove Exercise from workout 
 WorkoutRouter.delete('/remEx', async(req, res, next) => {

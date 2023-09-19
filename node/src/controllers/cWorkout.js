@@ -35,7 +35,7 @@ async function DeleteWorkout(req,res,next){
     const {workout_id} = res.locals.bodyData;
     //console.log(workout_id);
     try{
-        const delWorkout = await Workout.deleteOne({_id:workout_id});
+        const delWorkout = await Workout.deleteOne({_id:workout_id, user_id:res.locals.user});
         res.send({deleted:true, count:delWorkout});
     }
     catch(e){
@@ -48,7 +48,7 @@ async function DeleteWorkout(req,res,next){
  */
 async function ListWorkouts(req,res,next){
     try{
-        const found = await Workout.find({}).populate({path: "exercises", populate: {path: "motion sets"}});
+        const found = await Workout.find({}).populate({path: "exercises user_id", populate: {path: "motion sets"}});
         res.send({all: found});
     }
     catch(e){
@@ -70,6 +70,21 @@ async function ListMyWorkouts(req,res,next){
     }
 }
 
+/**
+ * 
+ */
+async function GetWorkout(req,res,next){
+    const {workout_id} = res.locals.bodyData;
+    try{
+        console.log(res.locals.user);
+        const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion sets"}});
+        console.log(found);
+        res.send({workout:found});
+    }
+    catch(e){
+        next(e.message);
+    }
+}
 
 /**
  * Attach a Exercise to a Workout by passing a workout_id and motion_id in the request
@@ -174,4 +189,4 @@ async function RemoveSet(req, res, next) {
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
 
-module.exports = {ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+module.exports = {GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
