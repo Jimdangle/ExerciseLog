@@ -51,7 +51,7 @@ WorkoutRouter.delete('/delete', async(req,res,next) =>{
 })
 
 // Get a specified workout
-WorkoutRouter.get('/get', WorkoutControllers.GetWorkout);
+WorkoutRouter.post('/get', WorkoutControllers.GetWorkout);
 
 // remove Exercise from workout 
 WorkoutRouter.delete('/remEx', async(req, res, next) => {
