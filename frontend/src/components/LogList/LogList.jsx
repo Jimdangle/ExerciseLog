@@ -7,6 +7,7 @@ export default function LogList({GetList, SelectPage, token}){
     
     const [rawList, setRawList] = useState([]);
     const [displayList, setDisplayList] = useState([]);
+    const [newWorkoutName, setNewWorkoutName] = useState("");
 
     useEffect(()=>{
         GetList(setRawList);
@@ -25,13 +26,16 @@ export default function LogList({GetList, SelectPage, token}){
                     'Content-Type': 'application/json',
                     'authorization': token
                 },
-                mode:'cors'
+                mode:'cors',
+                body: JSON.stringify( {name: newWorkoutName})
             })
 
             const bod = await response.json();
             if(response.ok){
                 console.log(bod);
                 GetList(setRawList);
+                GetList(setDisplayList)
+                setNewWorkoutName("");
             }
         }
         catch(e){
@@ -56,7 +60,7 @@ export default function LogList({GetList, SelectPage, token}){
     return(<>
         <div className=" w-3/4">
             <button className='my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={AddWorkout}>Add New</button>
-
+            <input type="text" value={newWorkoutName } className='ml-6 my-2 focus:form-active-input form-nonactive-input duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
             <div className="w-full h-12 bg-green-200 flex">
                 <h1 className="text-center font-semibold text-3xl">Recent Workouts</h1>
                 <input type="text" className='ml-6 my-2 focus:form-active-input form-nonactive-input duration-150' onChange={(value)=>{searchLogs(value.target.value)}}></input>

@@ -10,7 +10,7 @@ export default function LogView({token}){
     async function GetList(update){
         
         try{
-            const response = await fetch("http://127.0.0.1:3001/workout/ls",{
+            const response = await fetch("http://127.0.0.1:3001/workout/lsm",{
                 method: "GET",
                 headers: {
                     'Origin': 'http://127.0.0.1:3000',

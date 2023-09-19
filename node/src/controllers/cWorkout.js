@@ -15,9 +15,12 @@ const sutil = require('../util/sutil.js');
 async function CreateWorkout(req, res, next) {
     var user = res.locals.user;
     //const userfromDB = await User.findOne({username:}); // search for our user
-    
+    const {name} = res.locals.bodyData;
     try {
         var newWorkout = new Workout({user_id: user});
+        if(name){
+            newWorkout.name = name;
+        }
         const added = await newWorkout.save(); 
         console.log(added);
         res.send({created:true, id:newWorkout._id});
