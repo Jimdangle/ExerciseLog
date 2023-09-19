@@ -15,7 +15,6 @@ export default function LogList({GetList, SelectPage, token}){
     },[])
    
     
-
     
     async function AddWorkout(){
         try{
@@ -69,7 +68,7 @@ export default function LogList({GetList, SelectPage, token}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <button key={index} className="my-6 py-3 px-2 w-full h-32 rounded-md shadow-md bg-blue-200" onClick={()=>{SelectPage(item)}}>
+                        <button key={index} className="my-6 py-3 px-2 w-full h-32 rounded-md shadow-md bg-blue-200" onClick={()=>{SelectPage(item._id)}}>
                             <h1 className="font-bold text-lg">{item.name}</h1>
                             <p>Created:{item.createdAt}</p>
                             <p>Edited:{item.updatedAt}</p>
