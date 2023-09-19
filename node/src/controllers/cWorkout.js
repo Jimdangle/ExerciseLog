@@ -56,6 +56,21 @@ async function ListWorkouts(req,res,next){
     }
 }
 
+/** 
+ * List all workouts for a particular user (this will replace ListWorkouts at somepoint)
+ */
+async function ListMyWorkouts(req,res,next){
+    try{
+        const found = await  Workout.find({user_id:res.locals.user})//.populate({path: "exercises", populate: {path: "motion sets"}});
+        console.log(found);
+        res.send({all:found});
+    }
+    catch(e){
+        next(e.message);
+    }
+}
+
+
 /**
  * Attach a Exercise to a Workout by passing a workout_id and motion_id in the request
  * 
@@ -67,7 +82,7 @@ async function AddExercise(req,res,next){
         const newEx = await addedExercise.save();
         console.log(newEx);
         try{
-            const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$push: {"exercises" : newEx._id}});
+            const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
             res.send({added:true, exercises:assocWorkout.exercises});
         }
         catch(e){
@@ -158,4 +173,5 @@ async function RemoveSet(req, res, next) {
 }
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
-module.exports = {CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+
+module.exports = {ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    

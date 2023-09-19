@@ -75,4 +75,6 @@ WorkoutRouter.delete('/remSet', async(req, res, next) => {
 })
 
 
+WorkoutRouter.get('/lsm', WorkoutControllers.ListMyWorkouts)
+
 module.exports = {WorkoutRouter: WorkoutRouter}
