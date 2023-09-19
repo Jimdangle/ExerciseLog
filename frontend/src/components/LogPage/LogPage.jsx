@@ -41,8 +41,32 @@ export default function LogPage({item, SelectPage, token}){
         GetWorkoutInfo();
     }
 
+    async function RemoveExercise(exercise_id){
+        try{
+            const response = await fetch('http://localhost:3001/workout/remEx',{
+                method:"DELETE",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token
+                },
+                mode:'cors',
+                body:JSON.stringify({workout_id:item,exercise_id:exercise_id})
+            })
+
+            if(response.ok){
+                const bod = await response.json();
+                console.log(bod);
+                GetWorkoutInfo();
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
     return (<>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 p-2 bg-blue-300">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 p-2 bg-blue-300 overflow-scroll">
             <h2>{logData.name}</h2>
             {console.log(logData.exercises)}
             {
@@ -50,7 +74,23 @@ export default function LogPage({item, SelectPage, token}){
                 logData.exercises ? 
                     logData.exercises.map((item, index) =>{
                         return (
-                            <p key={index}>Exercise: {item.motion.name}</p>
+                           <div key={index}>
+                            <button className='inline general-button scale-50' onClick={()=>{RemoveExercise(item._id)}}>-</button>
+                            <p className='inline'>{item.motion.name}</p>
+                            {
+                                item.motion.sets ? 
+                                item.motions.sets.map( (set, subindex) => {
+                                    return(
+                                        <div key={index+subindex*100}>
+                                        <p>Reps/Time:{set.rep_or_time}</p>
+                                        <p>Weight:{set.added_weight}</p>
+                                        </div>);
+                                })
+                                :
+                                <></>
+                            }
+                            <button className='inline general-button scale-50'>+</button>
+                           </div>
                         )
                     })
                     :
