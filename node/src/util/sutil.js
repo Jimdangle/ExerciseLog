@@ -57,6 +57,7 @@ function ValidateToken(req, res, next) {
       return res.send('this token is no longer valid')
     }
     // by now the token is valid and we can attatch the user to the request
+    console.log(user);
     res.locals.user = user.id; //  moved this to be added into the response object, unsure if we are allowed to add to the request object at this stage
     //console.log(json.stringify(user));
     //console.log(user);
