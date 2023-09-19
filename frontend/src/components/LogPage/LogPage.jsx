@@ -66,7 +66,31 @@ export default function LogPage({item, SelectPage, token}){
         }
     }
 
-    
+    async function RemoveSet(exercise_id,set_id){
+        try{
+            const response = await fetch('http://localhost:3001/workout/remSet',{
+                method:"DELETE",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token
+                },
+                mode:'cors',
+                body:JSON.stringify({exercise_id:exercise_id, set_id:set_id})
+            })
+
+            if(response.ok){
+                const bod = await response.json();
+                console.log(bod);
+                GetWorkoutInfo();
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+
     return (<>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 p-2 bg-blue-300 overflow-scroll">
             <h2>{logData.name}</h2>
@@ -84,14 +108,15 @@ export default function LogPage({item, SelectPage, token}){
                                 item.sets ? 
                                 item.sets.map( (set, subindex) => {
                                     return(
-                                        <div key={index+subindex*100}>
-                                            <p>Reps/Time:{set.rep_or_time}, Weight:{set.added_weight}</p>
+                                        <div className="relative left-10" key={index+subindex*100}>
+                                            <button className='inline general-button scale-50' onClick={()=>{RemoveSet(item._id,set._id) }}>-</button>
+                                            <p className='inline'>Reps/Time:{set.rep_or_time}, Weight:{set.added_weight}</p>
                                         </div>);
                                 })
                                 :
                                 <></>
                             }
-                            <SetAdder exercise_id={item._id}></SetAdder>
+                            <SetAdder exercise_id={item._id} refresh={GetWorkoutInfo}></SetAdder>
                             
                            </div>
                         )

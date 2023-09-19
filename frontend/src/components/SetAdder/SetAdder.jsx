@@ -1,7 +1,7 @@
 import { TokenContext } from "../../views/Home"
 import { useContext, useState } from "react"
 
-export default function SetAdder({exercise_id}){
+export default function SetAdder({exercise_id, refresh}){
     const token = useContext(TokenContext);
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
@@ -23,6 +23,9 @@ export default function SetAdder({exercise_id}){
             if(response.ok){
                 const bod = await response.json();
                 console.log(bod);
+                setReps(1);
+                setWeight(0);
+                refresh()
             }
         }
         catch(e){
