@@ -93,7 +93,7 @@ export default function LogPage({item, SelectPage, token}){
 
 
     return (
-            <div className="w-2/3 h-2/3 p-2 bg-blue-300 overflow-scroll">
+            <div className="w-auto h-auto m-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
                 <h2>{logData.name}</h2>
                 {console.log(logData.exercises)}
                 {

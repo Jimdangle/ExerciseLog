@@ -35,8 +35,8 @@ export default function SetAdder({exercise_id, refresh}){
 
     return(<>
         <div className="w-64 h-32 inline">
-            <input className="inline mx-2" type="number" placeholder="reps or time" min={1} onChange={(v)=>{setReps(v.target.value)}}></input>
-            <input className="inline mx-2" type="number" placeholder="additional weight" min={0} onChange={(v)=>{setWeight(v.target.value)}}></input>
+            <input className="inline mx-2" type="number" value={reps} placeholder="reps or time" min={1} onChange={(v)=>{setReps(v.target.value)}}></input>
+            <input className="inline mx-2" type="number" value={weight} placeholder="additional weight" min={0} onChange={(v)=>{setWeight(v.target.value)}}></input>
             <button className='inline general-button scale-50' onClick={()=>{AddSet()}}>+</button>
         </div>
     </>)
