@@ -58,9 +58,9 @@ export default function Signup({onClick}){
     
     return (
         <>
-         <div className="login-center-view">
+         <div className="justify-center">
             <div className="z-2">
-                <div id="login-card" className="w-[32rem] h-[32rem] login-center-card">
+                <div id="login-card" className="w-auto h-[32rem] login-center-card">
                 <h2 className="text-3xl font-bold text-white underline underline-offset-9 pt-5">BoatLog</h2>
                 <p className='pt-2 font-semibold text-black'>Create a new account!</p>
                 <div className='relative pt-6 top-1/5'>
