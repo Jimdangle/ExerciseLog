@@ -18,13 +18,13 @@ export default function Home({signout}){
 
     const token = localStorage.getItem(lsPrefix+"actk");
 
-    return(<>
-       
+    return(
+       <div className="col-span-8 col-start-2 row-span-4 row-start-2">
         <button className="rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400" onClick={logout}>Sign out</button>
         <TokenContext.Provider value={token}>
             <LogView token={token}></LogView>
         </TokenContext.Provider>
-        
-    </>)
+        </div>
+    )
 }
 

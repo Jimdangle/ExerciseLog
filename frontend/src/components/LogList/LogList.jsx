@@ -56,8 +56,8 @@ export default function LogList({GetList, SelectPage, token}){
         }
     }
 
-    return(<>
-        <div className=" w-3/4">
+    return(
+        <div className="w-auto">
             <button className='my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={AddWorkout}>Add New</button>
             <input type="text" value={newWorkoutName } className='ml-6 my-2 focus:form-active-input form-nonactive-input duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
             <div className="w-full h-12 bg-green-200 flex">
@@ -77,6 +77,6 @@ export default function LogList({GetList, SelectPage, token}){
                 })}
             </ul>
         </div>
-    </>)
+    )
 }
 

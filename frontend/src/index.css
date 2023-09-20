@@ -5,11 +5,11 @@
 
 @layer components {
     .form-nonactive-input{
-        @apply text-center scale-100 bg-slate-100;
+        @apply w-auto text-center scale-100 bg-slate-100;
     }
 
     .form-active-input{
-        @apply text-left scale-125 bg-white
+        @apply w-auto text-left scale-125 bg-white
     }
 
     .form-gen-input{
@@ -26,6 +26,30 @@
 
     .general-button{
         @apply my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400;
+    }
+
+    .desktop_grid{
+        @apply grid-cols-4 grid-rows-4 gap-2
+    }
+
+    .mobile_grid{
+        @apply grid-cols-2 grid-rows-4 gap-2
+    }
+
+    .mobile_middle{
+        @apply col-span-1 col-start-2 row-span-4 row-start-1
+    }
+
+    .desktop_middle{
+        @apply col-span-2 col-start-2 row-span-2 row-start-1
+    }
+
+    .mobile_spacer{
+        @apply col-span-2 
+    }
+
+    .desktop_spacer{
+        @apply col-span-1
     }
 
 }
