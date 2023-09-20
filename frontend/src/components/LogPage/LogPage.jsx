@@ -11,7 +11,7 @@ export default function LogPage({item, SelectPage}){
     const token = useContext(TokenContext)
     useEffect(()=>{loadMostRecent()}, []);
 
-    async function GetWorkoutInfo(workout_id){
+    async function GetWorkoutInfo(){
         try{
             const response = await fetch('http://localhost:3001/workout/get',{
             method: "POST",
@@ -21,7 +21,7 @@ export default function LogPage({item, SelectPage}){
                 'authorization': token
             },
             mode:'cors',
-            body: JSON.stringify( {workout_id:workout_id})
+            body: JSON.stringify( {workout_id:localStorage.getItem(recentLog)})
             });
     
             const bod = await response.json();
@@ -41,7 +41,7 @@ export default function LogPage({item, SelectPage}){
             GetWorkoutInfo(localStorage.getItem(recentLog));
         }
         else{
-            GetWorkoutInfo(item);
+       
         }
     }
 
@@ -50,7 +50,7 @@ export default function LogPage({item, SelectPage}){
 
     function AddedExercise(){
         setAddingExercise(false);
-        GetWorkoutInfo();
+        GetWorkoutInfo(localStorage.getItem(recentLog));
     }
 
     async function RemoveExercise(exercise_id){
@@ -63,7 +63,7 @@ export default function LogPage({item, SelectPage}){
                     'authorization': token
                 },
                 mode:'cors',
-                body:JSON.stringify({workout_id:item,exercise_id:exercise_id})
+                body:JSON.stringify({workout_id:localStorage.getItem(recentLog),exercise_id:exercise_id})
             })
 
             if(response.ok){
@@ -105,7 +105,7 @@ export default function LogPage({item, SelectPage}){
     return (
             <div className="w-auto h-auto m-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
                 <h2>{logData.name}</h2>
-                {console.log(logData.exercises)}
+                {console.log(logData)}
                 {
                     
                     logData.exercises ? 
@@ -137,8 +137,8 @@ export default function LogPage({item, SelectPage}){
                     
                 }
                 <button className='general-button' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add" }</button>
-                {addingExercise ? <ExerciseAdder workout_id={item} complete={AddedExercise}></ExerciseAdder> : <></>}
-                <button className='my-2 absolute top-3/4 left-1/2 -translate-x-1/2 translate-y-10 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage(0)}}>Return</button>
+                {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
+                <button className='my-2 mx-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage(0)}}>Return</button>
             </div>
         )
         
