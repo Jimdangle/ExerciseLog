@@ -4,15 +4,19 @@ import LoginSignup from '../views/LoginSignup'
 import Home from '../views/Home'
 import lsPrefix from '../config/cfUtil'
 import LogList from './LogList/LogList'
+import LogView from '../views/LogView'
+import ExerciseAdder from './ExerciseAdder/ExerciseAdder'
 function App() {
   
   const [isSignedIn, setIsSignedIn] = useState(false);
+  
 
   const toggleSignedIn = () =>{
     var is = isSignedIn;
     setIsSignedIn(!is);
   }
 
+  
   
   return (
     

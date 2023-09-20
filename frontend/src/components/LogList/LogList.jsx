@@ -1,19 +1,65 @@
 
 // Make more pretty
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
+import {recentLog} from '../../config/cfUtil';
 
-export default function LogList({GetList, SelectPage, token}){
+import { TokenContext } from '../../views/Home';
 
+export default function LogList({SelectPage}){
+    const token = useContext(TokenContext);
+    
     
     const [rawList, setRawList] = useState([]);
     const [displayList, setDisplayList] = useState([]);
     const [newWorkoutName, setNewWorkoutName] = useState("");
 
-    useEffect(()=>{
-        GetList(setRawList);
-        GetList(setDisplayList);
-    },[])
-   
+    function SetMostRecent(workout_id){
+        localStorage.setItem(recentLog,workout_id);
+        console.log(workout_id);
+        
+    }
+
+    function SetAndSwap(workout_id){
+        SetMostRecent(workout_id);
+        SelectPage(1);
+    }
+
+    // Sort the initial results by date created
+    function sortResults(list){
+        return list.sort((a,b)=> {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        })
+    }
+
+    async function GetList(){
+        try{
+            const response = await fetch("http://127.0.0.1:3001/workout/lsm",{
+                method: "GET",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token
+                },
+                mode:'cors'
+            })
+
+            const bod = await response.json();
+            if(response.ok){
+                if(bod.all){
+                    var sorted = sortResults(bod.all)
+                    setRawList(sorted);
+                    setDisplayList(sorted);
+                    if(!localStorage.getItem(recentLog)){
+                        SetMostRecent(sorted[0]._id)
+                    }
+                }
+            }
+        }
+        catch(e){
+            console.log(e.message)
+        }
+        
+    }
     
     
     async function AddWorkout(){
@@ -26,19 +72,18 @@ export default function LogList({GetList, SelectPage, token}){
                     'authorization': token
                 },
                 mode:'cors',
-                body: JSON.stringify( {name: newWorkoutName})
+                body: JSON.stringify({name:newWorkoutName})
             })
-
             const bod = await response.json();
             if(response.ok){
                 console.log(bod);
-                GetList(setRawList);
-                GetList(setDisplayList)
+                GetList();
                 setNewWorkoutName("");
+                SetMostRecent(bod.id);
             }
         }
         catch(e){
-            console.error(e.message);
+            console.log(e);
         }
     }
     
@@ -52,9 +97,14 @@ export default function LogList({GetList, SelectPage, token}){
             setDisplayList(searched);
         }
         else{
-            GetList(setRawList);
+            GetList();
         }
     }
+
+    useEffect(()=>{
+       GetList();
+    },[])
+   
 
     return(
         <div className="w-auto m-2">
@@ -68,7 +118,7 @@ export default function LogList({GetList, SelectPage, token}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <button key={index} className="my-6 py-3 px-2 w-full h-32 rounded-md shadow-md bg-blue-200" onClick={()=>{SelectPage(item._id)}}>
+                        <button key={index} className="my-6 py-3 px-2 w-full h-32 rounded-md shadow-md bg-blue-200" onClick={()=>{SetAndSwap(item._id)}}>
                             <h1 className="font-bold text-lg">{item.name}</h1>
                             <p>Created:{item.createdAt}</p>
                             <p>Edited:{item.updatedAt}</p>

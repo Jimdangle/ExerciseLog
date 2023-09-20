@@ -49,12 +49,12 @@ function ValidateToken(req, res, next) {
   const token = req.headers['authorization'];
   
   if(!token) {
-    return res.send('no token recieved');
+    return next('no token recieved');
   }
   // should have token here , time to verify
   jwt.verify(token, jwtSecret, (err, user) => {
     if(err) {
-      return res.send('this token is no longer valid')
+      return next('this token is no longer valid')
     }
     // by now the token is valid and we can attatch the user to the request
     console.log(user);

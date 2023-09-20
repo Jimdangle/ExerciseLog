@@ -1,15 +1,17 @@
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 
+import {recentLog} from '../../config/cfUtil';
 import ExerciseAdder from '../ExerciseAdder/ExerciseAdder';
 import SetAdder from '../SetAdder/SetAdder';
+import { TokenContext } from '../../views/Home';
 
 
-export default function LogPage({item, SelectPage, token}){
+export default function LogPage({item, SelectPage}){
     
-    
-    useEffect(()=>{GetWorkoutInfo()}, []);
+    const token = useContext(TokenContext)
+    useEffect(()=>{loadMostRecent()}, []);
 
-    async function GetWorkoutInfo(){
+    async function GetWorkoutInfo(workout_id){
         try{
             const response = await fetch('http://localhost:3001/workout/get',{
             method: "POST",
@@ -19,7 +21,7 @@ export default function LogPage({item, SelectPage, token}){
                 'authorization': token
             },
             mode:'cors',
-            body: JSON.stringify( {workout_id:item})
+            body: JSON.stringify( {workout_id:workout_id})
             });
     
             const bod = await response.json();
@@ -34,6 +36,14 @@ export default function LogPage({item, SelectPage, token}){
     }
 
     
+    function loadMostRecent(){
+        if(localStorage.getItem(recentLog)){
+            GetWorkoutInfo(localStorage.getItem(recentLog));
+        }
+        else{
+            GetWorkoutInfo(item);
+        }
+    }
 
     const [logData, setLogData] = useState({})
     const [addingExercise, setAddingExercise] = useState(false);
@@ -128,7 +138,7 @@ export default function LogPage({item, SelectPage, token}){
                 }
                 <button className='general-button' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add" }</button>
                 {addingExercise ? <ExerciseAdder workout_id={item} complete={AddedExercise}></ExerciseAdder> : <></>}
-                <button className='my-2 absolute top-3/4 left-1/2 -translate-x-1/2 translate-y-10 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage({})}}>Return</button>
+                <button className='my-2 absolute top-3/4 left-1/2 -translate-x-1/2 translate-y-10 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage(0)}}>Return</button>
             </div>
         )
         
