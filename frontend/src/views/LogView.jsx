@@ -48,7 +48,7 @@ export default function LogView({token}){
 
     return (<>
         
-        {Object.keys(selectedLog).length !==0 ? <LogPage item={selectedLog} SelectPage={SelectPage} token={token}></LogPage> : <LogList GetList={GetList} SelectPage={SelectPage} token={token}></LogList>}
+        {Object.keys(selectedLog).length !==0 ? <LogPage item={selectedLog} SelectPage={SelectPage} token={token}></LogPage> : <LogList SelectPage={SelectPage} token={token}></LogList>}
     </>)
 
     
