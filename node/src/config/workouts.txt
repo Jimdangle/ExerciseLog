@@ -1,4 +1,3 @@
-Exercise Name,Primary Muscle Group,Secondary Muscle Groups,Description
 Push-up,1,6,A basic bodyweight exercise that primarily targets the chest muscles with secondary engagement of the shoulders and triceps.
 Bench Press,1,6,A compound movement targeting the chest muscles, with secondary involvement of the shoulders and triceps. Often performed with a barbell or dumbbells.
 Pull-up,2,1,A bodyweight exercise primarily targeting the back muscles, specifically the latissimus dorsi (lats).
@@ -34,7 +33,7 @@ Cable Crunch,6,1,A core exercise that engages the abdominals, particularly the r
 Leg Raise,5,6,A bodyweight exercise targeting the lower abs and hip flexors. Involves raising the legs off the ground.
 Lat Raise,6,,An isolation exercise for the shoulder muscles, specifically the rear deltoids.
 Kettlebell Swing,3,6,A dynamic exercise that engages the quads, hamstrings, glutes, and shoulders.
-Russian Twist (with weight),6,1,A variation of the Russian twist that involves holding a weight or medicine ball.
+Russian Twist,6,1,A variation of the Russian twist that involves holding a weight or medicine ball.
 Step-ups,3,5,Targets the quads, hamstrings, and calves. Involves stepping up onto a bench or platform.
 Decline Bench Press,1,6,Similar to the bench press but performed on a decline bench to target the lower chest.
 Cable Row,2,1,Focused on the back muscles, particularly the lats and rhomboids. Performed on a cable row machine.
@@ -46,7 +45,7 @@ Concentration Curl,7,,An isolation exercise for the biceps, often performed with
 Barbell Shrug,6,,Primarily targets the trapezius muscles (traps). Involves lifting the shoulders upward.
 Farmer's Walk,3,6,A full-body exercise that engages the grip, forearms, traps, and core. Involves carrying heavy weights.
 Leg Press Machine Calf Raise,5,,Targets the calf muscles and is performed on a leg press machine.
-Bicycle Crunches (with weight),6,1,A variation of bicycle crunches that involves holding a weight or medicine ball.
+Bicycle Crunches,6,1,A variation of bicycle crunches that involves holding a weight or medicine ball.
 Face Pull,6,2,An exercise for the shoulders and upper back, focusing on the rear deltoids and traps.
 Seated Leg Curl,4,,Targets the hamstrings and is typically done on a seated leg curl machine.
 Dumbbell Pullover,1,,Targets the chest and also engages the lats and triceps. Performed with a dumbbell on a bench.
@@ -97,7 +96,7 @@ Lateral Leg Raises,3,6,An isolation exercise that targets the outer thighs (abdu
 One-Arm Dumbbell Row,2,1,Targets the back muscles, particularly the lats and middle back, using a single dumbbell.
 Dumbbell Step-Ups,3,5,Targets the quads, hamstrings, and glutes. Involves stepping up onto a bench with dumbbells.
 Decline Dumbbell Press,1,6,Similar to the bench press but performed on a decline bench with dumbbells.
-Seated Calf Raise (with weight),5,,Targets the calf muscles and is performed with added weight on a calf raise machine.
+Seated Calf Raise ,5,,Targets the calf muscles and is performed with added weight on a calf raise machine.
 Back Extension,2,,Targets the lower back muscles. Performed on a back extension machine or hyperextension bench.
 Barbell Bench Press,1,6,A compound exercise that primarily targets the chest muscles, with secondary involvement of the shoulders and triceps.
 Leg Curl Machine (lying),4,,Targets the hamstrings and is performed on a lying leg curl machine.
@@ -123,7 +122,7 @@ Seated Dumbbell Curl,7,,An isolation exercise for the biceps, performed while se
 Glute Bridge,4,6,A lower body exercise that targets the glutes and lower back, involving hip thrusting from a supine position.
 Pec Dec Machine Fly,1,,Targets the chest muscles and is performed on a Pec Dec machine.
 Dumbbell Skull Crushers,8,1,An isolation exercise for the triceps, performed with dumbbells by extending the arms above the chest.
-Lying Leg Raise (with weight),5,6,A variation of lying leg raises that involves holding a weight between the feet for added resistance.
+Lying Leg Raise ,5,6,A variation of lying leg raises that involves holding a weight between the feet for added resistance.
 Treadmill Running,3,5,Cardiovascular exercise that primarily targets the quads and calves while improving endurance.
 Standing Dumbbell Shoulder Press,6,,Targets the shoulders (deltoids) with dumbbells, performed in a standing position.
 Cable Rope Hammer Curl,7,,An isolation exercise for the biceps using a cable machine and rope attachment.
@@ -131,7 +130,7 @@ Leg Curl Machine (standing),4,,Targets the hamstrings and is performed on a stan
 Tricep Rope Pushdown,8,,An isolation exercise for the triceps using a cable machine and rope attachment.
 Glute Kickback Machine,4,,Targets the glutes and hamstrings, performed on a glute kickback machine.
 Landmine Press,1,6,A full-body exercise that targets the chest and shoulders, involving pressing weight with a landmine attachment.
-Seated Calf Raise (with weight),5,,Targets the calf muscles and is performed with added weight on a calf raise machine.
+Seated Calf Raise ,5,,Targets the calf muscles and is performed with added weight on a calf raise machine.
 Bent Over Barbell Curl,7,,An isolation exercise for the biceps, involving curling a barbell while bent over.
 Dumbbell Shrugs (with twist),6,,An exercise for the shoulders and traps, involving a twisting motion during shrugs with dumbbells.
 Reverse Hyperextension,2,6,Targets the lower back and glutes, performed on a reverse hyperextension machine or bench.

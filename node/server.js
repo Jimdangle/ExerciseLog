@@ -16,6 +16,9 @@ const Workout = require('./src/routes/rWorkout').WorkoutRouter;
 const Admin = require('./src/routes/rAdmin').AdminRouter;
 
 const corsOpts = require('./src/config/cfCors').corsOpts;
+const dutil = require('./src/util/dutil');
+
+const {Motion} = require('./src/models/mWorkout');
 
 app.use(cors(corsOpts));
 
@@ -48,11 +51,42 @@ async function load_mongo(){
     try {
         await mongoose.connect(process.env.MONGO_URL); //initialize databse here
         console.log("Connected to Mongodb");
+
+        try{
+            const count = await Motion.estimatedDocumentCount()
+            if(count < 144){
+                try{
+                    await Motion.deleteMany({});
+                }
+                catch(e){
+                    console.error(e.message);
+                }
+                console.log("adding in motions");
+                try{
+                    const input = await dutil.GetMotionArray();
+                    console.log(`Length of input : ${input.length}`);
+                    Motion.create(input)
+                }
+                catch(e){console.log(e.message)}
+            }
+        }
+        catch(e){
+            console.log(e.message);
+        }
+        
+
       }
       catch(er){
         console.log(er);
       }
-      
+    
+    try{
+        const count = await Motion.estimatedDocumentCount();
+        console.log(`Count After adding ${count} / 149`);
+    }
+    catch(e){
+        console.log(e.message);
+    }
 }
 
 
