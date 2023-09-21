@@ -14,6 +14,7 @@ const app = express();
 const Login = require('./src/routes/rLogin').LoginRouter; // Login Routing
 const Workout = require('./src/routes/rWorkout').WorkoutRouter; 
 const Admin = require('./src/routes/rAdmin').AdminRouter;
+const User = require('./src/routes/rUser').UserRouter;
 
 const corsOpts = require('./src/config/cfCors').corsOpts;
 const dutil = require('./src/util/dutil');
@@ -34,6 +35,7 @@ app.use('/', (req,res,next) => {
 app.use('/login/', Login);
 app.use('/workout/', Workout);
 app.use('/admin/', Admin);
+app.use('/user/', User);
 
 
 

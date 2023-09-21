@@ -5,7 +5,7 @@ export default function SetItem({set, RemoveSet, number, exercise_id}){
 
         <>
             <div className="">
-                <p className="px-2 font-semibold text-white">{number}.</p>
+                <p className="px-2 font-semibold text-slate-500">{number}.</p>
                 
             </div>
             <div className="">

@@ -1,6 +1,7 @@
 import lsPrefix from "../config/cfUtil"
 import LogList from "../components/LogList/LogList";
 import LogPage from "../components/LogPage/LogPage";
+import UserInfo from "../components/UserInfo/UserInfo";
 import { createContext, useState, useEffect } from "react";
 import NavBar from "../components/NavBar/NavBar";
 //Home Show recent workouts and let user edit items in the list
@@ -17,10 +18,10 @@ export default function Home({signout}){
         
     }
     
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(2);
     
     function SetPage(pg){setPage(pg)}
-    function pp(arg){console.log(arg)}
+    
     //0:Home
     //1:Log View
     //2:Settings
@@ -30,9 +31,11 @@ export default function Home({signout}){
         console.log(`Page swapped to ${page}`);
         switch(page){
             case 1: 
-            return <LogPage SelectPage={SetPage}></LogPage>
+                return <LogPage SelectPage={SetPage}></LogPage>
+            case 2:
+                return <UserInfo></UserInfo>
             default:
-            return <LogList SelectPage={SetPage}></LogList>
+                return <LogList SelectPage={SetPage}></LogList>
         }
         
     }
