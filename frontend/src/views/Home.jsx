@@ -14,10 +14,10 @@ export default function Home({signout}){
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
         signout();
-        console.log("fuck")
+        
     }
     
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     
     function SetPage(pg){setPage(pg)}
     function pp(arg){console.log(arg)}
