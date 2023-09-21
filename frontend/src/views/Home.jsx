@@ -16,52 +16,53 @@ export default function Home({signout}){
         signout();
         console.log("fuck")
     }
-
+    
     const [page, setPage] = useState(0);
-
+    
     function SetPage(pg){setPage(pg)}
     function pp(arg){console.log(arg)}
     //0:Home
     //1:Log View
     //2:Settings
-
+    
     
     function SelectPage(){
         console.log(`Page swapped to ${page}`);
         switch(page){
-        case 1: 
+            case 1: 
             console.log("Should return LogPage! if not react is gay")
             return <LogPage SelectPage={SetPage}></LogPage>
-        default:
+            default:
             console.log("Should return LogList")
             return <LogList SelectPage={SetPage}></LogList>
         }
         
     }
-
+    
     const token = localStorage.getItem(lsPrefix+"actk");
     
-
+    
     useEffect(()=>{
         console.log(`useEffect in home.jsx ${page}`);
-       SelectPage()
+        SelectPage()
         
     },[page])
     
-
+    
     return(
         <div className="md:mobile_middle lg:desktop_middle">
         
         <NavBar SetPage={SetPage} logout={logout}></NavBar>
-       
-            <TokenContext.Provider value={token}>
-                {SelectPage()}
-            </TokenContext.Provider>
+        
+        <TokenContext.Provider value={token}>
+            {SelectPage()}
+        </TokenContext.Provider>
         
         </div>
         
         
         
-    )
-}
-
+        )
+    }
+    
+    

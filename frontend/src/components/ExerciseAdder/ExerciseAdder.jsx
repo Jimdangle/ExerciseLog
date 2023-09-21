@@ -12,7 +12,7 @@ export default function ExerciseAdder({workout_id, complete}){
     function searchMotions(search){
         console.log(`Searching: ${search}`)
         var moti = motions;
-        var searched = moti.filter( (motion) =>  motion.name.toLowerCase().indexOf(search) !=-1 );
+        var searched = moti.filter( (motion) =>  motion.name.toLowerCase().indexOf(search.toLowerCase()) !=-1 );
         console.log(searched);
         setDisplayMotions(searched);
     }
@@ -70,9 +70,10 @@ export default function ExerciseAdder({workout_id, complete}){
     }
 
     return(<>
-        <div className="w-64 h-32 bg-white rounded-md overflow-scroll">
+        <div className="lg:w-96 max-md:w-64 h-32 bg-white rounded-md overflow-scroll">
             <h1 className="font-semibold">Add a new motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
+            <p className="inline">{displayMotions.length}</p>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{

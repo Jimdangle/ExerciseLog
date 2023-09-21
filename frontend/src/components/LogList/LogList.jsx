@@ -91,7 +91,7 @@ export default function LogList({SelectPage}){
 
     function searchLogs(search_term){
         if(search_term!=""){
-            const searched = rawList.filter( (item) => item.name.indexOf(search_term) != -1)
+            const searched = rawList.filter( (item) => item.name.toLowerCase().indexOf(search_term.toLowerCase()) != -1)
             console.log(search_term)
             console.log(searched);
             setDisplayList(searched);
