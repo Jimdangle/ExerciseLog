@@ -40,4 +40,17 @@ async function GetWorkoutSummary(req,res,next){
     }
 }
 
-module.exports = {GetUser:GetUser, GetWorkoutSummary:GetWorkoutSummary}
+async function ChangeUsername(req,res,next){
+    const {username} = res.locals.bodyData;
+    const user = res.locals.user;
+    try{
+        const updatedUser = await User.findOneAndUpdate({_id:user},{$set: {username:username}});
+        console.log(updatedUser);
+        res.send({user:updatedUser});
+    }
+    catch(e){
+        next(e.message);
+    }
+}
+
+module.exports = {GetUser:GetUser, GetWorkoutSummary:GetWorkoutSummary,ChangeUsername:ChangeUsername}

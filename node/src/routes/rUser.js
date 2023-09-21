@@ -9,7 +9,9 @@ const UserController = require('../controllers/cUser.js')
 const UserRouter = express.Router(); // create our router object
 
 const REQUIRED_KEYS = {
-    "/info" : true
+    "/info" : true,
+    "summary": true,
+    "changename": ["username"]
 }
 
 
@@ -28,5 +30,7 @@ UserRouter.use('', (req, res, next) => {
 
 UserRouter.get('/info', UserController.GetUser);
 UserRouter.get('/summary', UserController.GetWorkoutSummary);
+
+UserRouter.post('/changename', UserController.ChangeUsername);
 
 module.exports = {UserRouter:UserRouter}

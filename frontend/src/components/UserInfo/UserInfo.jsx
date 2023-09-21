@@ -13,6 +13,38 @@ export default function UserInfo(){
         GetUserSummary();
     },[])
 
+
+    function setUsername(name){
+        const info = userInfo;
+        setUserInfo({email:info.email,username:name})
+    }
+
+    async function SetUsername(name){
+        try{
+            const response = await fetch('http://localhost:3001/user/changename',{
+                method:"post",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token,
+                    'Accept': '*/*'
+                },
+                mode:'cors',
+                body: JSON.stringify({username:name})
+            })
+
+            if(response.ok){
+                console.log(response)
+                const bod = await response.json();
+                console.log(bod);
+                setUsername(bod.user.username);
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
     async function GetUserInfo(){
         try{
             const response = await fetch('http://localhost:3001/user/info',{
@@ -69,23 +101,27 @@ export default function UserInfo(){
     function findTop5(obj){
         console.log(obj)
         var items = Object.keys(obj).map( (key) => {return [key, obj[key]]});
-        items.sort((a,b)=>{ return a[1]-b[1]});
+        items.sort((a,b)=>{ return b[1]-a[1]});
 
-        var top5 = items.slice(0,5).map( (e) => {return e[0]} )
+        var top5 = items.slice(0,3).map( (e) => {return e[0]} )
         console.log(top5);
         return top5;
     }
 
-    return(<div>
-        <p>User Info!</p>
-        
-        <p>{userInfo.email} - {userInfo.username}</p>
-        <p>{userDisplay.count} - {userDisplay.motion_count}</p>
-        <ul>
-            {userDisplay.motions_top5.map( (item,index) => {
-                return <li key={index}>{item}</li>
-            })}
-        </ul>
-        <button className="general-button" onClick={()=>{GetUserInfo()}}>Refresh</button>
-    </div>)
+    return(
+        <div className="bg-blue-200 rounded-sm mx-8 my-24 px-6 flex flex-col">
+            <div className="flex flex-row">
+                <p>{userInfo.email}</p>
+                <input className="mx-6 bg-blue-200" type="text" placeholder={userInfo.username} onFocus={(ev)=>{ev.target.value=""}} onBlur={(ev)=>{SetUsername(ev.target.value)}}></input>
+            </div>
+            
+            <p>{userDisplay.count} - {userDisplay.motion_count}</p>
+            <p>Top 3 Workouts</p>
+            <ul>
+                {userDisplay.motions_top5.map( (item,index) => {
+                    return <li className={"font-semibold text-slate-"+String((700-100*index))} key={index}>{index+1}: {item}</li>
+                })}
+            </ul>
+            
+        </div>)
 }

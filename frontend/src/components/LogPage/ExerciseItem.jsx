@@ -5,7 +5,7 @@ import { TranslateMuscle } from '../../utils/muscle';
 export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh}){
 
     return (
-        <div className='w-auto h-auto mx-2 my-2 bg-slate-100 rounded-lg pb-2'>
+        <div className='w-auto h-auto mx-2 my-2 bg-blue-200 rounded-lg pb-2'>
             
             <div className='flex flex-row'>
                 <button className='w-12 h-12 rounded-full bg-red-200 scale-50 text-3xl' onClick={()=>{RemoveExercise(item._id)}}>-</button> 
@@ -20,7 +20,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                 </div>
             </div>
            
-            <div className='h-auto w-auto -mt-12 bg-blue-200 mx-2 rounded-md shadow-sm'>
+            <div className='h-auto w-auto -mt-12 bg-slate-100 mx-2 rounded-md shadow-sm'>
                 <div className='grid grid-cols-4 place-items-center'>
                     <div className='text-sm font-semibold text-slate-600'>Set #</div> 
                     <div className='text-sm font-semibold text-slate-600'>Rep/Time</div>

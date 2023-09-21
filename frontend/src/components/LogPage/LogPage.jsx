@@ -107,7 +107,7 @@ export default function LogPage({item, SelectPage}){
 
 
     return (
-            <div className="w-auto h-auto mx-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
+            <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
                 
                 <h2 className='font-semibold text-center text-2xl'>{(logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
                 {

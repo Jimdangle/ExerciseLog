@@ -18,7 +18,7 @@ export default function Home({signout}){
         
     }
     
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(2);
     
     function SetPage(pg){setPage(pg)}
     
