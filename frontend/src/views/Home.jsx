@@ -50,17 +50,18 @@ export default function Home({signout}){
     
 
     return(
-        <>
+        <div className="md:mobile_middle lg:desktop_middle">
         
         <NavBar SetPage={SetPage} logout={logout}></NavBar>
-       <div className="md:mobile_middle lg:desktop_middle">
+       
             <TokenContext.Provider value={token}>
                 {SelectPage()}
             </TokenContext.Provider>
+        
         </div>
         
         
-        </>
+        
     )
 }
 
