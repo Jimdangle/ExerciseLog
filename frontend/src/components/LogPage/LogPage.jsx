@@ -2,11 +2,13 @@ import {useContext, useEffect, useState} from 'react'
 
 import {recentLog} from '../../config/cfUtil';
 import ExerciseAdder from '../ExerciseAdder/ExerciseAdder';
-import SetAdder from '../SetAdder/SetAdder';
+
 import { TokenContext } from '../../views/Home';
 
 
+
 import { isTimeString, GetLocal } from '../../utils/date';
+import ExerciseItem from './ExerciseItem';
 
 export default function LogPage({item, SelectPage}){
     
@@ -105,35 +107,14 @@ export default function LogPage({item, SelectPage}){
 
 
     return (
-            <div className="w-auto h-auto m-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
+            <div className="w-auto h-auto mx-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
                 
-                <h2 className='font-semibold'>{(logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
-                {console.log(logData)}
+                <h2 className='font-semibold text-center text-2xl'>{(logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
                 {
                     
                     logData.exercises ? 
                         logData.exercises.map((item, index) =>{
-                            return (
-                            <div key={index}>
-                                <button className='inline general-button scale-50' onClick={()=>{RemoveExercise(item._id)}}>-</button>
-                                <p className='inline'>{item.motion.name}</p>
-                                
-                                {
-                                    item.sets ? 
-                                    item.sets.map( (set, subindex) => {
-                                        return(
-                                            <div className="relative left-10" key={index+subindex*100}>
-                                                <button className='inline general-button scale-50' onClick={()=>{RemoveSet(item._id,set._id) }}>-</button>
-                                                <p className='inline'>Reps/Time:{set.rep_or_time}, Weight:{set.added_weight}</p>
-                                            </div>);
-                                    })
-                                    :
-                                    <></>
-                                }
-                                <SetAdder exercise_id={item._id} refresh={GetWorkoutInfo}></SetAdder>
-                                
-                            </div>
-                            )
+                            return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={GetWorkoutInfo}></ExerciseItem>
                         })
                         :
                         <p>No Exercises</p>

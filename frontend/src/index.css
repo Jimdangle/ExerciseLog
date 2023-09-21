@@ -33,11 +33,11 @@
     }
 
     .mobile_grid{
-        @apply grid-cols-8 grid-rows-4 gap-2
+        @apply grid-cols-1 grid-rows-1 
     }
 
     .mobile_middle{
-        @apply col-span-6 col-start-2 row-span-4 row-start-1
+        @apply col-span-1 col-start-1 row-span-1 row-start-1
     }
 
     .desktop_middle{

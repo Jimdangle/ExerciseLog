@@ -17,7 +17,7 @@ export default function Home({signout}){
         console.log("fuck")
     }
     
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     
     function SetPage(pg){setPage(pg)}
     function pp(arg){console.log(arg)}
@@ -30,10 +30,8 @@ export default function Home({signout}){
         console.log(`Page swapped to ${page}`);
         switch(page){
             case 1: 
-            console.log("Should return LogPage! if not react is gay")
             return <LogPage SelectPage={SetPage}></LogPage>
             default:
-            console.log("Should return LogList")
             return <LogList SelectPage={SetPage}></LogList>
         }
         

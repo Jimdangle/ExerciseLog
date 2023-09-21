@@ -17,7 +17,7 @@ export default function LogList({SelectPage}){
 
     function SetMostRecent(workout_id){
         localStorage.setItem(recentLog,workout_id);
-        console.log(workout_id);
+        
         
     }
 
