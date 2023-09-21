@@ -5,6 +5,8 @@ import {recentLog} from '../../config/cfUtil';
 
 import { TokenContext } from '../../views/Home';
 
+import { isTimeString, GetLocal } from '../../utils/date';
+
 export default function LogList({SelectPage}){
     const token = useContext(TokenContext);
     
@@ -79,7 +81,7 @@ export default function LogList({SelectPage}){
                 console.log(bod);
                 GetList();
                 setNewWorkoutName("");
-                SetMostRecent(bod.id);
+                SetAndSwap(bod.id);
             }
         }
         catch(e){
@@ -127,6 +129,8 @@ export default function LogList({SelectPage}){
        GetList();
     },[])
    
+    
+    
 
     return(
         <div className="w-auto m-2">
@@ -142,7 +146,7 @@ export default function LogList({SelectPage}){
                     return (
                         <div key={index} className="my-6 py-3 px-2 w-full h-auto rounded-md shadow-md bg-blue-200">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="font-bold text-lg">{item.name}</h1>
+                                <h1 className="font-bold text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name) : item.name)}</h1>
                                 <p>Created:{item.createdAt}</p>
                                 <p>Edited:{item.updatedAt}</p>
                             </div>

@@ -6,6 +6,8 @@ import SetAdder from '../SetAdder/SetAdder';
 import { TokenContext } from '../../views/Home';
 
 
+import { isTimeString, GetLocal } from '../../utils/date';
+
 export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
@@ -104,7 +106,8 @@ export default function LogPage({item, SelectPage}){
 
     return (
             <div className="w-auto h-auto m-2 p-2 bg-blue-300 overflow-scroll shadow-lg rounded-md">
-                <h2>{logData.name}</h2>
+                
+                <h2 className='font-semibold'>{(logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
                 {console.log(logData)}
                 {
                     
