@@ -73,7 +73,7 @@ export default function ExerciseAdder({workout_id, complete}){
         <div className="lg:w-96 max-md:w-64 h-32 bg-white rounded-md overflow-scroll">
             <h1 className="font-semibold">Add a new motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
-            <p className="inline">{displayMotions.length}</p>
+            <p className="inline text-slate-500">{displayMotions.length}</p>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{

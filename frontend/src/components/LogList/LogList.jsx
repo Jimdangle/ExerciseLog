@@ -87,6 +87,28 @@ export default function LogList({SelectPage}){
         }
     }
     
+    async function RemoveWorkout(workout_id){
+        try{
+            const response = await fetch('http://localhost:3001/workout/delete', {
+                method: "DELETE",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token
+                },
+                mode:'cors',
+                body: JSON.stringify({workout_id:workout_id})
+            })
+            const bod = await response.json();
+            if(response.ok){
+                console.log(bod);
+                GetList();
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
     
 
     function searchLogs(search_term){
@@ -118,11 +140,14 @@ export default function LogList({SelectPage}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <button key={index} className="my-6 py-3 px-2 w-full h-32 rounded-md shadow-md bg-blue-200" onClick={()=>{SetAndSwap(item._id)}}>
-                            <h1 className="font-bold text-lg">{item.name}</h1>
-                            <p>Created:{item.createdAt}</p>
-                            <p>Edited:{item.updatedAt}</p>
-                        </button>
+                        <div key={index} className="my-6 py-3 px-2 w-full h-auto rounded-md shadow-md bg-blue-200">
+                            <div   onClick={()=>{SetAndSwap(item._id)}}>
+                                <h1 className="font-bold text-lg">{item.name}</h1>
+                                <p>Created:{item.createdAt}</p>
+                                <p>Edited:{item.updatedAt}</p>
+                            </div>
+                            <button className='inline general-button' onClick={()=>{RemoveWorkout(item._id)}}>-</button>
+                        </div>
                     )
                 })}
             </ul>
