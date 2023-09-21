@@ -20,36 +20,40 @@ export default function Login({signin}){
     // Handle signing the user in
     async function handleLogin()
     {
-        //request back end
-        const response = await fetch("http://127.0.0.1:3001/login/login", {
-            method: "POST",
-            headers: {
-                'Origin': 'http://127.0.0.1:3000',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(state),
-            mode: "cors"
-        })
+        try{
+            const response = await fetch("http://127.0.0.1:3001/login/login", {
+                method: "POST",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(state),
+                mode: "cors"
+            })
 
-        const bod = await response.json(); // convert body to json
-        
-
-        if(response.ok){ // server will send a 200 even in failure so we can get body data
-            if(bod["access_token"]){
-                setErrMessage("");
-                localStorage.setItem(lsPrefix+"actk", bod["access_token"]);
-                signin(); // this is techinicall prop drilling but we are limited to two layers rn
-            }
-            else{ // render the error message
-                if(bod["message"]){
-                    setErrMessage(bod["message"]);
-                }
-            }
-           
-        }
-        else{ // handle this better sometime
-            console.log("bad request");
+            const bod = await response.json(); // convert body to json
             
+
+            if(response.ok){ // server will send a 200 even in failure so we can get body data
+                if(bod["access_token"]){
+                    setErrMessage("");
+                    localStorage.setItem(lsPrefix+"actk", bod["access_token"]);
+                    signin(); // this is techinicall prop drilling but we are limited to two layers rn
+                }
+                else{ // render the error message
+                    if(bod["message"]){
+                        setErrMessage(bod["message"]);
+                    }
+                }
+            
+            }
+            else{ // handle this better sometime
+                console.log("bad request");
+                setErrMessage("Unable to make request")
+            }
+        }
+        catch(e){
+            setErrMessage(e.toString());
         }
     }
     
