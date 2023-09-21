@@ -10,6 +10,8 @@ services:
     depends_on:
       db-mongo:
         condition: service_started
+    volumes:
+      - ./node/src:/server/src/src
   db-mongo: #MongoDB Service
     image: mongo:4.0-xenial
     ports:
