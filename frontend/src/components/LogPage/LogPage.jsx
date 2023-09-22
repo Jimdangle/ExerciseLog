@@ -31,7 +31,12 @@ export default function LogPage({item, SelectPage}){
             const bod = await response.json();
             if(response.ok)
             {
-                setLogData(bod.workout);
+                if(bod.workout){
+                    setLogData(bod.workout);
+                }
+                else{
+                    setLogData({name:"Non valid workout selected"})
+                }
             }
         }
         catch(e){
@@ -109,7 +114,7 @@ export default function LogPage({item, SelectPage}){
     return (
             <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
                 
-                <h2 className='font-semibold text-center text-2xl'>{(logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
+                <h2 className='font-semibold text-center text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
                 {
                     
                     logData.exercises ? 
