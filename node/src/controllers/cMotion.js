@@ -24,10 +24,13 @@ async function ListUserMotions(req,res,next){
 async function ListAllMotions(req,res,next){
     const user = res.locals.user;
     try{
-        const motions = await Motion.find({});
-        const uMotions = await UserMotion.find({user_id:user});
-        console.log(uMotions[0]);
-        console.log(motions[0])
+        const motions = await Motion.find({},"name");
+        const uMotions = await UserMotion.find({user_id:user},"name");
+        
+        
+        const cated = motions.concat(uMotions) // combine results 
+        console.log(cated[cated.length-1]);
+        res.send({motions: cated})
     }
     catch(e)
     {

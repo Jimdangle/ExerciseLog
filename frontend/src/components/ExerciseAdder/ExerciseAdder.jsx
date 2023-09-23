@@ -19,7 +19,7 @@ export default function ExerciseAdder({workout_id, complete}){
 
     async function GetMotions(){
         try{
-            const response = await fetch('http://localhost:3001/motion/ls', {
+            const response = await fetch('http://localhost:3001/motion/lsa', {
                 method: "GET",
                 headers: {
                     'Origin': 'http://127.0.0.1:3000',
@@ -32,7 +32,7 @@ export default function ExerciseAdder({workout_id, complete}){
 
             const bod = await response.json();
             if(response.ok){
-                console.log(bod)
+                console.log(bod.motions)
                 setMotions(bod.motions)
                 setDisplayMotions(bod.motions);
             }
