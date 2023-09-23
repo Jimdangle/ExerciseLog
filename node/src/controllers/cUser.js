@@ -19,15 +19,16 @@ async function GetUser(req,res,next){
 async function GetWorkoutSummary(req,res,next){
     const user = res.locals.user;
     try{
-        const usersWorkouts = await Workout.find({user_id:user}).populate({path:"exercises", populate: {path: "motion sets"}});
+        const usersWorkouts = await Workout.find({user_id:user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         var userSummary = {count:0,motion_count:0,motions:{}}
         usersWorkouts.forEach( (workout) => {
             console.log(workout);
             userSummary.count+=1;
             workout.exercises.forEach( (exercise) => {
                 userSummary.motion_count+=1;
-                if(userSummary.motions[exercise.motion.name]){userSummary.motions[exercise.motion.name]+=1}
-                else{userSummary.motions[exercise.motion.name]=1}
+                var properName = exercise.motion.motion ? exercise.motion.motion.name : exercise.motion.umotion.name
+                if(userSummary.motions[properName]){userSummary.motions[properName]+=1}
+                else{userSummary.motions[properName]=1}
             })
         })
         console.log(userSummary);
