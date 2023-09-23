@@ -80,7 +80,7 @@ async function GetWorkout(req,res,next){
     const {workout_id} = res.locals.bodyData;
     try{
         console.log(res.locals.user);
-        const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion sets"}});
+        const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         console.log(found);
         res.send({workout:found});
     }
@@ -96,7 +96,8 @@ async function GetWorkout(req,res,next){
 async function AddExercise(req,res,next){
     const {workout_id,motion_id} = res.locals.bodyData;
     try{
-        const addedExercise = new Exercise({motion:motion_id});
+        const motion = await Motion.findOne({_id:motion_id})
+        const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
         console.log(newEx);
         try{

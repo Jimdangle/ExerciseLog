@@ -86,6 +86,7 @@ export default function UserInfo(){
             if(response.ok){
                 console.log(response)
                 const bod = await response.json();
+                console.log(bod);
                 const {count, motion_count, motions} = bod.summary;
                 const top5 = findTop5(motions);
                 setUserDisplay({count:count, motion_count:motion_count,motions_top5:top5});

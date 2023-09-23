@@ -1,21 +1,30 @@
 import SetAdder from '../SetAdder/SetAdder';
 import SetItem from './SetItem';
 import { TranslateMuscle } from '../../utils/muscle';
+import {useEffect, useState} from 'react'
 
 export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh}){
+    const [motionData, setMotionData] = useState({});
+    console.log(item)
+    
+    const init = item.motion.motion ? item.motion.motion : item.motion.umotion; // handle differences between user motions and server motions
+    useEffect(()=>{
+        setMotionData(init);
+    },[])
+    console.log(init)
 
     return (
         <div className='w-auto h-auto mx-2 my-2 bg-blue-200 rounded-lg pb-2'>
             
             <div className='flex flex-row'>
                 <button className='w-12 h-12 rounded-full bg-red-200 scale-50 text-3xl' onClick={()=>{RemoveExercise(item._id)}}>-</button> 
-                <p className='justify-center my-3 w-auto h-24 font-semibold'>{item.motion.name}</p>
+                <p className='justify-center my-3 w-auto h-24 font-semibold'>{motionData.name}</p>
                 <div className='ml-auto mr-5'>
-                    <p className='text-lg text-slate-900'>{TranslateMuscle(item.motion.p_group)}</p>
+                    <p className='text-lg text-slate-900'>{TranslateMuscle(motionData.p_group)}</p>
                     <ul>
-                        {item.motion.s_groups.map( (item,index) => {
-                            return (<li key={index*900} className='text-slate-500'>{TranslateMuscle(item)}</li>)
-                        })}
+                        { motionData.s_groups ? motionData.s_groups.map( (items,index) => {
+                            return (<li key={index*900} className='text-slate-500'>{TranslateMuscle(items)}</li>)
+                        }) : <></>}
                     </ul>
                 </div>
             </div>

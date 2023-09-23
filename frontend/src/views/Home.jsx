@@ -4,6 +4,8 @@ import LogPage from "../components/LogPage/LogPage";
 import UserInfo from "../components/UserInfo/UserInfo";
 import { createContext, useState, useEffect } from "react";
 import NavBar from "../components/NavBar/NavBar";
+
+import { recentPage } from "../config/cfUtil";
 //Home Show recent workouts and let user edit items in the list
 // Two Components I think
 // 1) Log List : displays a list of workout logs with edit buttons and delete buttons
@@ -17,8 +19,14 @@ export default function Home({signout}){
         signout();
         
     }
+
+    const savedPage = localStorage.getItem(recentPage) ?  Number(localStorage.getItem(recentPage)) : 0;
+
+    function SaveRecentPage(page){
+        localStorage.setItem(recentPage,String(page))
+    }
     
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(savedPage);
     
     function SetPage(pg){setPage(pg)}
     
@@ -29,6 +37,7 @@ export default function Home({signout}){
     
     function SelectPage(){
         console.log(`Page swapped to ${page}`);
+        SaveRecentPage(page);
         switch(page){
             case 1: 
                 return <LogPage SelectPage={SetPage}></LogPage>
@@ -49,7 +58,7 @@ export default function Home({signout}){
         
     },[page])
     
-    
+   
     return(
         <div className="md:mobile_middle lg:desktop_middle">
         

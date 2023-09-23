@@ -125,8 +125,12 @@ export default function LogPage({item, SelectPage}){
                         <p>No Exercises</p>
                     
                 }
-                <button className='general-button' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add" }</button>
-                {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
+                <div className='grid grid-row-2'>
+                    <button className='general-button justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "-" : "+" }</button>
+                    {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
+                </div>
+                
+                
                 <button className='my-2 mx-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage(0)}}>Return</button>
             </div>
         )

@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../../views/Home";
+import MotionAdder from "./MotionAdder";
 // Create a dropdown list from the motions stored on the db
 
 export default function ExerciseAdder({workout_id, complete}){
@@ -8,6 +9,8 @@ export default function ExerciseAdder({workout_id, complete}){
 
     const [motions, setMotions] = useState([])
     const [displayMotions, setDisplayMotions] = useState([]);
+
+    const [addingNew, setAddingNew] = useState(false);
 
     function searchMotions(search){
         console.log(`Searching: ${search}`)
@@ -19,12 +22,12 @@ export default function ExerciseAdder({workout_id, complete}){
 
     async function GetMotions(){
         try{
-            const response = await fetch('http://localhost:3001/admin/lsM', {
+            const response = await fetch('http://localhost:3001/motion/lsa', {
                 method: "GET",
                 headers: {
                     'Origin': 'http://127.0.0.1:3000',
                     'Content-Type': 'application/json',
-                    
+                    'authorization': token
                 },
                 mode:'cors',
 
@@ -32,7 +35,7 @@ export default function ExerciseAdder({workout_id, complete}){
 
             const bod = await response.json();
             if(response.ok){
-                console.log(bod)
+                console.log(bod.motions)
                 setMotions(bod.motions)
                 setDisplayMotions(bod.motions);
             }
@@ -71,9 +74,12 @@ export default function ExerciseAdder({workout_id, complete}){
 
     return(<>
         <div className="lg:w-96 max-md:w-64 h-32 bg-white rounded-md overflow-scroll">
-            <h1 className="font-semibold">Add a new motion</h1>
+            
+            <h1 className="font-semibold">Select a motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
             <p className="inline text-slate-500">{displayMotions.length}</p>
+            {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
+            <button className="px-4 mx-1 inline general-button bg-green-300 scale-70" onClick={()=>{setAddingNew(true)}}>Add New</button>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{
