@@ -96,7 +96,8 @@ async function GetWorkout(req,res,next){
 async function AddExercise(req,res,next){
     const {workout_id,motion_id} = res.locals.bodyData;
     try{
-        const addedExercise = new Exercise({motion: {motion: motion_id}});
+        const motion = await Motion.findOne({_id:motion_id})
+        const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
         console.log(newEx);
         try{

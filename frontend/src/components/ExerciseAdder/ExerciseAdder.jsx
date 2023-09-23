@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../../views/Home";
+import MotionAdder from "./MotionAdder";
 // Create a dropdown list from the motions stored on the db
 
 export default function ExerciseAdder({workout_id, complete}){
@@ -8,6 +9,8 @@ export default function ExerciseAdder({workout_id, complete}){
 
     const [motions, setMotions] = useState([])
     const [displayMotions, setDisplayMotions] = useState([]);
+
+    const [addingNew, setAddingNew] = useState(false);
 
     function searchMotions(search){
         console.log(`Searching: ${search}`)
@@ -71,10 +74,12 @@ export default function ExerciseAdder({workout_id, complete}){
 
     return(<>
         <div className="lg:w-96 max-md:w-64 h-32 bg-white rounded-md overflow-scroll">
+            
             <h1 className="font-semibold">Select a motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
             <p className="inline text-slate-500">{displayMotions.length}</p>
-            <button className="px-4 mx-1 inline general-button bg-green-300 scale-70">Add New</button>
+            {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
+            <button className="px-4 mx-1 inline general-button bg-green-300 scale-70" onClick={()=>{setAddingNew(true)}}>Add New</button>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{
