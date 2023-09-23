@@ -21,6 +21,25 @@ const MotionSchema = new mongoose.Schema({
     desc: String
 })
 
+// These do not need unique names 
+const UserMotionSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        required: true,
+        unique: false
+    },
+    p_group: {
+        type: Number,
+        required: true
+    },
+    s_groups: [Number],
+    desc: String,
+    user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+
+})
+UserMotionSchema.index({name:1,user_id:1}, {unique: true}); //create a "unique" pairing, so users cant make duplicates of items
+
+
 
 // Represents a singular set of work done
 // Number of repetitions or time held 
@@ -37,9 +56,9 @@ const SetSchema = new mongoose.Schema({
 // Motion refers to the physical movmement undertaken, as well as impacted muscles
 // Sets define the volume achieved on that motion 
 const ExerciseSchema = new mongoose.Schema({
-    motion: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Motion'
+    motion: {  
+        motion: {type: mongoose.Schema.Types.ObjectId, ref: 'Motion' },
+        umotion: {type: mongoose.Schema.Types.ObjectId, ref: 'UserMotion'}
     },
     sets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Set'}]
 
@@ -75,5 +94,6 @@ const Motion = mongoose.model("Motion", MotionSchema);
 const Set = mongoose.model("Set", SetSchema);
 const Exercise = mongoose.model("Exercise", ExerciseSchema);
 const Workout = mongoose.model("Workout", WorkoutSchema);
+const UserMotion = mongoose.model("UserMotion", UserMotionSchema);
 
-module.exports = {Workout: Workout, Motion: Motion, Exercise:Exercise, Set: Set}
+module.exports = {Workout: Workout, Motion: Motion, Exercise:Exercise, Set: Set, UserMotion: UserMotion}

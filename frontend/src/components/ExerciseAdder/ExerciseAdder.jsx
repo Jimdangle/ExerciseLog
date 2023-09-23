@@ -19,12 +19,12 @@ export default function ExerciseAdder({workout_id, complete}){
 
     async function GetMotions(){
         try{
-            const response = await fetch('http://localhost:3001/admin/lsM', {
+            const response = await fetch('http://localhost:3001/motion/ls', {
                 method: "GET",
                 headers: {
                     'Origin': 'http://127.0.0.1:3000',
                     'Content-Type': 'application/json',
-                    
+                    'authorization': token
                 },
                 mode:'cors',
 
