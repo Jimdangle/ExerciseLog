@@ -42,6 +42,9 @@ export default function SetAdder({exercise_id, refresh}){
             <div></div>
             <input className="mr-10 my-2" type="number" value={weight} placeholder="additional weight" min={0} onChange={(v)=>{setWeight(v.target.value)}}></input>
             <div></div>
-            <button className='inline general-button scale-50 col-span-2 col-start-2' onClick={()=>{AddSet()}}>+</button>
+            
+            <button className='w-12 col-start-3  h-12 rounded-full bg-green-200 scale-50 text-3xl' onClick={()=>{AddSet()}}>+</button>
+            
+            
     </>)
 }
