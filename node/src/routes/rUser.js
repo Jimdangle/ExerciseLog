@@ -10,8 +10,9 @@ const UserRouter = express.Router(); // create our router object
 
 const REQUIRED_KEYS = {
     "/info" : true,
-    "summary": true,
-    "changename": ["username"]
+    "/summary": true,
+    "/changename": ["username"],
+    "/csum": ["range"]
 }
 
 
@@ -30,6 +31,7 @@ UserRouter.use('', (req, res, next) => {
 
 UserRouter.get('/info', UserController.GetUser);
 UserRouter.get('/summary', UserController.GetWorkoutSummary);
+UserRouter.post('/csum', UserController.GetComplexSummary);
 
 UserRouter.post('/changename', UserController.ChangeUsername);
 

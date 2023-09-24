@@ -8,6 +8,7 @@ const {Workout, Exercise, Motion, Set} = require('../models/mWorkout'); // worko
 const Config = require('../config/cfLogin');
 
 const sutil = require('../util/sutil.js');
+const { GetDate } = require('../util/dateutil');
 
 /**
  * Create a new workout attached to a authenticated users token
@@ -15,11 +16,15 @@ const sutil = require('../util/sutil.js');
 async function CreateWorkout(req, res, next) {
     var user = res.locals.user;
     //const userfromDB = await User.findOne({username:}); // search for our user
-    const {name} = res.locals.bodyData;
+    const {name,backdate} = res.locals.bodyData;
+    const oldDate = backdate ? GetDate(backdate) : false;
     try {
         var newWorkout = new Workout({user_id: user});
         if(name){
             newWorkout.name = name;
+        }
+        if(backdate){
+            newWorkout.createdAt = oldDate;
         }
         const added = await newWorkout.save(); 
         console.log(added);

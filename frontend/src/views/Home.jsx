@@ -36,7 +36,7 @@ export default function Home({signout}){
     
     
     function SelectPage(){
-        console.log(`Page swapped to ${page}`);
+        
         SaveRecentPage(page);
         switch(page){
             case 1: 
@@ -53,7 +53,7 @@ export default function Home({signout}){
     
     
     useEffect(()=>{
-        console.log(`useEffect in home.jsx ${page}`);
+        
         SelectPage()
         
     },[page])
