@@ -49,21 +49,22 @@ async function GetWorkoutSummary(req,res,next){
 //          total_volume: number
 //          heaviest weight: {motion_name:string, weight:number} name and weight of heaviest lift
 //          highest_reps:  {motion_name:string, reps:number} name and number of reps of most repped lift
-//          motions_count: {motion1:number,motion2:number, etc...} dictionary with a count of all motions
-//          muscle_group_volume: [number,] array with counts corresponding to volume in a muscle group
+//          motion_data: {motion1:number,motion2:number, etc...} dictionary with a count of all motions
 async function GetComplexSummary(req,res,next){
     const {range} = res.locals.bodyData; //date range 0:week, 1:month, 2:4-months, 3:year, 4:all time
+    
     const user = res.locals.user;
 
     var stats = {total_workouts:0,total_exercises:0,total_volume:0,heaviest_weight:{name:"",weight:0},highest_reps:{name:"",reps:0},motion_data:{},muscle_group_volume:[]}
     const compareDate = GetDate(range); // Date to compare against 
     try{
         //Find all meeting date range and populate
-        const workouts = await Workout.find({user_id:user, updatedAt: {$gte: compareDate}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
+        const workouts = await Workout.find({user_id:user, createdAt: {$gte: compareDate}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         //deep accumulation lmao basically,  sum the volume in each exercise, over all exercises, over all workouts
         const total_volume = workouts.reduce( (accum, workout) => {return (workout.exercises) ? (accum + workout.exercises.reduce( (accum2,ex) => {return accum2+ ExerciseVolume(ex)},0 )) : 0},0);
         const total_exercises = workouts.reduce( (a,w) => { return (w.exercises? a + w.exercises.length : 0)},0); // sum number of exercises over all workouts
 
+        console.log(`SUMMARY FOR RANGE:\n\tRange: ${range}\n\t Date:${compareDate.toString()}\n\tresults : ${workouts.length}\n`);
         
         var found_motions = {} // A dictionary of all the motions a user has done, as well as the max
         workouts.forEach( (workout) => { // loop over all the workouts 

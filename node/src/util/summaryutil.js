@@ -6,7 +6,7 @@ function ExerciseVolume(exercise){
     var vol = exercise.sets.reduce( (total,set)=> { 
         var weight = set.added_weight >0 ? set.added_weight : 1 // account for non weighted exercise
         return total + (set.rep_or_time* weight)},0);
-    console.log(`Calculated Volume: ${vol}`)
+    //console.log(`Calculated Volume: ${vol}`)
     return vol;
 }
 
