@@ -119,6 +119,7 @@ export default function LogPage({item, SelectPage}){
                     
                     logData.exercises ? 
                         logData.exercises.map((item, index) =>{
+                            console.log(item)
                             return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={GetWorkoutInfo}></ExerciseItem>
                         })
                         :

@@ -6,13 +6,13 @@ const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
 const cors = require("cors");
 require('dotenv').config();
-
+const bcrypt = require('bcrypt');
 
 //Create an app
 const app = express();
 
 const Login = require('./src/routes/rLogin').LoginRouter; // Login Routing
-const Workout = require('./src/routes/rWorkout').WorkoutRouter; 
+const WorkoutR = require('./src/routes/rWorkout').WorkoutRouter; 
 const Admin = require('./src/routes/rAdmin').AdminRouter;
 const User = require('./src/routes/rUser').UserRouter;
 const MotionR = require('./src/routes/rMotion').MotionRouter;
@@ -20,8 +20,8 @@ const MotionR = require('./src/routes/rMotion').MotionRouter;
 const corsOpts = require('./src/config/cfCors').corsOpts;
 const dutil = require('./src/util/dutil');
 
-const {Motion} = require('./src/models/mWorkout');
-
+const {Motion,UserMotion,Workout,Exercise,Set} = require('./src/models/mWorkout');
+const mUser = require('./src/models/mUsers');
 app.use(cors(corsOpts));
 
 // First Entry Point
@@ -34,7 +34,7 @@ app.use('/', (req,res,next) => {
 
 //Router Mounting
 app.use('/login/', Login);
-app.use('/workout/', Workout);
+app.use('/workout/', WorkoutR);
 app.use('/admin/', Admin);
 app.use('/user/', User);
 app.use('/motion/', MotionR);
@@ -51,16 +51,24 @@ app.listen(PORT);
 console.log(`Running on port ${PORT}`);
 load_mongo();
 
+const reset_db=true;
+
 async function load_mongo(){
     try {
         await mongoose.connect(process.env.MONGO_URL); //initialize databse here
         console.log("Connected to Mongodb");
 
         try{
-            const count = await Motion.estimatedDocumentCount()
-            if(count < 144){
+            //make true to reset db. will need to if you have data before this update
+            if(true){
                 try{
+                    await mUser.deleteMany({});
+                    await Exercise.deleteMany({});
+                    await Workout.deleteMany({})
                     await Motion.deleteMany({});
+                    await UserMotionMotion.deleteMany({});
+                   
+
                 }
                 catch(e){
                     console.error(e.message);
@@ -68,8 +76,12 @@ async function load_mongo(){
                 console.log("adding in motions");
                 try{
                     const input = await dutil.GetMotionArray();
-                    console.log(`Length of input : ${input.length}`);
                     Motion.create(input)
+                    const adminpass = await bcrypt.hash("a", 10)
+                    
+                    const admin = new mUser({email:"admin@a",password:adminpass});
+                    const t = await admin.save();
+                    console.log(t);
                 }
                 catch(e){console.log(e.message)}
             }
