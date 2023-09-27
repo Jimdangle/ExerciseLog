@@ -20,12 +20,8 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                 <button className='w-12 h-12 rounded-full bg-red-200 scale-50 text-3xl' onClick={()=>{RemoveExercise(item._id)}}>-</button> 
                 <p className='justify-center my-3 w-auto h-24 font-semibold'>{motionData.name}</p>
                 <div className='ml-auto mr-5'>
-                    <p className='text-lg text-slate-900'>{TranslateMuscle(motionData.p_group)}</p>
-                    <ul>
-                        { motionData.s_groups ? motionData.s_groups.map( (items,index) => {
-                            return (<li key={index*900} className='text-slate-500'>{TranslateMuscle(items)}</li>)
-                        }) : <></>}
-                    </ul>
+                    <p className='text-lg text-slate-900'>{motionData.muscles}</p>
+                    <p className='text-lg'>{motionData.type}</p>
                 </div>
             </div>
            

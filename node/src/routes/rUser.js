@@ -12,7 +12,8 @@ const REQUIRED_KEYS = {
     "/info" : true,
     "/summary": true,
     "/changename": ["username"],
-    "/csum": ["range"]
+    "/csum": ["range"],
+    "/wsum": ["start", "end"]
 }
 
 
@@ -32,6 +33,7 @@ UserRouter.use('', (req, res, next) => {
 UserRouter.get('/info', UserController.GetUser);
 UserRouter.get('/summary', UserController.GetWorkoutSummary);
 UserRouter.post('/csum', UserController.GetComplexSummary);
+UserRouter.post('/wsum', UserController.GetWholeSummary)
 
 UserRouter.post('/changename', UserController.ChangeUsername);
 

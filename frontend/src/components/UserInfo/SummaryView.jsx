@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { TokenContext } from "../../views/Home"
 
-export default function SummaryView({stats}){
+export default function SummaryView(){
     //useEffect( ()=>{console.log(stats)})
-    
+    const stats = null
     return(stats ? <div className="flex flex-col">
         <p>Total Workouts - {stats.total_workouts}</p>
         <p>Total Exercises - {stats.total_exercises}</p>

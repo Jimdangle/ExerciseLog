@@ -16,9 +16,25 @@ const MotionSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    p_group: Number,
-    s_groups: [Number],
-    desc: String
+    type: {
+        type:Number,
+        min:0,
+        max:2
+    },
+    muscles: {
+        type: [Number],
+        validate: [
+            function(v){
+                const sum = v.reduce((total,item)=>{
+                    console.log(`\titem:${item} : t:${typeof item}`)
+                    return total+item},0)
+
+                var t = Math.round(sum*10)/10;
+                console.log(`total: ${t}`);
+                return (v.length===7 & 1 === t)
+            },"Sum of muscle impact not equal to 1"
+        ]
+    }
 })
 
 // These do not need unique names 
@@ -28,11 +44,25 @@ const UserMotionSchema = new mongoose.Schema({
         required: true,
         unique: false
     },
-    p_group: {
-        type: Number,
-        required: true
+    type: {
+        type:Number,
+        min:0,
+        max:2
     },
-    s_groups: [Number],
+    muscles: {
+        type: [Number],
+        validate: [
+            function(v){
+                const sum = v.reduce((total,item)=>{
+                    console.log(`\titem:${item} : t:${typeof item}`)
+                    return total+item},0)
+
+                var t = Math.round(sum*10)/10;
+                console.log(`total: ${t}`);
+                return (v.length===7 & 1 === t)
+            },"Sum of muscle impact not equal to 1"
+        ]
+    },
     desc: String,
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 

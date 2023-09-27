@@ -16,9 +16,10 @@ async function GetMotionArray(){
 
         //console.log(motionsRaw)
         const motionsMapped = motionsRaw.map((item)=>{
-            const splitMotion = item.split(",");
-            console.log(splitMotion[0])
-            return {name:splitMotion[0], p_group: Number(splitMotion[1]), s_groups:[Number(splitMotion[2])], desc:splitMotion[3]}
+            const splitMotion = item.split(":");
+            console.log(splitMotion[2])
+            var muscle_map = splitMotion[2].split(",").map((item)=>{return Number(item)})
+            return {name:splitMotion[0], type: Number(splitMotion[1]), muscles:muscle_map, desc:splitMotion[3]}
         })
         
 
