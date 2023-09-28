@@ -2,6 +2,7 @@ import { TokenContext } from "../../views/Home"
 
 import { useContext, useEffect, useState } from "react"
 import SummaryView from "./SummaryView";
+import SummarySettings from "./SummarySettings";
 export default function UserInfo(){
     const token = useContext(TokenContext);
     const [userInfo, setUserInfo] = useState({email:"",username:""}) // user information 
@@ -112,24 +113,7 @@ export default function UserInfo(){
                 <input className="mx-6 bg-blue-200" type="text" placeholder={userInfo.username} onFocus={(ev)=>{ev.target.value=""}} onBlur={(ev)=>{SetUsername(ev.target.value)}}></input>
             </div>
             
-            <p>{userDisplay.count} - {userDisplay.motion_count}</p>
-            <p>Top 3 Workouts</p>
-            <ul>
-                {userDisplay.motions_top5.map( (item,index) => {
-                    return <li className={"font-semibold text-slate-"+String((700-100*index))} key={index}>{index+1}: {item}</li>
-                })}
-            </ul>
-            <div className="mt-6 flex flex-row justify-text-startjustify-items-end">
-                <p>Start</p>
-                <input type="date" className="ml-2" onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
-                <p>End</p>
-                <input type="date" className="mr-2" onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
-                <button onClick={GetWholeSummary}>Click</button>
-            </div>
-            <div className="flex flex-row">
-                <p>{new Date(startDate).toString()}</p>
-                <p>{new Date(endDate).toString()}</p>
-            </div>
+            <SummarySettings GetWholeSummary={GetWholeSummary}></SummarySettings>
             
             <SummaryView ></SummaryView>
             

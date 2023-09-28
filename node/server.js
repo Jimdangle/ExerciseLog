@@ -60,7 +60,7 @@ async function load_mongo(){
 
         try{
             //make true to reset db. will need to if you have data before this update
-            if(true){
+            if(false){
                 try{
                     await mUser.deleteMany({});
                     await Exercise.deleteMany({});
