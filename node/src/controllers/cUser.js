@@ -116,7 +116,7 @@ async function GetWholeSummary(req,res,next){
     
     const endDate = end !=0 ? new Date(end) : Date.now();
     //Our final result object
-    var summaryData = {total_workouts:0,total_exercises:0,exercise_totals:[0,0,0],muscles:[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],exercise_summary:{}}
+    var summaryData = {total_workouts:0,total_exercises:0,total_sets:0,exercise_totals:[0,0,0],muscles:[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]],exercise_summary:{}}
     try{
         const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: endDate}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(endDate).toString()}: found ${workouts.length} workouts`)
@@ -160,8 +160,9 @@ function GetExerciseSummary(exercise, summaryData){
     summaryData.muscles[motion.type] = summaryData.muscles[motion.type].map( (item,index) => {return item+impact[index]}) // add in our impact
     summaryData.exercise_totals[motion.type] += sum; // add our total 
     //For storing values as we average and access later
-    var value = {min:1000000,max:0,avg:0}
-    var weight = {min:100000,max:0,avg:0}
+    const minValue = 1000000;
+    var value = {min:minValue,max:0,avg:0}
+    var weight = {min:minValue,max:0,avg:0}
 
     //get min max and average
     exercise.sets.forEach( (set) => {
@@ -174,11 +175,14 @@ function GetExerciseSummary(exercise, summaryData){
         weight.avg += set.added_weight
     });
 
+    value.min = value.min!== minValue ? value.min : 0;
+    weight.min = weight.min!== minValue ? weight.min : 0;
+
     //calculate average on this exercise
     value.avg = value.avg / (exercise.sets.length > 0? exercise.sets.length : 1);
     weight.avg = weight.avg / (exercise.sets.length > 0? exercise.sets.length : 1);
     const m = exercise.sets.length;
-
+    summaryData.total_sets+=m;
     
 
     if(summaryData.exercise_summary[motion.name]){

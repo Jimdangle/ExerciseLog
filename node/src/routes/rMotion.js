@@ -16,7 +16,7 @@ const REQUIRED_KEYS = {
     "/ls" : true,
     "/lsm": true,
     "/lsa": true,
-    "/add": ["name", "pg", "sg", "desc"],
+    "/add": ["name", "muscles", "type"],
     "/rem": ["umotion"]
 }
 
