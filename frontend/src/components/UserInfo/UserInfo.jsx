@@ -6,14 +6,10 @@ import SummarySettings from "./SummarySettings";
 export default function UserInfo(){
     const token = useContext(TokenContext);
     const [userInfo, setUserInfo] = useState({email:"",username:""}) // user information 
-    const [userDisplay, setUserDisplay] = useState({count:0,motion_count:0,motions_top5:[]}) // what and how to display info
-    
+    const [summary,setSummary] = useState({});
     
 
-    const [startDate,setStartDate] = useState(0)
-    const [endDate,setEndDate] = useState(0)
-
-    const rangeTranslate = ["1 Week", "1 Month", "4 Months", "1 Year", "All Time"]
+    
 
     useEffect(()=>{
         GetUserInfo();
@@ -79,29 +75,6 @@ export default function UserInfo(){
         }
     }
 
-    async function GetWholeSummary(){
-        try{
-            const response = await fetch('http://localhost:3001/user/wsum',{
-                method:"POST",
-                headers: {
-                    'Origin': 'http://127.0.0.1:3000',
-                    'Content-Type': 'application/json',
-                    'authorization': token,
-                    'Accept': '*/*'
-                },
-                mode:'cors',
-                body: JSON.stringify({start:startDate,end:endDate})
-            })
-
-            if(response.ok){
-                const bod = await response.json();
-                console.log(bod);
-            }
-        }
-        catch(e){
-            console.log(e);
-        }
-    }
 
     
     
@@ -113,9 +86,9 @@ export default function UserInfo(){
                 <input className="mx-6 bg-blue-200" type="text" placeholder={userInfo.username} onFocus={(ev)=>{ev.target.value=""}} onBlur={(ev)=>{SetUsername(ev.target.value)}}></input>
             </div>
             
-            <SummarySettings GetWholeSummary={GetWholeSummary}></SummarySettings>
+            <SummarySettings update={setSummary}></SummarySettings>
             
-            <SummaryView ></SummaryView>
+            <SummaryView Summary={summary}></SummaryView>
             
             
         </div>)
