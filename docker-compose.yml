@@ -12,6 +12,7 @@ services:
         condition: service_started
     volumes:
       - ./node/src:/server/src/src
+      - ./node/server.js:/server/src/server.js
   db-mongo: #MongoDB Service
     image: mongo:4.0-xenial
     ports:

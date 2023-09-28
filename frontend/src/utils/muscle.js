@@ -1,4 +1,4 @@
-const muscles = ["Chest", "Back",  "Hamstrings","Quads",  "Biceps", "Triceps","Shoulders"]
+export const muscles = ["Chest", "Back",  "Hamstrings", "Quads",  "Biceps", "Triceps","Shoulders"]
 const types = ["Lift", "Cardio", "Hold"]
 /**
  * 

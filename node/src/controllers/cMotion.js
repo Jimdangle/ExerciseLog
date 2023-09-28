@@ -42,14 +42,16 @@ async function ListAllMotions(req,res,next){
 
  // Add a user defined motion to the UserMotion Collection
 async function AddUserMotion(req, res, next){
-    const {name, pg, sg, desc} = req.body;
+    const {name, type, muscles, desc} = req.body;
+    const description = desc ? desc : "" // just incase we dont get one
     const user = res.locals.user;
+    console.log(muscles);
     try{
         //Check to see if name exists in our db
         var inDb = await Motion.findOne({name:name});
         console.log(inDb);
         if(!inDb){ // 
-            var motion = new UserMotion({name:name,p_group:pg,s_groups:sg,desc:desc,user_id:user});
+            var motion = new UserMotion({name:name,type:type, muscles:muscles,desc:description,user_id:user});
             await motion.save();
 
             res.send({created:true});
