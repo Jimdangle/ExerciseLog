@@ -14,7 +14,7 @@ export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
     useEffect(()=>{loadMostRecent()}, []);
-
+    
     async function GetWorkoutInfo(){
         try{
             const response = await fetch('http://localhost:3001/workout/get',{
@@ -127,7 +127,7 @@ export default function LogPage({item, SelectPage}){
                     
                 }
                 <div className='grid grid-row-2'>
-                    <button className='general-button justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "-" : "+" }</button>
+                    <button className='m-2 rounded-md p-2 bg-green-400 focus:scale-90 duration-75 text-white font-semibold justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
                     {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
                 </div>
                 

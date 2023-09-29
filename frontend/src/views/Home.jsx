@@ -13,7 +13,7 @@ import { recentPage } from "../config/cfUtil";
 
 export const TokenContext = createContext(null);
 
-export default function Home({signout}){
+export default function Home({signout,test}){
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
         signout();
@@ -61,7 +61,7 @@ export default function Home({signout}){
    
     return(
         <div className="md:mobile_middle lg:desktop_middle">
-        
+        <h2>{test}</h2>
         <NavBar SetPage={SetPage} logout={logout}></NavBar>
         
         <TokenContext.Provider value={token}>

@@ -14,7 +14,7 @@ export default function SetItem({set, RemoveSet, number, exercise_id}){
             <div className="">
                 {set.added_weight}
             </div>
-            <button className='justify-end w-12 h-12 rounded-full bg-red-200 scale-50 text-3xl' onClick={()=>{RemoveSet(exercise_id,set._id) }}>-</button>
+            <button className='justify-end w-8 h-8 rounded-full text-lg hover:text-red-400 font-bold text-center' onClick={()=>{RemoveSet(exercise_id,set._id) }}>-</button>
         </>
                 
       

@@ -23,8 +23,8 @@ export default function SetAdder({exercise_id, refresh}){
             if(response.ok){
                 const bod = await response.json();
                 console.log(bod);
-                setReps(1);
-                setWeight(0);
+                //setReps(1); Resetting the rep and weight is a preference idk which way i like more 
+                //setWeight(0);
                 refresh()
             }
         }
@@ -34,16 +34,10 @@ export default function SetAdder({exercise_id, refresh}){
     }
 
     return(<>
-            <p className="">Reps</p>
-            <div></div>
-            <input className="mr-10 my-2" type="number" value={reps} placeholder="reps or time" min={1} onChange={(v)=>{setReps(v.target.value)}}></input>
-            <div></div>
-            <p>Weight</p>
-            <div></div>
-            <input className="mr-10 my-2" type="number" value={weight} placeholder="additional weight" min={0} onChange={(v)=>{setWeight(v.target.value)}}></input>
-            <div></div>
-            
-            <button className='w-12 col-start-3  h-12 rounded-full bg-green-200 scale-50 text-3xl' onClick={()=>{AddSet()}}>+</button>
+            <p className="text-slate-400">New Set</p>
+            <input className="text-center w-12 my-2" type="number" value={reps} placeholder="reps or time" min={1} onChange={(v)=>{setReps(v.target.value)}}></input>
+            <input className="w-12 my-2" type="number" value={weight} placeholder="additional weight" min={0} onChange={(v)=>{setWeight(v.target.value)}}></input>
+            <button className='w-8 h-8 rounded-full text-center hover:text-green-400 text-lg font-bold' onClick={()=>{AddSet()}}>+</button>
             
             
     </>)
