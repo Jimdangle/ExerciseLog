@@ -71,7 +71,7 @@ export default function Login({signin}){
                         <input name="pass" onChange={handleChange} required type="password" placeholder="Password" className="focus:form-active-input form-nonactive-input form-gen-input duration-150"></input>
                         <br></br>
                         <br></br>
-                        <button disabled={state["email"] && state["email"].indexOf("@") != -1 && state["pass"] ? false : true} className='button button_e_green disabled:button_d duration-150' onClick={handleLogin}>Login</button>
+                        <button disabled={state["email"] && state["email"].indexOf("@") != -1 && state["pass"] ? false : true} className='button button-e-green disabled:button-d duration-150' onClick={handleLogin}>Login</button>
                         <p className='pt-2 font-semibold text-red-400'>{errMessage}</p>
                     </div>
                 </div>

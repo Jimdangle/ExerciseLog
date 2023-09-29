@@ -136,7 +136,7 @@ export default function LogList({SelectPage}){
     return(
         <div className="w-auto justify-center">
             <div className='flex flex-col justify-center'>
-                <button className='button button_e_green' onClick={AddWorkout}>Start New</button>
+                <button className='button button-e-green' onClick={AddWorkout}>Start New</button>
                 <input type="text" placeholder='Name(optional)' value={newWorkoutName } className='mx-6 h-8 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
             </div>
             
@@ -161,7 +161,7 @@ export default function LogList({SelectPage}){
                                 <p>Edited:{item.updatedAt}</p>
                             </div>
                             <div className='flex justify-center'>
-                                <button className='button button_e_red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>
+                                <button className='button button-e-red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>
                             </div>
                             
                         </div>

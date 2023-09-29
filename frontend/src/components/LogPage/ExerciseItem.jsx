@@ -22,24 +22,23 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
 
 
     return (
-        // Main container blue background card for exercise
-        <div className='w-auto h-auto m-2 bg-blue-200 rounded-lg pb-2'>
+        // Main container card for exercise
+        <div className='my-3 border-b-2 border-b-green-400'>
             
             {/** Main info about the exercise, name, type, and the muscles it impacts */}
             <div className='flex flex-row'>
-                <p className='justify-center m-3 w-auto h-24 text-xl font-semibold'>{motionData.name}<span className='px-2 text-slate-600'>({TranslateType(motionData.type)})</span></p>
-                <div className='ml-auto mr-5'>
-                    <p className='text-lg text-slate-900'>{motionData.muscles? SortedMuscleIndex(motionData.muscles).map((item,index)=>{return <span key={index} className='text-sm mr-1'>{ motionData.muscles[item]>=0.1 ? TranslateMuscle(item)+"," : <></>}</span>}) : <></>}</p>
-                    
+                <p className='justify-center m-3 w-auto h-24 text-xl font-semibold text-white'>{motionData.name}<span className='px-2 text-slate-200'>({TranslateType(motionData.type)})</span></p>
+                <div className='ml-auto mr-5 mt-3'>
+                    <p className='text-lg text-white'>{motionData.muscles? SortedMuscleIndex(motionData.muscles).map((item,index)=>{return <span key={index} className={'text-sm ml-2'}>{ motionData.muscles[item]>=0.2 ? TranslateMuscle(item) : <></>}</span>}) : <></>}</p>
                 </div>
             </div>
            
            {/**Container for the sets, and set adder component */}
-            <div className='h-auto w-auto -mt-12 bg-slate-100 mx-2 rounded-md shadow-sm'>
-                <div className='grid grid-cols-4 place-items-center'>
-                    <div className='text-sm font-semibold text-slate-600'>Set #</div> 
-                    <div className='text-sm font-semibold text-slate-600'>{motionData.type==0 ? "Reps" : "Time(s)"}</div>
-                    <div className='text-sm font-semibold text-slate-600'>Weight(lbs)</div>
+            <div className='h-auto w-auto -mt-12 bg-slate-600 mx-2 rounded-md shadow-sm'>
+                <div className='grid grid-cols-4 place-items-center text-green-400'>
+                    <div className='text-sm font-semibold text-white'>Set #</div> 
+                    <div className='text-sm font-semibold text-white'>{motionData.type==0 ? "Reps" : "Time(s)"}</div>
+                    <div className='text-sm font-semibold text-white'>Weight(lbs)</div>
                     <div></div>       
                 
                     {
@@ -55,7 +54,10 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                     <SetAdder exercise_id={item._id} refresh={refresh}></SetAdder>
                 </div>
             </div>
-            <button className='rounded-md h-10 m-2 p-2 bg-red-400 focus:scale-90 duration-75 hover:bg-red-200 text-white' onClick={()=>{RemoveExercise(item._id)}}>Remove</button>
+            <div className='flex justify-center mt-2'>
+             <button className='rounded-md h-10 m-2 p-2 bg-red-400 focus:scale-90 duration-75 hover:bg-red-200 text-white' onClick={()=>{RemoveExercise(item._id)}}>Remove</button>
+            </div>
+            
         </div>
         )
     

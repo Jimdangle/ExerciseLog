@@ -77,7 +77,7 @@ export default function Signup({onClick}){
                     <p className='text-red-500 pt-2'>{state["pass"]!=state["cpass"] ? "Please ensure passwords match" : ""}</p>
                     <br></br>
                     <br></br>
-                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='button button_e_green disabled:button_d duration-150' onClick={handleSignup}>Signup</button>
+                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='button button-e-green disabled:button-d duration-150' onClick={handleSignup}>Signup</button>
                     <p className='pt-2 font-semibold text-red-400'>{errMessage}</p>
                 </div>
             </div>

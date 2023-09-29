@@ -18,7 +18,7 @@ export default function LoginSignup({signin}) {
     <>
       {isUser ? <Login signin={signin}></Login> : <Signup onClick={toggleUser}></Signup>}
       <div className='flex justify-center'>
-        <button disabled={false} onClick={()=>{toggleUser()}} className=' button button_e_green'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
+        <button disabled={false} onClick={()=>{toggleUser()}} className=' button button-e-green'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
       </div>
      
     </>
