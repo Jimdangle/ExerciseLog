@@ -154,9 +154,9 @@ export default function LogList({SelectPage}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <div key={index} className="my-6 py-3 px-2 w-full h-auto rounded-md shadow-md bg-blue-200">
+                        <div key={index} className="workout-log">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="font-bold text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name) : item.name)}</h1>
+                                <h1 className="font-bold text-green-400 text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
                                 <p>Created:{item.createdAt}</p>
                                 <p>Edited:{item.updatedAt}</p>
                             </div>
