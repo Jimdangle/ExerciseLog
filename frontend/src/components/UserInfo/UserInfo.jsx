@@ -1,15 +1,25 @@
 import { TokenContext } from "../../views/Home"
-
+import { recentSummary } from "../../config/cfUtil";
 import { useContext, useEffect, useState } from "react"
 import SummaryView from "./SummaryView";
 import SummarySettings from "./SummarySettings";
 export default function UserInfo(){
     const token = useContext(TokenContext);
     const [userInfo, setUserInfo] = useState({email:"",username:""}) // user information 
-    const [summary,setSummary] = useState({});
-    
 
     
+    const savedSummary = localStorage.getItem(recentSummary) ? localStorage.getItem(recentSummary) : {}
+
+    const [summary,setSummary] = useState(JSON.parse(savedSummary));
+    
+
+    function SaveSummary(in_summary){
+        const string = JSON.stringify(in_summary);
+        console.log(in_summary);
+        console.log(string)
+        localStorage.setItem(recentSummary,string)
+        setSummary(in_summary);
+    }
 
     useEffect(()=>{
         GetUserInfo();
@@ -80,13 +90,14 @@ export default function UserInfo(){
     
 
     return(
-        <div className="bg-blue-200 rounded-sm mx-8 my-24 px-6 flex flex-col  w-auto ">
-            <div className="flex flex-row">
-                <p>{userInfo.email}</p>
-                <input className="mx-6 bg-blue-200" type="text" placeholder={userInfo.username} onFocus={(ev)=>{ev.target.value=""}} onBlur={(ev)=>{SetUsername(ev.target.value)}}></input>
+        <div className="rounded-sm mx-8 text-white my-24 px-6 flex flex-col w-auto ">
+            <div className="flex flex-row text-center">
+                <h1 className="font-semibold text-xl">Summary for<span className="info-green">{userInfo.email} - {userInfo.username}</span></h1>
+                
+
             </div>
             
-            <SummarySettings update={setSummary}></SummarySettings>
+            <SummarySettings update={SaveSummary}></SummarySettings>
             
             <SummaryView Summary={summary}></SummaryView>
             

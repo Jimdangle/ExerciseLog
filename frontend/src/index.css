@@ -37,7 +37,7 @@
 
     /*Containers*/
     .login-center-card{
-        @apply text-center mx-12  bg-slate-600 rounded-b-lg rounded-t-md shadow-lg;
+        @apply w-auto h-auto text-center mx-12 bg-slate-600 rounded-b-lg rounded-t-md shadow-lg;
     }
 
     .workout-log{

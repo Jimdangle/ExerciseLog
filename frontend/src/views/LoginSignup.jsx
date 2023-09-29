@@ -15,13 +15,17 @@ export default function LoginSignup({signin}) {
 
   return (
     
-    <>
+    <div>
+      {/**spacer */}
+      <div className='h-124'><p className='text-slate-800'>t</p></div>
       {isUser ? <Login signin={signin}></Login> : <Signup onClick={toggleUser}></Signup>}
+      
       <div className='flex justify-center'>
         <button disabled={false} onClick={()=>{toggleUser()}} className=' button button-e-green'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
       </div>
-     
-    </>
+      {/**Literal filler, large height, large vertical margin, invisible text */}
+      <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+    </div>
     
   )
 }
