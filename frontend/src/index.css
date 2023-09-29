@@ -8,17 +8,26 @@
         @apply text-3xl font-bold text-white underline pt-5
     }
 
+    .nav-item {
+        @apply inline px-5 text-white scale-100
+    }
+    .nav-a-item {
+        @apply inline px-5 text-green-400 scale-110
+    }
+
     .info-green{
-        @apply m-3 font-semibold text-green-400
+        @apply m-3 font-semibold  text-green-400
     }
 
     .form-nonactive-input{
-        @apply w-auto text-center scale-100 bg-slate-100;
+        @apply w-auto text-center scale-100 bg-slate-100
     }
 
     .form-active-input{
         @apply w-auto text-left scale-125 bg-white
     }
+
+    
 
     .form-gen-input{
         @apply px-6 py-1;
@@ -27,14 +36,19 @@
     .login-center-card{
         @apply text-center mx-12  bg-slate-600 rounded-b-lg rounded-t-md shadow-lg;
     }
-
+ 
     .button{
-        @apply mx-2 my-2 h-10 w-auto px-3 rounded-md font-semibold
+        @apply mx-2 my-2 h-10 w-auto px-3 font-mono rounded-md font-semibold
     }
 
     .button_e_green{
         @apply bg-green-400 text-white scale-100
     }
+
+    .button_e_red{
+        @apply bg-red-400 text-white scale-100
+    }
+
 
     .button_d{
         @apply bg-slate-300 bg-opacity-75 hover:ring-4 hover:ring-red-600 scale-90

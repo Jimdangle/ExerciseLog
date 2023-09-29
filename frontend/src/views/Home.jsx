@@ -61,8 +61,7 @@ export default function Home({signout,test}){
    
     return(
         <>
-        <h2>{test}</h2>
-        <NavBar SetPage={SetPage} logout={logout}></NavBar>
+        <NavBar SetPage={SetPage} logout={logout} active={savedPage}></NavBar>
         
         <TokenContext.Provider value={token}>
             {SelectPage()}

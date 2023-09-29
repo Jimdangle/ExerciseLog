@@ -20,7 +20,7 @@ function App() {
   
   return (
     
-    <div className="bg-slate-800 h-full w-full">
+    <div className="bg-slate-800 h-full w-full font-mono">
       
       {localStorage.getItem(lsPrefix+"actk") ? <Home signout={toggleSignedIn}></Home> : <LoginSignup signin={toggleSignedIn}></LoginSignup>}
       
