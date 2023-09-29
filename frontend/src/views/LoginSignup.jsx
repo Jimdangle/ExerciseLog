@@ -15,12 +15,13 @@ export default function LoginSignup({signin}) {
 
   return (
     
-    <div className="md:mobile_middle lg:desktop_middle">
-      <p>{localStorage.getItem(lsPrefix+"actk") ?  "Logged in!" : "Not Logged in"}</p>
-       
+    <>
       {isUser ? <Login signin={signin}></Login> : <Signup onClick={toggleUser}></Signup>}
-      <button disabled={false} onClick={()=>{toggleUser()}} className='justify-center my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
-    </div>
+      <div className='flex justify-center'>
+        <button disabled={false} onClick={()=>{toggleUser()}} className=' button button_e_green'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
+      </div>
+     
+    </>
     
   )
 }

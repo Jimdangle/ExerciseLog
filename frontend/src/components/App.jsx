@@ -20,10 +20,10 @@ function App() {
   
   return (
     
-    <div className="grid md:mobile_grid lg:desktop_grid">
-      <div className="max-md:col-span-1 lg:col-span-1"></div>
+    <div className="bg-slate-800 h-full w-full">
+      
       {localStorage.getItem(lsPrefix+"actk") ? <Home signout={toggleSignedIn}></Home> : <LoginSignup signin={toggleSignedIn}></LoginSignup>}
-      <div className="max-md:col-span-1 lg:col-span-1"></div>
+      
     </div>
     
   ) 

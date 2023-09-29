@@ -60,7 +60,7 @@ export default function Home({signout,test}){
     
    
     return(
-        <div className="md:mobile_middle lg:desktop_middle">
+        <>
         <h2>{test}</h2>
         <NavBar SetPage={SetPage} logout={logout}></NavBar>
         
@@ -68,7 +68,7 @@ export default function Home({signout,test}){
             {SelectPage()}
         </TokenContext.Provider>
         
-        </div>
+        </>
         
         
         
