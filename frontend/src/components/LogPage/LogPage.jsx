@@ -14,7 +14,7 @@ export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
     useEffect(()=>{loadMostRecent()}, []);
-
+    
     async function GetWorkoutInfo(){
         try{
             const response = await fetch('http://localhost:3001/workout/get',{

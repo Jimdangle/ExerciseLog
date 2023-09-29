@@ -66,7 +66,7 @@ async function load_mongo(){
                     await Exercise.deleteMany({});
                     await Workout.deleteMany({})
                     await Motion.deleteMany({});
-                    await UserMotionMotion.deleteMany({});
+                    await UserMotion.deleteMany({});
                    
 
                 }
