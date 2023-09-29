@@ -87,7 +87,7 @@ export default function MotionAdder({update,refresh}){
     }
 
     function percentageColorRed(num){
-        return (num >= 0.5) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-red-600' ) 
+        return (num == 1) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-red-600' ) 
     }
 
     return (<>
@@ -98,7 +98,7 @@ export default function MotionAdder({update,refresh}){
             <div className="flex flex-row place-items-center">
 
                 <p className="font-semibold text-lg">Name</p>
-                <input className=" ml-2 mr-auto" type="text" name="name" placeholder="(Required)" onChange={handleFormUpdate}></input>
+                <input className=" ml-2 mr-auto text-slate-800" type="text" name="name" placeholder="(Required)" onChange={handleFormUpdate}></input>
 
                 <select name="type_select" className="w-24 bg-slate-600" onChange={(e)=>{setType(Number(e.target.value))}}>
                     <option value="0">Lift</option>
@@ -124,7 +124,7 @@ export default function MotionAdder({update,refresh}){
             
             {/** Description input*/}
             <div className="flex flex-row mt-4 justify-center">
-                <input className="px-2" type="text" name="desc" placeholder="description(optional)" onChange={handleFormUpdate}></input>
+                <input className="px-2 text-slate-800" type="text" name="desc" placeholder="description(optional)" onChange={handleFormUpdate}></input>
             </div>
 
             {/**Buttons on the bottom */}

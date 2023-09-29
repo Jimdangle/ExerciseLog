@@ -8,18 +8,11 @@ export default function UserInfo(){
     const [userInfo, setUserInfo] = useState({email:"",username:""}) // user information 
 
     
-    const savedSummary = localStorage.getItem(recentSummary) ? localStorage.getItem(recentSummary) : {}
-
-    const [summary,setSummary] = useState(JSON.parse(savedSummary));
     
 
-    function SaveSummary(in_summary){
-        const string = JSON.stringify(in_summary);
-        console.log(in_summary);
-        console.log(string)
-        localStorage.setItem(recentSummary,string)
-        setSummary(in_summary);
-    }
+    const [summary,setSummary] = useState({});
+    
+    
 
     useEffect(()=>{
         GetUserInfo();
@@ -97,7 +90,7 @@ export default function UserInfo(){
 
             </div>
             
-            <SummarySettings update={SaveSummary}></SummarySettings>
+            <SummarySettings update={setSummary}></SummarySettings>
             
             <SummaryView Summary={summary}></SummaryView>
             

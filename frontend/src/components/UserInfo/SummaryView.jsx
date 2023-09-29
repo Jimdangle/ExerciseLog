@@ -5,7 +5,7 @@ import { percentageColor, percentageColorRed } from "../../utils/styleutil";
 export default function SummaryView({Summary}){
     //useEffect( ()=>{console.log(stats)})
     
-    return( Object.keys(Summary).length>0 ? 
+    return( Object.keys(Summary).length>1 ? 
         //Conditionally render the summary data if our summary object has keys
 
 
