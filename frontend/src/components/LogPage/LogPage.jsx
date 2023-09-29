@@ -132,7 +132,15 @@ export default function LogPage({item, SelectPage}){
                 </div>
                 
                 
+                
+                {/**Literal filler, large height, large vertical margin, invisible text */}
+                <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+
+                {/**Button to return doesnt set nav bar */}
                 <button className='button button-e-green' onClick={()=>{SelectPage(0)}}>Return</button>
+
+                 {/**Literal filler, large height, large vertical margin, invisible text */}
+                <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
             </div>
         )
         

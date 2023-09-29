@@ -73,19 +73,19 @@ export default function ExerciseAdder({workout_id, complete}){
     }
 
     return(<>
-        <div className="lg:w-96 max-md:w-64 h-124 bg-white rounded-md overflow-scroll">
+        <div className="lg:w-96 max-md:w-124 h-124 bg-white rounded-md overflow-scroll">
             
-            <h1 className="font-semibold">Select a motion</h1>
+            {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
+            <h1 className="font-semibold ml-3">Select a motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
             <p className="inline text-slate-500">{displayMotions.length}</p>
-            {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
-            <button className="px-4 mx-1 inline general-button bg-green-300 scale-70" onClick={()=>{setAddingNew(true)}}>Add New</button>
+            <button className="px-4 mx-1 inline button button-e-green bg-green-300 scale-70 text-black" onClick={()=>{setAddingNew(true)}}>Add New</button>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{
                     
                     return (
-                        <button key={index} className="px-4 mx-1 inline general-button scale-70" onClick={()=>{AddExerciseToLog(item._id)}}>{item.name}</button>
+                        <button key={index} className="px-4 mx-1 border-2 inline button h-auto scale-70" onClick={()=>{AddExerciseToLog(item._id)}}>{item.name}</button>
                     )
                 })
                 :
