@@ -36,16 +36,25 @@ export default function SummarySettings({update}){
     
 
     return (<div>
-        <div className="mt-6 flex flex-row justify-text-startjustify-items-end">
-                <p>Start</p>
-                <input type="date" className="ml-2" onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
-                <p>End</p>
-                <input type="date" className="mr-2" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
-                <button onClick={(GetWholeSummary)}>Click</button>
+                <div className="mt-6 flex flex-col justify-text-start justify-items-end">
+
+                    <div className='flex flex-row my-2'>
+                        <p>Start</p>
+                        <input type="date" className="ml-auto" onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
+                    </div>
+                    <div className='flex flex-row'>
+                        <p>End</p>
+                        <input type="date" className="ml-auto" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
+                    </div>
+                    
+                    
+                    <button className='button button-e-green' onClick={(GetWholeSummary)}>Generate</button>
+                </div>
+                <div className="flex flex-row">
+                    <p>{new Date(startDate).toString().slice(0,15)}</p>
+                    <p className='mx-3'>-</p>
+                    <p>{endDate==0 ? "Right Now" : new Date(endDate).toString().slice(0,15)}</p>
+                </div>
             </div>
-            <div className="flex flex-row">
-                <p>{new Date(startDate).toString()}</p>
-                <p>{new Date(endDate).toString()}</p>
-            </div>
-    </div>)
+    )
 }

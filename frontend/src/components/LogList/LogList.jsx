@@ -14,6 +14,7 @@ export default function LogList({SelectPage}){
     const [rawList, setRawList] = useState([]);
     const [displayList, setDisplayList] = useState([]);
     const [newWorkoutName, setNewWorkoutName] = useState("");
+    const [showWorkouts, setShowWorkouts] = useState(false)
 
     function SetMostRecent(workout_id){
         localStorage.setItem(recentLog,workout_id);
@@ -133,28 +134,47 @@ export default function LogList({SelectPage}){
     
 
     return(
-        <div className="w-auto m-2">
-            <button className='my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={AddWorkout}>Add New</button>
-            <input type="text" value={newWorkoutName } className='ml-6 my-2 focus:form-active-input form-nonactive-input duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
-            <div className="w-full h-auto bg-green-200 flex">
-                <h1 className="text-center font-semibold text-3xl">Recent Workouts</h1>
-                <input type="text" className='mr-6 ml-2 my-2 focus:form-active-input form-nonactive-input scale-75 hover:scale-100 duration-150' onChange={(value)=>{searchLogs(value.target.value)}}></input>
+        <div className="w-auto justify-center">
+            <div className='flex flex-col justify-center'>
+                <button className='button button-e-green' onClick={AddWorkout}>Start New</button>
+                <input type="text" placeholder='Name(optional)' value={newWorkoutName } className='mx-6 h-8 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
+            </div>
+            
+            <h1 className='text-2xl ml-4 mt-32 text-white' onClick={()=>{setShowWorkouts(!showWorkouts)}}> Past Workouts: <span className='info-green'>{rawList.length}</span> <button>{showWorkouts ? "v" : ">"}</button></h1>
+            
+            {
+            showWorkouts ? 
+            <>
+            <div className="w-full h-auto flex flex-col">
+                <h1 className="text-center font-semibold text-white text-3xl">Search</h1>
+                <input type="text" className='mx-6 h-8 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{searchLogs(value.target.value)}}></input>
+                <h2 className='text-white text-center'>{displayList.length} / {rawList.length}</h2>
             </div>
             <ul>
                 {displayList.map((item,index) => {
                     
                     return (
-                        <div key={index} className="my-6 py-3 px-2 w-full h-auto rounded-md shadow-md bg-blue-200">
+                        <div key={index} className="workout-log">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="font-bold text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name) : item.name)}</h1>
+                                <h1 className="font-bold text-green-400 text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
                                 <p>Created:{item.createdAt}</p>
                                 <p>Edited:{item.updatedAt}</p>
                             </div>
-                            <button className='inline general-button' onClick={()=>{RemoveWorkout(item._id)}}>-</button>
+                            <div className='flex justify-center'>
+                                <button className='button button-e-red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>
+                            </div>
+                            
                         </div>
                     )
                 })}
             </ul>
+            </>
+            :
+            <></>
+            }
+            {/**Literal filler, large height, large vertical margin, invisible text */}
+            <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+            <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
         </div>
     )
 }

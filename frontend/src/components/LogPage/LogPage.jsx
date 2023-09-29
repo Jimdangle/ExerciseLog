@@ -114,7 +114,7 @@ export default function LogPage({item, SelectPage}){
     return (
             <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
                 
-                <h2 className='font-semibold text-center text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
+                <h2 className='font-semibold text-center text-green-400 text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
                 {
                     
                     logData.exercises ? 
@@ -132,7 +132,15 @@ export default function LogPage({item, SelectPage}){
                 </div>
                 
                 
-                <button className='my-2 mx-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400' onClick={()=>{SelectPage(0)}}>Return</button>
+                
+                {/**Literal filler, large height, large vertical margin, invisible text */}
+                <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+
+                {/**Button to return doesnt set nav bar */}
+                <button className='button button-e-green' onClick={()=>{SelectPage(0)}}>Return</button>
+
+                 {/**Literal filler, large height, large vertical margin, invisible text */}
+                <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
             </div>
         )
         

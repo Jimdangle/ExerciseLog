@@ -5,7 +5,7 @@ import Signup from '../components/Signup/Signup'
 import lsPrefix from '../config/cfUtil';
 
 export default function LoginSignup({signin}) {
-  const [isUser, setIsUser] = useState(false);
+  const [isUser, setIsUser] = useState(true);
 
   const toggleUser = () => {
     var isU = isUser;
@@ -15,11 +15,16 @@ export default function LoginSignup({signin}) {
 
   return (
     
-    <div className="md:mobile_middle lg:desktop_middle">
-      <p>{localStorage.getItem(lsPrefix+"actk") ?  "Logged in!" : "Not Logged in"}</p>
-       
+    <div>
+      {/**spacer */}
+      <div className='h-124'><p className='text-slate-800'>t</p></div>
       {isUser ? <Login signin={signin}></Login> : <Signup onClick={toggleUser}></Signup>}
-      <button disabled={false} onClick={()=>{toggleUser()}} className='justify-center my-2 rounded-3xl bg-slate-100 p-5 font-semibold hover:bg-green-400'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
+      
+      <div className='flex justify-center'>
+        <button disabled={false} onClick={()=>{toggleUser()}} className=' button button-e-green'>{isUser ? "Don't Have an Account?" : "Have An Account?"}</button>
+      </div>
+      {/**Literal filler, large height, large vertical margin, invisible text */}
+      <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
     </div>
     
   )

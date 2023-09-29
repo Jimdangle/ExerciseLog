@@ -11,6 +11,8 @@ export default function MotionAdder({update,refresh}){
     const [muscleMap, setMuscleMap] = useState({0:0,1:0,2:0,3:0,4:0,5:0,6:0}) // default to empty
     const [type, setType] = useState(0); // default to lift
 
+    const [errorMessage, setErrorMessage] = useState("");
+
     // return the sum from the muscle maps
     function getSum(){
         const sum = Object.keys(muscleMap).reduce((total,key) => {return total+muscleMap[key];},0);
@@ -61,9 +63,15 @@ export default function MotionAdder({update,refresh}){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod);
-                update(false);
-                refresh();
+                if(!bod.message){
+                    console.log(bod);
+                    update(false);
+                    refresh();
+                }
+                else{
+                    setErrorMessage(bod.message)
+                }
+                
             }
         }
         catch(e){
@@ -71,40 +79,62 @@ export default function MotionAdder({update,refresh}){
         }
     }
 
-    return (<>
-    <div className="z-5">
-        <div className="flex flex-col bg-slate-200 h-124">
 
-            <div className="flex flex-row mt-4 place-items-center">
-                <p className="font-semibold">Name</p>
-                <input className=" ml-auto mr-2" type="text" name="name" placeholder="" onChange={handleFormUpdate}></input>
+    // return a tailwind text color class based on a float between 0-1 that represents a percentage
+    function percentageColor(num){
+        console.log(num)
+        return (num >= 0.5) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-slate-300' ) 
+    }
+
+    function percentageColorRed(num){
+        return (num == 1) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-red-600' ) 
+    }
+
+    return (<>
+    <div className="justify-center w-full rounded-md border-4 border-green-400">
+        <div className="flex flex-col bg-slate-800 pl-2 text-white h-124">
+
+            {/** Name of Exercise and type drop down*/}
+            <div className="flex flex-row place-items-center">
+
+                <p className="font-semibold text-lg">Name</p>
+                <input className=" ml-2 mr-auto text-slate-800" type="text" name="name" placeholder="(Required)" onChange={handleFormUpdate}></input>
+
+                <select name="type_select" className="w-24 bg-slate-600" onChange={(e)=>{setType(Number(e.target.value))}}>
+                    <option value="0">Lift</option>
+                    <option value="1">Cardio</option>
+                    <option value="2">Hold</option>
+                </select>
             </div>
 
-            <select onChange={(e)=>{setType(Number(e.target.value))}}>
-                <option value="0">Lift</option>
-                <option value="1">Cardio</option>
-                <option value="2">Hold</option>
-            </select>
 
+            {/** Muscle impact sliders */}
+            <div className='flex justify-center mt-3'>
+                <h2 className={"font-semibold "+percentageColorRed(Object.values(muscleMap).reduce((t,v)=>{return t+v},0))}>Muscle Impact Distribution</h2>
+            </div>
+            
             {muscles.map((muscle,index)=> {
                 return(
                 <div className="flex flex-row mt-4 justify-center" key={"abcdefhijklmnop"+index}>
-                    <p className="font-semibold">{muscle} {muscleMap[index] ? muscleMap[index]*100 : 0}%</p>
+                    <p className={"font-semibold ml-4 " + percentageColor((muscleMap[index] ? muscleMap[index] : 0))}>{muscle} {muscleMap[index] ? muscleMap[index]*100 : 0}%</p>
                     <input className="inline ml-auto mr-2" type="range" name={index}  min="0" max="1" step="0.1" value={muscleMap[index] ? muscleMap[index] : 0} onChange={handleSliderUpdate}></input>
                 </div>)
             })}
 
             
-
+            {/** Description input*/}
             <div className="flex flex-row mt-4 justify-center">
-                <input className="" type="text" name="desc" placeholder="description" onChange={handleFormUpdate}></input>
+                <input className="px-2 text-slate-800" type="text" name="desc" placeholder="description(optional)" onChange={handleFormUpdate}></input>
             </div>
 
+            {/**Buttons on the bottom */}
             <div className="flex flex-row justify-center">
-                <button className="general-button mx-auto bg-red-300" onClick={()=>{update(false)}}>Cancel</button>
-                <button className="general-button mx-auto bg-green-300" onClick={AddUserMotion}>Add</button>
+                <button className="button button-e-red" onClick={()=>{update(false)}}>Cancel</button>
+                <button className="button button-e-green" onClick={AddUserMotion}>Add</button>
             </div>
             
+            {/**Error message */}
+            <p className="text-red-400 font-sans">{errorMessage ? errorMessage : ""}</p>
             
         </div>
     </div>

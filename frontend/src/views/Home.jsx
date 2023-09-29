@@ -60,15 +60,18 @@ export default function Home({signout,test}){
     
    
     return(
-        <div className="md:mobile_middle lg:desktop_middle">
-        <h2>{test}</h2>
-        <NavBar SetPage={SetPage} logout={logout}></NavBar>
+        <>
+        <NavBar SetPage={SetPage} logout={logout} active={page}></NavBar>
         
         <TokenContext.Provider value={token}>
             {SelectPage()}
         </TokenContext.Provider>
         
-        </div>
+        {/**Literal filler, large height, large vertical margin, invisible text */}
+        <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+        {/**Literal filler, large height, large vertical margin, invisible text */}
+        <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+        </>
         
         
         

@@ -55,15 +55,15 @@ export default function Signup({onClick}){
         return true;
     }
 
-    
+
     return (
-        <>
-         <div className="justify-center">
-            <div className="z-2">
-                <div id="login-card" className="w-auto h-[32rem] login-center-card">
-                <h2 className="text-3xl font-bold text-white underline underline-offset-9 pt-5">BoatLog</h2>
-                <p className='pt-2 font-semibold text-black'>Create a new account!</p>
-                <div className='relative pt-6 top-1/5'>
+       
+         
+        <div className="justify-center">
+            <div className="w-auto login-center-card">
+                <h2 className="bname">BoatLog</h2>
+                <p className='info-green'>Create a new account!</p>
+                <div className='pt-4'>
                     <input name="email" onChange={handleChange}  className="focus:form-active-input form-nonactive-input form-gen-input duration-150"  type="email" placeholder="Email"></input>
                     <p className='text-red-500 pt-2'>{state["email"] && state["email"].indexOf("@")==-1 ?  "Please enter a semi valid email" : ""}</p>
                     <br></br>
@@ -77,13 +77,12 @@ export default function Signup({onClick}){
                     <p className='text-red-500 pt-2'>{state["pass"]!=state["cpass"] ? "Please ensure passwords match" : ""}</p>
                     <br></br>
                     <br></br>
-                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='rounded-3xl bg-slate-100 p-5 font-semibold disabled:bg-slate-300 disabled:bg-opacity-75 bg-opacity-100 hover:bg-green-400 disabled:hover:ring-4 disabled:hover:ring-red-600' onClick={handleSignup}>Signup</button>
+                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='button button-e-green disabled:button-d duration-150' onClick={handleSignup}>Signup</button>
                     <p className='pt-2 font-semibold text-red-400'>{errMessage}</p>
-                </div>
-                
                 </div>
             </div>
         </div>
-        </>
+        
+       
     )
 }
