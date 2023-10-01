@@ -15,7 +15,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
     function SortedMuscleIndex(data){
         var nonZero = Object.keys(data).filter((item)=>{return data[item]>0.0}) // return indexes that are non zero
         var sorted = nonZero.sort((a,b)=>{return (data[a]<data[b] ? 1 : -1)});
-        console.log(`original:${data}\n\tnonZero:${nonZero}-${nonZero.map((item)=>{return TranslateMuscle(item)})}\n\tsorted:${sorted}-${sorted.map((item)=>{return TranslateMuscle(item)})}`);
+        //console.log(`original:${data}\n\tnonZero:${nonZero}-${nonZero.map((item)=>{return TranslateMuscle(item)})}\n\tsorted:${sorted}-${sorted.map((item)=>{return TranslateMuscle(item)})}`);
         return sorted;
 
     }

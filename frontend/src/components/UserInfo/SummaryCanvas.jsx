@@ -81,26 +81,28 @@ export default function SummaryCanvas({summaryData}){
             const stdev = Math.sqrt(pre_stdev);
 
             const std_scores = summaryData.muscles[0].map((item,index)=>{
-                const zeta = Math.abs((item-stdev)/avg) // # of stdevs away from mean
-                console.log(`${item} : ${zeta}`)
+                const zeta = (item-stdev)/avg // # of stdevs away from mean
+                
                 return zeta;
             })
             // for each item in our summary data impact map (calculate the total percentage, and then designate a color)
+            console.log(std_scores)
             std_scores.map((item,index)=>{
-                console.log(`${item}, ${tot}`)
+                
                 const percent = Math.round((item/tot)*100);
                 var color = "red";
-                if(item<=1){
-                    color="green"
+                
+                if(!item|| item<=0){
+                    color="blue"
                 }
-                else if(item>1 && item <2){
-                    color="yellow"
+                else if(item<=1){
+                    color="green"
                 }
                 else{
                     color="red"
                 }
 
-                console.log(`Coloring ${TranslateMuscle(index)} : ${color} because of ${item}`)
+                
                 //Iterate over the shapes for the muscle we are at and fill them in
                 muscle_group_shapes[index].map((item)=>{
                     fillShape(ctx,shapes[item],color)

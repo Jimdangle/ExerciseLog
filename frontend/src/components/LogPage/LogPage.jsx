@@ -9,11 +9,20 @@ import { TokenContext } from '../../views/Home';
 
 import { isTimeString, GetLocal } from '../../utils/date';
 import ExerciseItem from './ExerciseItem';
+import WorkoutSummary from './WorkoutSummary';
 
 export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
-    useEffect(()=>{loadMostRecent()}, []);
+    const [logData, setLogData] = useState({})
+    const [addingExercise, setAddingExercise] = useState(false);
+    const [summary,setSummary] = useState({})
+    useEffect(()=>{loadMostRecent(); GetWholeSummary()}, []);
+
+    async function Refresh(){
+        await GetWorkoutInfo();
+        await GetWholeSummary();
+    }
     
     async function GetWorkoutInfo(){
         try{
@@ -54,8 +63,7 @@ export default function LogPage({item, SelectPage}){
         }
     }
 
-    const [logData, setLogData] = useState({})
-    const [addingExercise, setAddingExercise] = useState(false);
+   
 
     function AddedExercise(){
         setAddingExercise(false);
@@ -77,8 +85,7 @@ export default function LogPage({item, SelectPage}){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod);
-                GetWorkoutInfo();
+                Refresh();
             }
         }
         catch(e){
@@ -101,8 +108,7 @@ export default function LogPage({item, SelectPage}){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod);
-                GetWorkoutInfo();
+                Refresh()
             }
         }
         catch(e){
@@ -110,6 +116,34 @@ export default function LogPage({item, SelectPage}){
         }
     }
 
+
+    async function GetWholeSummary(){ //
+        if(logData && logData.createdAt){
+            const time= logData.createdAt;
+            try{
+                const response = await fetch('http://localhost:3001/user/wsum',{
+                    method:"POST",
+                    headers: {
+                        'Origin': 'http://127.0.0.1:3000',
+                        'Content-Type': 'application/json',
+                        'authorization': token,
+                        'Accept': '*/*'
+                    },
+                    mode:'cors',
+                    body: JSON.stringify({start:time,end:time}) // lol my thinking is there should only be one workout with the start and end equalt to eachother
+                })
+
+                if(response.ok){
+                    const bod = await response.json();
+                    console.log(bod);
+                    setSummary(bod.summary);
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+    }
 
     return (
             <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
@@ -119,8 +153,8 @@ export default function LogPage({item, SelectPage}){
                     
                     logData.exercises ? 
                         logData.exercises.map((item, index) =>{
-                            console.log(item)
-                            return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={GetWorkoutInfo}></ExerciseItem>
+                            //console.log(item)
+                            return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={Refresh}></ExerciseItem>
                         })
                         :
                         <p>No Exercises</p>
@@ -131,7 +165,10 @@ export default function LogPage({item, SelectPage}){
                     {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
                 </div>
                 
-                
+                <div className='mt-5 flex justify-center'>
+                    <h1 className='font-semibold text-xl text-white'>Workout Summary</h1>
+                </div>
+                {summary ? <WorkoutSummary summary={summary}></WorkoutSummary> : <></>}
                 
                 {/**Literal filler, large height, large vertical margin, invisible text */}
                 <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
