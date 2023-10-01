@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { TokenContext } from "../../views/Home"
 import { TranslateMuscle, TranslateType } from "../../utils/muscle";
 import { percentageColor, percentageColorRed } from "../../utils/styleutil";
+import SummaryCanvas from "./SummaryCanvas";
 export default function SummaryView({Summary}){
     //useEffect( ()=>{console.log(stats)})
     
@@ -10,6 +11,8 @@ export default function SummaryView({Summary}){
 
 
         <div className="flex flex-col mt-3 pt-3 border-t-2">
+            <SummaryCanvas summaryData={Summary}></SummaryCanvas>
+
             <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
             <h1 className="text-center text-white text-2xl font-semibold underline">Summary</h1>
             {/* General Summary Info*/}

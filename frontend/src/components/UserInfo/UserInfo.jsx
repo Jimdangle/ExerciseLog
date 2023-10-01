@@ -91,7 +91,7 @@ export default function UserInfo(){
 
             </div>
 
-            <SummaryCanvas summaryData={summary}></SummaryCanvas>
+            
             
             <SummarySettings update={setSummary}></SummarySettings>
             
