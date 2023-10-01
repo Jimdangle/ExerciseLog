@@ -1,15 +1,15 @@
 import {useRef, useEffect} from 'react'
 import { TranslateMuscle } from '../../utils/muscle';
 
-export default function SummaryCanvas({summaryData}){
+export default function SummaryCanvas({summaryData,overlay}){
     const canvasRef = useRef(null);
 
-    
+    useEffect(()=>{console.log(summaryData)},[])
 
     useEffect(()=>{
         initCanvas()
         
-    },[summaryData])
+    },[summaryData,overlay])
 
     // Initialize our canvas by drawing the image on it
     function initCanvas(){
@@ -22,7 +22,7 @@ export default function SummaryCanvas({summaryData}){
             muscleOutline()
             dataOverlay();
         }
-        img.src = "/public/scaledbody.png";
+        img.src = "/scaledbody.png";
 
         
 
@@ -73,20 +73,20 @@ export default function SummaryCanvas({summaryData}){
 
         //ensure we have summary data to do things with
         if(summaryData && Object.keys(summaryData).length>1){
-            const tot = summaryData.exercise_totals[0]; // only showing lift impact
+            const tot = summaryData.exercise_totals[overlay]; // only showing lift impact
 
             //average and stdev
-            const avg = summaryData.muscles[0].reduce((t,v)=>{return t+v},0)/summaryData.muscles[0].length;
-            const pre_stdev = summaryData.muscles[0].reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/summaryData.muscles[0].length-1;
+            const avg = summaryData.muscles[overlay].reduce((t,v)=>{return t+v},0)/summaryData.muscles[overlay].length;
+            const pre_stdev = summaryData.muscles[overlay].reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/summaryData.muscles[overlay].length-1;
             const stdev = Math.sqrt(pre_stdev);
 
-            const std_scores = summaryData.muscles[0].map((item,index)=>{
+            const std_scores = summaryData.muscles[overlay].map((item,index)=>{
                 const zeta = (item-stdev)/avg // # of stdevs away from mean
                 
                 return zeta;
             })
             // for each item in our summary data impact map (calculate the total percentage, and then designate a color)
-            console.log(std_scores)
+            
             std_scores.map((item,index)=>{
                 
                 const percent = Math.round((item/tot)*100);

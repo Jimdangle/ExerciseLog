@@ -4,6 +4,8 @@ import { TranslateMuscle, TranslateType } from "../../utils/muscle";
 import { percentageColor, percentageColorRed, stdColorRed } from "../../utils/styleutil";
 import SummaryCanvas from "./SummaryCanvas";
 export default function SummaryView({Summary}){
+
+    const [overlay,setOverlay] = useState(0);
     
     
     return( Summary && Object.keys(Summary).length>1 ? 
@@ -11,7 +13,12 @@ export default function SummaryView({Summary}){
 
 
         <div className="flex flex-col mt-3 pt-3 border-t-2 text-white">
-            <SummaryCanvas summaryData={Summary}></SummaryCanvas>
+            <SummaryCanvas summaryData={Summary} overlay={overlay}></SummaryCanvas>
+            <div className='flex flex-row justify-center'>
+                <button className={'button button-e-green' + (overlay==0 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(0)}}>Lifts</button>
+                <button className={'button button-e-green' + (overlay==1 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(1)}}>Cardio</button>
+                <button className={'button button-e-green'+ (overlay==2 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(2)}}>Holds</button>
+            </div>
 
             <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
             <h1 className="text-center text-white text-2xl font-semibold underline">Summary</h1>
