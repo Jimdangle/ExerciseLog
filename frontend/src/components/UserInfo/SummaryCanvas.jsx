@@ -11,12 +11,13 @@ export default function SummaryCanvas({summaryData}){
         
     },[summaryData])
 
+    // Initialize our canvas by drawing the image on it
     function initCanvas(){
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const img = new Image();
         
-        img.onload = () => {
+        img.onload = () => { // once our image is loaded perform these function calls 
             ctx.drawImage(img,0,0)
             muscleOutline()
             dataOverlay();
@@ -27,7 +28,7 @@ export default function SummaryCanvas({summaryData}){
 
     }
 
-    // shapes defined as their x,y pos, as well as width and height
+    // shapes defined as their x,y pos, as well as width and height (these are used for the outline and fill)
     const shapes = {
         "chest": {x:43,y:60,w:60,h:30},
         "shL": {x:23,y:60,w:20,h:20},
@@ -43,18 +44,20 @@ export default function SummaryCanvas({summaryData}){
         "triR": {x:251,y:77,w:18,h:40},
     }
 
-    // triceps then shoulders
+    // This maps the muscle group indexes to the muscle shapes
     const muscle_group_shapes = [["chest"],["back"],["hamL","hamR"],["quadL","quadR"],["biL","biR"],["triL","triR"],["shL","shR"]]
 
+    // draw a given shape
     function strokeShape(ctx,shape){
         ctx.strokeRect(shape.x,shape.y,shape.w,shape.h)
     }
+    // fill in a shape (but move it and shrink a touch so we don't cover the outline)
     function fillShape(ctx,shape,color="black"){
         ctx.fillStyle = color
         ctx.fillRect(shape.x+1,shape.y+1,shape.w-2,shape.h-2)
     }
     
-
+    // Go over all of our options and draw them
     function muscleOutline(){
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -63,11 +66,16 @@ export default function SummaryCanvas({summaryData}){
         
     }
 
+    // Use summary data to project correct color on to map
     function dataOverlay(){
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+
+        //ensure we have summary data to do things with
         if(summaryData && Object.keys(summaryData).length>1){
-            const tot = summaryData.exercise_totals[0]; // only doing lifts rn
+            const tot = summaryData.exercise_totals[0]; // only showing lift impact
+
+            // for each item in our summary data impact map (calculate the total percentage, and then designate a color)
             summaryData.muscles[0].map((item,index)=>{
                 console.log(`${item}, ${tot}`)
                 const percent = Math.round((item/tot)*100);
@@ -83,7 +91,7 @@ export default function SummaryCanvas({summaryData}){
                 }
 
                 console.log(`Coloring ${TranslateMuscle(index)} : ${color} because of ${percent}`)
-
+                //Iterate over the shapes for the muscle we are at and fill them in
                 muscle_group_shapes[index].map((item)=>{
                     fillShape(ctx,shapes[item],color)
                 })
