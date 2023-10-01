@@ -4,13 +4,13 @@ import { TranslateMuscle, TranslateType } from "../../utils/muscle";
 import { percentageColor, percentageColorRed, stdColorRed } from "../../utils/styleutil";
 import SummaryCanvas from "./SummaryCanvas";
 export default function SummaryView({Summary}){
-    //useEffect( ()=>{console.log(stats)})
     
-    return( Object.keys(Summary).length>1 ? 
+    
+    return( Summary && Object.keys(Summary).length>1 ? 
         //Conditionally render the summary data if our summary object has keys
 
 
-        <div className="flex flex-col mt-3 pt-3 border-t-2">
+        <div className="flex flex-col mt-3 pt-3 border-t-2 text-white">
             <SummaryCanvas summaryData={Summary}></SummaryCanvas>
 
             <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
@@ -72,7 +72,7 @@ export default function SummaryView({Summary}){
                 Summary.exercise_summary ? 
                 Object.keys(Summary.exercise_summary).map((key,index)=>{
                     const exercise = Summary.exercise_summary[key];
-                    console.log(exercise.muscles)
+                    
                     const impact = exercise.muscles.reduce((t,i)=>{return t+i},0);
                     
                     return(
