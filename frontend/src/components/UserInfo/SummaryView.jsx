@@ -52,7 +52,9 @@ export default function SummaryView({Summary}){
                     return zeta;
                 })
 
-                return (
+                return ( (index ==4 || index == overlay )
+                ? 
+                
                    
                     <div key={"FreakShowDumpTruckCumGobbler"+index*9000} className="flex flex-col">
                          {/* You might ask whats up with the keys, but I can't seem to not get the unique key warning without some obscene shit so here we are maybe ur upset bc you feel targeted but its not personal*/}
@@ -70,6 +72,8 @@ export default function SummaryView({Summary}){
                         </div>
                         
                     </div>
+                :
+                    <></>
                 )
             })}
 
