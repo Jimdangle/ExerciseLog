@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TokenContext } from "../../views/Home"
 import { TranslateMuscle, TranslateType } from "../../utils/muscle";
-import { percentageColor, percentageColorRed } from "../../utils/styleutil";
+import { percentageColor, percentageColorRed, stdColorRed } from "../../utils/styleutil";
 import SummaryCanvas from "./SummaryCanvas";
 export default function SummaryView({Summary}){
     //useEffect( ()=>{console.log(stats)})
@@ -35,17 +35,27 @@ export default function SummaryView({Summary}){
                 const map_total = Summary.exercise_totals[index];//get the total, then map a division onto the impacts
                 const percents = impact_map.map((impact)=>{return Math.round((impact/map_total*100))});
                 
+                const avg = impact_map.reduce((t,v)=>{return t+v},0)/impact_map.length;
+                var stdev = impact_map.reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/impact_map.length-1;
+                stdev = Math.sqrt(stdev);
+
+                const std_scores = impact_map.map((item,index)=>{
+                    const zeta = Math.abs((item-stdev)/avg) // # of stdevs away from mean
+                    
+                    return zeta;
+                })
+
                 return (
                    
                     <div key={"FreakShowDumpTruckCumGobbler"+index*9000} className="flex flex-col">
                          {/* You might ask whats up with the keys, but I can't seem to not get the unique key warning without some obscene shit so here we are maybe ur upset bc you feel targeted but its not personal*/}
                         <h3 className="ml-2 text-start text-white font-semibold underline">{TranslateType(index)}{index==0 || index==2 ? "s" : ""}</h3>
                         <div className="flex flex-col">
-                            {percents.map((percent,subindex)=>{
+                            {std_scores.map((score,subindex)=>{
                                 
                                 return (
-                                    percent ?
-                                    <p className={"ml-4"} key={"urCoolCat"+subindex+"urMom"+index}>{TranslateMuscle(subindex)} : <span className={percentageColorRed(percent/100)}>{percent}%</span> </p>
+                                    score ?
+                                    <p className={"ml-4"} key={"urCoolCat"+subindex+"urMom"+index}>{TranslateMuscle(subindex)} : <span className={stdColorRed(score)}>{percents[subindex]}%</span> </p>
                                     :
                                     <p key={"urCoolCat"+subindex+"urMom"+index}>{/*Weird that this one doesnt show up as a normal element */}</p>
                                     )
