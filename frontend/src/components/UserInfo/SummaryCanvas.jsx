@@ -86,11 +86,13 @@ export default function SummaryCanvas({summaryData}){
                 return zeta;
             })
             // for each item in our summary data impact map (calculate the total percentage, and then designate a color)
+            console.log(std_scores)
             std_scores.map((item,index)=>{
                 
                 const percent = Math.round((item/tot)*100);
                 var color = "red";
-                if(item<=0){
+                
+                if(!item|| item<=0){
                     color="blue"
                 }
                 else if(item<=1){

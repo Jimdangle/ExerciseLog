@@ -118,28 +118,30 @@ export default function LogPage({item, SelectPage}){
 
 
     async function GetWholeSummary(){ //
-        const time = logData && logData.createdAt ? logData.createdAt : 0
-        try{
-            const response = await fetch('http://localhost:3001/user/wsum',{
-                method:"POST",
-                headers: {
-                    'Origin': 'http://127.0.0.1:3000',
-                    'Content-Type': 'application/json',
-                    'authorization': token,
-                    'Accept': '*/*'
-                },
-                mode:'cors',
-                body: JSON.stringify({start:time,end:time}) // lol my thinking is there should only be one workout with the start and end equalt to eachother
-            })
+        if(logData && logData.createdAt){
+            const time= logData.createdAt;
+            try{
+                const response = await fetch('http://localhost:3001/user/wsum',{
+                    method:"POST",
+                    headers: {
+                        'Origin': 'http://127.0.0.1:3000',
+                        'Content-Type': 'application/json',
+                        'authorization': token,
+                        'Accept': '*/*'
+                    },
+                    mode:'cors',
+                    body: JSON.stringify({start:time,end:time}) // lol my thinking is there should only be one workout with the start and end equalt to eachother
+                })
 
-            if(response.ok){
-                const bod = await response.json();
-                console.log(bod);
-                setSummary(bod.summary);
+                if(response.ok){
+                    const bod = await response.json();
+                    console.log(bod);
+                    setSummary(bod.summary);
+                }
             }
-        }
-        catch(e){
-            console.log(e);
+            catch(e){
+                console.log(e);
+            }
         }
     }
 
