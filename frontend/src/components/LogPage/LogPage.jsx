@@ -9,7 +9,7 @@ import { TokenContext } from '../../views/Home';
 
 import { isTimeString, GetLocal } from '../../utils/date';
 import ExerciseItem from './ExerciseItem';
-import WorkoutSummary from './WorkoutSummary';
+import SummaryView from '../UserInfo/SummaryView';
 
 export default function LogPage({item, SelectPage}){
     
@@ -17,11 +17,11 @@ export default function LogPage({item, SelectPage}){
     const [logData, setLogData] = useState({})
     const [addingExercise, setAddingExercise] = useState(false);
     const [summary,setSummary] = useState({})
-    useEffect(()=>{loadMostRecent(); GetWholeSummary()}, []);
+    useEffect(()=>{Refresh()}, []);
 
     async function Refresh(){
-        await GetWorkoutInfo();
-        await GetWholeSummary();
+        GetWorkoutInfo();
+        //GetWholeSummary();
     }
     
     async function GetWorkoutInfo(){
@@ -40,8 +40,11 @@ export default function LogPage({item, SelectPage}){
             const bod = await response.json();
             if(response.ok)
             {
+                console.log(bod)
                 if(bod.workout){
                     setLogData(bod.workout);
+                    console.log('Gettting summary')
+                    GetWholeSummary(bod.workout.createdAt);
                 }
                 else{
                     setLogData({name:"Non valid workout selected"})
@@ -54,20 +57,13 @@ export default function LogPage({item, SelectPage}){
     }
 
     
-    function loadMostRecent(){
-        if(localStorage.getItem(recentLog)){
-            GetWorkoutInfo(localStorage.getItem(recentLog));
-        }
-        else{
-       
-        }
-    }
+    
 
    
 
     function AddedExercise(){
         setAddingExercise(false);
-        GetWorkoutInfo(localStorage.getItem(recentLog));
+        Refresh()
     }
 
     async function RemoveExercise(exercise_id){
@@ -117,9 +113,8 @@ export default function LogPage({item, SelectPage}){
     }
 
 
-    async function GetWholeSummary(){ //
-        if(logData && logData.createdAt){
-            const time= logData.createdAt;
+    async function GetWholeSummary(date){ //
+        
             try{
                 const response = await fetch('http://localhost:3001/user/wsum',{
                     method:"POST",
@@ -130,7 +125,7 @@ export default function LogPage({item, SelectPage}){
                         'Accept': '*/*'
                     },
                     mode:'cors',
-                    body: JSON.stringify({start:time,end:time}) // lol my thinking is there should only be one workout with the start and end equalt to eachother
+                    body: JSON.stringify({start:date,end:date}) // lol my thinking is there should only be one workout with the start and end equalt to eachother
                 })
 
                 if(response.ok){
@@ -143,7 +138,7 @@ export default function LogPage({item, SelectPage}){
                 console.log(e);
             }
         }
-    }
+    
 
     return (
             <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
@@ -168,7 +163,7 @@ export default function LogPage({item, SelectPage}){
                 <div className='mt-5 flex justify-center'>
                     <h1 className='font-semibold text-xl text-white'>Workout Summary</h1>
                 </div>
-                {summary ? <WorkoutSummary summary={summary}></WorkoutSummary> : <></>}
+                {summary ? <SummaryView Summary={summary}></SummaryView> : <></>}
                 
                 {/**Literal filler, large height, large vertical margin, invisible text */}
                 <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
