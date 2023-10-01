@@ -40,7 +40,7 @@ export default function SummaryView({Summary}){
                 stdev = Math.sqrt(stdev);
 
                 const std_scores = impact_map.map((item,index)=>{
-                    const zeta = Math.abs((item-stdev)/avg) // # of stdevs away from mean
+                    const zeta = (item-stdev)/avg // # of stdevs away from mean
                     
                     return zeta;
                 })

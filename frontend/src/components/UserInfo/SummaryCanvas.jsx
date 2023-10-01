@@ -81,7 +81,7 @@ export default function SummaryCanvas({summaryData}){
             const stdev = Math.sqrt(pre_stdev);
 
             const std_scores = summaryData.muscles[0].map((item,index)=>{
-                const zeta = Math.abs((item-stdev)/avg) // # of stdevs away from mean
+                const zeta = (item-stdev)/avg // # of stdevs away from mean
                 
                 return zeta;
             })
@@ -90,11 +90,11 @@ export default function SummaryCanvas({summaryData}){
                 
                 const percent = Math.round((item/tot)*100);
                 var color = "red";
-                if(item<=1){
-                    color="green"
+                if(item<=0){
+                    color="blue"
                 }
-                else if(item>1 && item <2){
-                    color="yellow"
+                else if(item<=1){
+                    color="green"
                 }
                 else{
                     color="red"

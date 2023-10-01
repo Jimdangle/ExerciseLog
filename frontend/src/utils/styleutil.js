@@ -8,11 +8,11 @@ export function percentageColorRed(num){
 }
 
 export function stdColorRed(zScore){
-    if(zScore <1){
-        return 'text-green-400'
+    if(zScore <0){
+        return 'text-blue-400'
     }
-    else if(zScore <2){
-        return 'text-yellow-500'
+    else if(zScore <1){
+        return 'text-green-500'
     }
     else{
         return 'text-red-600'
