@@ -3,6 +3,7 @@ import { recentSummary } from "../../config/cfUtil";
 import { useContext, useEffect, useState } from "react"
 import SummaryView from "./SummaryView";
 import SummarySettings from "./SummarySettings";
+import SummaryCanvas from "./SummaryCanvas";
 export default function UserInfo(){
     const token = useContext(TokenContext);
     const [userInfo, setUserInfo] = useState({email:"",username:""}) // user information 
@@ -89,6 +90,8 @@ export default function UserInfo(){
                 
 
             </div>
+
+            <SummaryCanvas summaryData={summary}></SummaryCanvas>
             
             <SummarySettings update={setSummary}></SummarySettings>
             
