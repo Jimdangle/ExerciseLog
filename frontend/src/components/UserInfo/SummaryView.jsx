@@ -7,7 +7,7 @@ export default function SummaryView({Summary}){
 
     const [overlay,setOverlay] = useState(0);
     
-    
+    //Make this use the overlay to determine what to display so the map makes sense with all the data (also show by type)
     return( Summary && Object.keys(Summary).length>1 ? 
         //Conditionally render the summary data if our summary object has keys
 
