@@ -24,14 +24,14 @@ export default function SummaryView({Summary}){
             <h1 className="text-center text-white text-2xl font-semibold underline">Summary</h1>
             {/* General Summary Info*/}
             <h2 className="text-white text-xl mt-3 font-semibold">General</h2>
-            <p>Total Workouts: {Summary.total_workouts}</p>    
+            <p>{Summary.total_workouts >1 ? "Total Workouts:" +Summary.total_workouts : ""}</p>    
             <p>Total Exercises: {Summary.total_exercises}</p>    
             {/* Map the index of the array to the type it is and display the total*/}
             <h2 className="text-white text-xl font-semibold mt-3">Breakdown by Type</h2>
             {Summary.exercise_totals.map( (item,index)=>{
                 
                 
-                return (<p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: {item}{index==0 ? "lb" : "lb*s"}</p>)
+                return ((index==overlay || overlay==4) ? <p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: {item}{index==0 ? "lb" : "lb*s"}</p> : <></>)
             })}
 
 
@@ -86,7 +86,8 @@ export default function SummaryView({Summary}){
                     
                     const impact = exercise.muscles.reduce((t,i)=>{return t+i},0);
                     
-                    return(
+                    return((exercise.type==overlay || overlay==4) 
+                    ?
                     <div key={"fffffff"+index} className="mt-3 flex flex-col">
                         <div className="flex">
                             <h3 className="mt-2 font-semibold">{key}</h3>
@@ -109,7 +110,10 @@ export default function SummaryView({Summary}){
                                     {item >0 ? <p className="ml-2 text-sm">{TranslateMuscle(index)} - {item}</p> : ""}
                                 </div>)
                         })}
-                    </div>)
+                    </div>
+                    :
+                    <></>
+                    )
                 })
                 :
                 <></>
