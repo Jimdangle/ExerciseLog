@@ -36,8 +36,7 @@ export default function SummaryView({Summary}){
             <button className={'button button-e-green'+ (overlay==4 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(4)}}>Total</button>
             
             
-            <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
-            
+    
 
 
             <h2 className="text-white text-lg mt-3 font-semibold">Muscle Breakdown by Type</h2>
@@ -92,7 +91,7 @@ export default function SummaryView({Summary}){
                     
                     return((exercise.type==overlay || overlay==4) 
                     ?
-                    <div key={"fffffff"+index} className="mt-3 flex flex-col">
+                    <div key={"fffffff"+index} className="mt-5 flex flex-col">
                         <div className="flex border-b-2 mb-2 pb-2 border-dashed border-green-400">
                             <h3 className="mt-2 font-semibold">{key}</h3>
                             <h3 className="ml-1 text-sm justify-self-end text-green-400">{TranslateType(exercise.type)}</h3>
