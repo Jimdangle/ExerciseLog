@@ -13,15 +13,6 @@ export default function SummaryView({Summary}){
 
 
         <div className="flex flex-col mt-3 pt-3 border-t-2 text-white">
-            <SummaryCanvas summaryData={Summary} overlay={overlay}></SummaryCanvas>
-            <div className='flex flex-row justify-center'>
-                <button className={'button button-e-green' + (overlay==0 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(0)}}>Lifts</button>
-                <button className={'button button-e-green' + (overlay==1 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(1)}}>Cardio</button>
-                <button className={'button button-e-green'+ (overlay==2 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(2)}}>Holds</button>
-            </div>
-            <button className={'button button-e-green'+ (overlay==4 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(4)}}>Total</button>
-            <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
-            <h1 className="text-center text-white text-2xl font-semibold underline">Summary</h1>
             {/* General Summary Info*/}
             <h2 className="text-white text-xl mt-3 font-semibold">General</h2>
             <p>{Summary.total_workouts >1 ? "Total Workouts:" +Summary.total_workouts : ""}</p>    
@@ -31,19 +22,32 @@ export default function SummaryView({Summary}){
             {Summary.exercise_totals.map( (item,index)=>{
                 
                 
-                return ((index==overlay || overlay==4) ? <p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: {item}{index==0 ? "lb" : "lb*s"}</p> : <></>)
+                return ((index==overlay || overlay==4) ? <p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: <span className="text-green-400">{item}{index==0 ? "lb" : "lb*s"}</span></p> : <></>)
             })}
 
+            {/**Impact map and controls for overlay */}
+            <h2 className="text-white text-center text-xl font-semibold mt-3">Impact Map</h2>
+            <SummaryCanvas summaryData={Summary} overlay={overlay}></SummaryCanvas>
+            <div className='flex flex-row justify-center'>
+                <button className={'button button-e-green' + (overlay==0 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(0)}}>Lifts</button>
+                <button className={'button button-e-green' + (overlay==1 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(1)}}>Cardio</button>
+                <button className={'button button-e-green'+ (overlay==2 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(2)}}>Holds</button>
+            </div>
+            <button className={'button button-e-green'+ (overlay==4 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(4)}}>Total</button>
+            
+            
+            <p className="text-xs text-yellow-400">I Literally think i made up lb*s as a unit for measuring exercise its just the product between the time value and the additional weight field which should correspond to more effort in some sense</p>
+            
 
 
-        <h2 className="text-white text-lg mt-3 font-semibold">Muscle Breakdown by Type</h2>
+            <h2 className="text-white text-lg mt-3 font-semibold">Muscle Breakdown by Type</h2>
             {/* Going to list of the % impact on each muscle group for each type this could probably and should probably be turned into a component*/}
             {Summary.muscles.map((impact_map,index)=>{
                 const map_total = Summary.exercise_totals[index];//get the total, then map a division onto the impacts
                 const percents = impact_map.map((impact)=>{return Math.round((impact/map_total*100))});
                 
                 const avg = impact_map.reduce((t,v)=>{return t+v},0)/impact_map.length;
-                var stdev = impact_map.reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/impact_map.length-1;
+                var stdev = impact_map.reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/(impact_map.length-1);
                 stdev = Math.sqrt(stdev);
 
                 const std_scores = impact_map.map((item,index)=>{
@@ -61,7 +65,7 @@ export default function SummaryView({Summary}){
                         <h3 className="ml-2 text-start text-white font-semibold underline">{TranslateType(index)}{index==0 || index==2 ? "s" : ""}</h3>
                         <div className="flex flex-col">
                             {std_scores.map((score,subindex)=>{
-                                
+                                if(index == 2 && subindex==6){console.log(`View\n\tstd:${stdev} z:${score}, avg:${avg} -> ${stdColorRed(score)}`)}
                                 return (
                                     score ?
                                     <p className={"ml-4"} key={"urCoolCat"+subindex+"urMom"+index}>{TranslateMuscle(subindex)} : <span className={stdColorRed(score)}>{percents[subindex]}%</span> </p>
@@ -89,9 +93,9 @@ export default function SummaryView({Summary}){
                     return((exercise.type==overlay || overlay==4) 
                     ?
                     <div key={"fffffff"+index} className="mt-3 flex flex-col">
-                        <div className="flex">
+                        <div className="flex border-b-2 mb-2 pb-2 border-dashed border-green-400">
                             <h3 className="mt-2 font-semibold">{key}</h3>
-                            <h3 className="ml-1 text-sm justify-self-end">{TranslateType(exercise.type)}</h3>
+                            <h3 className="ml-1 text-sm justify-self-end text-green-400">{TranslateType(exercise.type)}</h3>
                         </div>
                         <div>
                             <p>Total Sets : {exercise.n}</p>
