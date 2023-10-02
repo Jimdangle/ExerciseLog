@@ -3,14 +3,14 @@ import { TranslateMuscle } from '../../utils/muscle';
 
 export default function SummaryCanvas({summaryData,overlay}){
     const canvasRef = useRef(null);
-
+    
     useEffect(()=>{console.log(summaryData)},[])
-
+    
     useEffect(()=>{
         initCanvas()
         
     },[summaryData,overlay])
-
+    
     // Initialize our canvas by drawing the image on it
     function initCanvas(){
         const canvas = canvasRef.current;
@@ -23,11 +23,11 @@ export default function SummaryCanvas({summaryData,overlay}){
             dataOverlay();
         }
         img.src = "/scaledbody.png";
-
         
-
+        
+        
     }
-
+    
     // shapes defined as their x,y pos, as well as width and height (these are used for the outline and fill)
     const shapes = {
         "chest": {x:43,y:60,w:60,h:30},
@@ -43,10 +43,10 @@ export default function SummaryCanvas({summaryData,overlay}){
         "triL": {x:177,y:77,w:18,h:40},
         "triR": {x:251,y:77,w:18,h:40},
     }
-
+    
     // This maps the muscle group indexes to the muscle shapes
     const muscle_group_shapes = [["chest"],["back"],["hamL","hamR"],["quadL","quadR"],["biL","biR"],["triL","triR"],["shL","shR"]]
-
+    
     // draw a given shape
     function strokeShape(ctx,shape){
         ctx.strokeRect(shape.x,shape.y,shape.w,shape.h)
@@ -57,64 +57,86 @@ export default function SummaryCanvas({summaryData,overlay}){
         ctx.fillRect(shape.x+1,shape.y+1,shape.w-2,shape.h-2)
     }
     
+    function getColorFromZ(score){
+        if(!score|| score<=0){
+            return "blue";
+        }
+        else if(score<=1){ // good use range
+            return "green";
+        }
+        else{ // over used
+            return "red";
+        }
+    }
+
+    function zScore(val,std,avg){
+        return (val-std)/avg // # of stdevs away from mean        
+    }
+    
     // Go over all of our options and draw them
     function muscleOutline(){
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
+        
         Object.keys(shapes).map((k)=>{strokeShape(ctx,shapes[k])})
         
     }
-
+    
     // Use summary data to project correct color on to map
     function dataOverlay(){
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-
+        
         //ensure we have summary data to do things with
         if(summaryData && Object.keys(summaryData).length>1){
-            const tot = summaryData.exercise_totals[overlay]; // only showing lift impact
-
-            //average and stdev
-            const avg = summaryData.muscles[overlay].reduce((t,v)=>{return t+v},0)/summaryData.muscles[overlay].length;
-            const pre_stdev = summaryData.muscles[overlay].reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/summaryData.muscles[overlay].length-1;
-            const stdev = Math.sqrt(pre_stdev);
-
-            const std_scores = summaryData.muscles[overlay].map((item,index)=>{
-                const zeta = (item-stdev)/avg // # of stdevs away from mean
-                
-                return zeta;
-            })
-            // for each item in our summary data impact map (calculate the total percentage, and then designate a color)
             
-            std_scores.map((item,index)=>{
-                
-                const percent = Math.round((item/tot)*100);
-                var color = "red";
-                
-                if(!item|| item<=0){
-                    color="blue"
-                }
-                else if(item<=1){
-                    color="green"
-                }
-                else{
-                    color="red"
-                }
-
-                
-                //Iterate over the shapes for the muscle we are at and fill them in
-                muscle_group_shapes[index].map((item)=>{
-                    fillShape(ctx,shapes[item],color)
-                })
+            
+            //Get average and stdevations for each overlay
+            //3 averages
+            
+            const avgs = summaryData.muscles.map( (muscle_map) => {return muscle_map.reduce((t,v)=>{return t+v},0)/muscle_map.length})
+            //3 standard deviations
+            var stdevs = summaryData.muscles.map( (muscle_map,index) => {return (muscle_map.reduce((t,v)=>{return t+((v-avgs[index])*(v-avgs[index]))},0)/(muscle_map.length-1))})
+            
+            
+            // dirty total calculation, iterate over each muscle map while going over the first one and add them all together (they should all be same length)
+            const totals = summaryData.muscles[0].map((muscle,index)=>{
+                return muscle+summaryData.muscles[1][index]+summaryData.muscles[2][index]
             })
+            
+            const t_avg = totals.reduce((t,v)=>{return t+v},0)/totals.length; // average for the totals 
+            var t_stdev = totals.reduce((t,v)=>{return t+((v-t_avg)*(v-t_avg))},0)/(totals.length-1)
+            t_stdev = Math.sqrt(t_stdev);
+            
+            
+            
+            
+            
+            const muscles = summaryData.muscles;
+            //all the values
+            const all_avgs = [...avgs,t_avg]
+            const all_stds = [...stdevs,t_stdev]
+            const all_muscles = [...muscles,totals]
+            
+            //using our all_stds list map over each value
+            all_stds.map((stdev, index)=> {
+                if(overlay==4 || (index==overlay)){ // if we are generating the total
+                    all_muscles[index].map((muscle,subindex)=>{
+                        const z = zScore(muscle,all_avgs[index],stdev);
+                        muscle_group_shapes[subindex].map((shape_key)=>{
+                            fillShape(ctx,shapes[shape_key],getColorFromZ(z))
+                        })
+                    })
+                }
+            })
+            
         }
     }
-
-
+    
+    
     return (
         <div className='flex justify-center'>
             <canvas ref={canvasRef}  width={"300"} height={"300"} >Body Impact Canvas</canvas>
         </div>
         )
-}
+    }
