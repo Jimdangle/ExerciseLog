@@ -11,6 +11,8 @@ import { isTimeString, GetLocal } from '../../utils/date';
 import ExerciseItem from './ExerciseItem';
 import SummaryView from '../UserInfo/SummaryView';
 
+
+
 export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
