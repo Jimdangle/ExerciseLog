@@ -161,22 +161,28 @@ function GetExerciseSummary(exercise, summaryData){
     summaryData.exercise_totals[motion.type] += sum; // add our total 
     //For storing values as we average and access later
     const minValue = 1000000;
-    var value = {min:minValue,max:0,avg:0}
-    var weight = {min:minValue,max:0,avg:0}
+    var value = {min:[minValue,0],max:[0,0],avg:0}
+    var weight = {min:[0,minValue],max:[0,0],avg:0}
 
     //get min max and average
     exercise.sets.forEach( (set) => {
-        value.min = value.min < set.rep_or_time ? value.min : set.rep_or_time
-        value.max = value.max > set.rep_or_time ? value.max : set.rep_or_time
+        value.min[0] = value.min[0] < set.rep_or_time ? value.min[0] : set.rep_or_time // rep minimum
+        value.min[1] = value.min[0] < set.rep_or_time ? value.min[1] : set.added_weight // relative weight for rep min
+
+        value.max[0] = value.max[0] > set.rep_or_time ? value.max[0] : set.rep_or_time // rep max
+        value.max[1] = value.max[0] > set.rep_or_time ? value.max[1] : set.added_weight// assoc weight for rep max
         value.avg += set.rep_or_time
 
-        weight.min = weight.min < set.added_weight ? weight.min : set.added_weight
-        weight.max = weight.min > set.added_weight ? weight.max : set.added_weight
+        weight.min[1] = weight.min[1] < set.added_weight ? weight.min[1] : set.added_weight //Weight min
+        weight.min[0] = weight.min[1] < set.added_weight ? weight.min[0] : set.rep_or_time // assoc reps for weight min
+
+        weight.max[1] = weight.min[1] > set.added_weight ? weight.max[1] : set.added_weight // weight max
+        weight.max[0] = weight.min[1] > set.added_weight ? weight.max[0] : set.rep_or_time // assoc reps for max
         weight.avg += set.added_weight
     });
 
-    value.min = value.min!== minValue ? value.min : 0;
-    weight.min = weight.min!== minValue ? weight.min : 0;
+    value.min[0] = value.min[0]!== minValue ? value.min[0] : 0; // ensure we don't return the min value
+    weight.min[1] = weight.min[1]!== minValue ? weight.min[1] : 0;
 
     //calculate average on this exercise
     value.avg = value.avg / (exercise.sets.length > 0? exercise.sets.length : 1);
@@ -192,13 +198,13 @@ function GetExerciseSummary(exercise, summaryData){
             n: cur_sum.n+m,
             type: cur_sum.type,
             values: {
-                min: Math.min(cur_sum.values.min, value.min),
-                max: Math.max(value.max,cur_sum.values.max),
+                min: (cur_sum.values.min[0] > value.min[0] ? value.min : cur_sum.values.min),
+                max: (value.max[0] > cur_sum.values.max[0] ? value.max : cur_sum.values.max),
                 avg: ((cur_sum.values.avg*cur_sum.n) +(value.avg*m))/(m+cur_sum.n)
             },
             weights: {
-                min: Math.min(weight.min,cur_sum.weights.min),
-                max: Math.max(weight.min,cur_sum.weights.min),
+                min: (weight.min[1] < cur_sum.weights.min[1] ? weight.min : cur_sum.weights.min),
+                max: (weight.max[1] < cur_sum.weights.max[1] ? weight.max : cur_sum.weights.max),
                 avg: ((cur_sum.weights.avg*cur_sum.n) +(weight.avg*m))/(m+cur_sum.n)
             },
             muscles: cur_sum.muscles.map ((item,index) => {return item+impact[index]})
