@@ -12,6 +12,7 @@ import { recentPage } from "../config/cfUtil";
 // 2) Log Adder : Let the user add a new workout log, name it and press some continue button
 
 export const TokenContext = createContext(null);
+export const PageContext = createContext(null);
 
 export default function Home({signout,test}){
     const logout = () => {
@@ -64,7 +65,9 @@ export default function Home({signout,test}){
         <NavBar SetPage={SetPage} logout={logout} active={page}></NavBar>
         
         <TokenContext.Provider value={token}>
-            {SelectPage()}
+            <PageContext.Provider value={SetPage}>
+                {SelectPage()}
+            </PageContext.Provider>
         </TokenContext.Provider>
         
         {/**Literal filler, large height, large vertical margin, invisible text */}
