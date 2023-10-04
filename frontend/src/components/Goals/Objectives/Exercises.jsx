@@ -15,7 +15,7 @@ export default function Exercise({setTarget}){
 
     useEffect(()=>{
         setTarget({exercise_name:motionName,subTarget:subTarget})
-    })
+    },[motionName,subTarget])
 
     async function GetMotions(){
         try{

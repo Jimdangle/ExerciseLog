@@ -45,6 +45,8 @@ export default function Home({signout,test}){
                 return <LogPage SelectPage={SetPage}></LogPage>
             case 2:
                 return <UserInfo></UserInfo>
+            case 3:
+                return <Goals></Goals>
             default:
                 return <LogList SelectPage={SetPage}></LogList>
         }
@@ -68,7 +70,6 @@ export default function Home({signout,test}){
         <TokenContext.Provider value={token}>
             <PageContext.Provider value={SetPage}>
                 {SelectPage()}
-                <Goals></Goals>
             </PageContext.Provider>
         </TokenContext.Provider>
         
