@@ -14,7 +14,7 @@ const GetDate = () => {
 //      1: has accesss to exercise_totals
 //      2: has access to muscles array
 //      3: has access to the exercise summary
-// target will be a string(that can be converted into a number for array access)
+// target will be an object (loosely controlled) that will contain target information (how to find the number we want to compare against) for a particular thing, will document as i go lol
 // value will be the value the user wants to assign the target
 const ObjectiveSchema = new mongoose.Schema({
     context: {
@@ -23,13 +23,13 @@ const ObjectiveSchema = new mongoose.Schema({
         required: true
     },
     target: {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
         required: true
     },
     value:{
         type: Number,
         required: true
-    }
+    },
 })
 
 
@@ -45,11 +45,11 @@ const GoalSchema = new mongoose.Schema({
         required: true,  
     },
     objectives: [{type: mongoose.Schema.Types.ObjectId, ref:'Objectives'}]
-
 })
+GoalSchema.index({user_id:1,start:1,end:1,name:1}, {unique: true}); // a unique goal should have different dates, and name per user 
 
 
 const Objectives = mongoose.model("Objectives", ObjectiveSchema);
-const Goals = mongoose.model("Goals", Goals);
+const Goals = mongoose.model("Goals", GoalSchema);
 
 module.exports = {Objectives:Objectives, Goals:Goals}
