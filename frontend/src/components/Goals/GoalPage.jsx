@@ -7,6 +7,7 @@ export default function GoalPage({goal,setViewingGoal}){
     const token = useContext(TokenContext);
     const [addingObjective, setAddingObjective] = useState(false)
 
+    
 
     return (
     <div className="flex flex-col">
