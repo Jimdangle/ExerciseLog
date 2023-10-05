@@ -31,7 +31,7 @@ export default function GoalMaker(){
         }
     }
 
-    return(<div  className="text-white">
+    return(<div  className="flex flex-col text-white">
         <h1>Goals Maker</h1>
         <div className="flex justify-center">
             <input type="text" className="text-black" placeholder="(name)" value={name} onChange={(e)=>{setName(e.target.value)}}></input>
@@ -44,7 +44,7 @@ export default function GoalMaker(){
             <p>End</p>
             <input type="date" placeholder={endDate.toString()} className="ml-auto  text-black" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
         </div>
-        <div className="flex justify-center w-1/2">
+        <div className="flex place-items-center justify-center">
             <button className="button button-e-green" onClick={AddGoal}>Add</button>
         </div>
 

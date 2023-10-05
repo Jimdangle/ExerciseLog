@@ -5,6 +5,8 @@ async function CreateNewGoal(req,res,next){
     const {start,end} = res.locals.bodyData;
     const user = res.locals.user;
     const name = res.locals.bodyData.name !== "" ? res.locals.bodyData.name : "default"
+
+    if(start > end){ next("Please select a end date that is after the start date")}; // make sure dates are okay
     console.log(res.locals.bodyData)
     try{
         const newGoal = new Goals({user_id:user,name:name,start:new Date(start),end:new Date(end)})

@@ -10,7 +10,7 @@ export default function Goals(){
 
     
     return(
-    <div>
+    <div className="flex flex-col">
         <GoalMaker></GoalMaker>
         {viewingGoal ? <GoalPage goal={goal} setViewingGoal={setViewingGoal}></GoalPage> : <GoalList setGoal={setGoal} setViewingGoal={setViewingGoal}></GoalList>}
         
