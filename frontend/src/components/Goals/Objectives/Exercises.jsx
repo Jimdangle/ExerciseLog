@@ -59,12 +59,12 @@ export default function Exercise({setTarget}){
                 <p>Option: </p>
                 <select name="volume_select" className="w-24 bg-slate-600" onChange={(e)=>{setSubTarget(e.target.value)}}>
                             <option value="n">Sets</option>
-                            <option value="rmin">Rep/Time Min</option>
-                            <option value="rmax">Rep/Time Max</option>
-                            <option value="ravg">Rep/Time Average</option>
-                            <option value="wmin">Weight Min</option>
-                            <option value="wmax">Weight Max</option>
-                            <option value="wavg">Weight Average</option>
+                            <option value="r,min">Rep/Time Min</option>
+                            <option value="r,max">Rep/Time Max</option>
+                            <option value="r,avg">Rep/Time Average</option>
+                            <option value="w,min">Weight Min</option>
+                            <option value="w,max">Weight Max</option>
+                            <option value="w,avg">Weight Average</option>
                 </select>  
             </div>
         </div>

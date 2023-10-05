@@ -32,7 +32,19 @@ async function GetMotionArray(){
     }
 }
 
-module.exports = {GetMotionArray:GetMotionArray}
+class SummaryData   {
+    constructor(){
+        this.total_workouts=0;
+        this.total_exercises=0
+        this.total_sets=0
+        this.exercise_totals=[0,0,0]
+        this.muscles=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
+        this.exercise_summary={}
+    }
+}
+
+
+module.exports = {GetMotionArray:GetMotionArray,SummaryData:SummaryData}
 const p2p = path.join(__dirname,'../','config','workouts_out.txt')
 async function WriteArray(){
     const inp = await GetMotionArray();
