@@ -13,10 +13,11 @@ GoalRouter.use(bodyParser.json());
 const REQUIRED_KEYS = {
     "/new": ["start","end"],
     "/addObj": ["context","target","value","goal_id"],
-    "/remObj": ["objective_id"],
+    "/remObj": ["objective_id","goal_id"],
     "/rem": ["goal_id"],
     "/ls": true,
-    "/lsr": ["start","end"]
+    "/lsr": ["start","end"],
+    "/get": ["goal_id"]
 }
 
 
@@ -33,6 +34,9 @@ GoalRouter.use('', (req, res, next) => {
 
 GoalRouter.post('/new', GoalContoller.CreateNewGoal );
 GoalRouter.delete('/rem',GoalContoller.RemoveGoal);
+GoalRouter.post('/get',GoalContoller.GetGoalData);
 GoalRouter.get('/ls', GoalContoller.ListGoals);
+GoalRouter.post('/lsr', GoalContoller.ListGoalsRange);
 GoalRouter.post('/addObj', GoalContoller.AddObj);
+GoalRouter.delete('/remObj', GoalContoller.RemoveObj);
 module.exports = {GoalRouter:GoalRouter}

@@ -5,7 +5,7 @@ import ObjectiveItem from "./ObjectiveItem";
 import Volumes from "./Volumes";
 import Muscles from "./Muscles";
 import Exercise from "./Exercises";
-export default function ObjectiveAdder({goal_id}){
+export default function ObjectiveAdder({goal_id,GetGoalData}){
     
     const token = useContext(TokenContext)
 
@@ -42,6 +42,7 @@ export default function ObjectiveAdder({goal_id}){
             if(response.ok){
                 const bod = await response.json();
                 console.log(bod);
+                GetGoalData()
             }
         }
         catch(e)

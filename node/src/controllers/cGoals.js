@@ -1,4 +1,5 @@
 const {Goals, Objectives} = require('../models/mGoals');
+const { Workout } = require('../models/mWorkout');
 
 
 async function CreateNewGoal(req,res,next){
@@ -32,11 +33,12 @@ async function RemoveGoal(req,res,next){
     }
 }
 
+// return ids of all goals
 async function ListGoals(req,res,next){
     const user = res.locals.user;
 
     try{
-        const found = await Goals.find({user_id:user}).populate("objectives")
+        const found = await Goals.find({user_id:user})
         res.send({found:found})
     }
     catch(e){
@@ -45,7 +47,31 @@ async function ListGoals(req,res,next){
 
 }
 
-async function ListGoalsRange(req,res,next){}
+//return ids of goals in a certain date range
+async function ListGoalsRange(req,res,next){
+    const user = res.locals.user;
+    const {start,end} = res.locals.bodyData;
+
+    try{
+        const found = await Goals.find({user_id:user, createdAt:{$gte: new Date(start), $lte: endDate}})
+        res.send({found:found})
+    }
+    catch(e){
+        next(e.message)
+    }
+}
+
+//return populated data on a single goal
+async function GetGoalData(req,res,next){
+    const {goal_id} = res.locals.bodyData;
+    try{
+        const match = await Goals.findOne({_id:goal_id}).populate("objectives");
+        res.send({goal:match})
+    }
+    catch(e){
+        next(e.message);
+    }
+}
 
 async function AddObj(req,res,next){
     const {context,target,value,goal_id} = res.locals.bodyData;
@@ -69,8 +95,18 @@ async function AddObj(req,res,next){
     }
 }
 
-async function RemoveObj(req,res,next){}
+async function RemoveObj(req,res,next){
+    const {goal_id, objective_id} = res.locals.bodyData;
+    try{
+        const goal = await Goals.findOneAndUpdate({_id:goal_id}, {$pull: {"objectives" : objective_id}})// pull objective off the goal
+        await Objectives.deleteOne({_id:objective_id}) // delete the objective
+        res.send({deleted:true})
+    }
+    catch(e){
+        next(e.message)
+    }
+}
 
 
 
-module.exports = {CreateNewGoal:CreateNewGoal,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
+module.exports = {CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}

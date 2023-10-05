@@ -2,11 +2,11 @@ import {useState, useContext, useEffect} from 'react'
 import { TokenContext } from '../../views/Home'
 import GoalItem from './GoalItem';
 
-export default function GoalList({setGoal,setViewingGoal}){
+export default function GoalList({setGoal,setViewingGoal,addedGoal}){
     const token = useContext(TokenContext);
     const [rawList,setRawList] = useState([])
     const [search, setSearch] = useState("")
-    const [displayList,setDisplayList] = useState([])
+    
 
     useEffect(()=>{GetGoals()},[])
 

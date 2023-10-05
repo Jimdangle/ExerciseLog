@@ -4,15 +4,17 @@ import GoalMaker from "./GoalMaker";
 import GoalPage from "./GoalPage";
 
 export default function Goals(){
-    
-   const [viewingGoal, setViewingGoal] = useState(false);
-   const [goal, setGoal] = useState({})
+
+    const [addedGoal,setAddedGoal] = useState(false);
+    const [viewingGoal, setViewingGoal] = useState(false);
+    const [goal, setGoal] = useState({})
+   
 
     
     return(
     <div className="flex flex-col">
-        <GoalMaker></GoalMaker>
-        {viewingGoal ? <GoalPage goal={goal} setViewingGoal={setViewingGoal}></GoalPage> : <GoalList setGoal={setGoal} setViewingGoal={setViewingGoal}></GoalList>}
+        <GoalMaker setAddedGoal={setAddedGoal}></GoalMaker>
+        {viewingGoal ? <GoalPage goal={goal} setViewingGoal={setViewingGoal}></GoalPage> : <GoalList setGoal={setGoal} setViewingGoal={setViewingGoal} addedGoal={addedGoal}></GoalList>}
         
     </div>)
     }
