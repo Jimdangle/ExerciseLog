@@ -136,7 +136,7 @@ async function CompareGoal(req,res,next){
 async function GoalSummary(req,res,next){
     var {start,end} = res.locals.bodyData; // Optional start and end date
     start = start ? new Date(start) : 0;
-    end = end ? new Date(Date.now());
+    end = end ? new Date(end) : new Date(Date.now());
 
 
     //Maybe return most complete goals, least complete goals, and most recent goals
