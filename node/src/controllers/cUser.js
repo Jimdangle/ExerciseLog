@@ -16,18 +16,30 @@ async function GetUser(req,res,next){
     }
 }
 
-
+/**  Request controler for generating a summary */
 async function GetWholeSummary(req,res,next){
     const {start,end} = res.locals.bodyData;
     const user = res.locals.user; // get our query data
     
-    const endDate = end !=0 ? new Date(end) : Date.now();
+    const endDate = end !=0 ? new Date(end) : Date.now(); //if end date is default value of 0 just make it current time and find all workouts up to this point
     //Our final result object
+    const summaryData = await GenerateSummary(user,start,endDate);
+    if(summaryData){
+        res.send({summary:summaryData})
+    }
+    else{
+        next(`Unable to generate summary for ${end}-${start}`)
+    }
+}
+
+
+/**  Function Summary Generation (not request dependent) should be able to generate summaries elsewhere now*/
+async function GenerateSummary(user,start,end){
     var data = new SummaryData();
     try{
-        const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: endDate}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
+        const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: new Date(end)}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         console.log(workouts)
-        console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(endDate).toString()}: found ${workouts.length} workouts`)
+        console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(end).toString()}: found ${workouts.length} workouts`)
         if(workouts.length > 0){
             workouts.forEach( (workout) => {
                 data.total_workouts+=1; //increment workout count
@@ -35,10 +47,10 @@ async function GetWholeSummary(req,res,next){
             })
         }
 
-        res.send({summary:data})
+        return data;
     }
     catch(e){
-        next(e.message)
+        return null;
     }
 }
 
@@ -146,4 +158,4 @@ async function ChangeUsername(req,res,next){
     }
 }
 
-module.exports = {GetWholeSummary:GetWholeSummary,GetUser:GetUser,ChangeUsername:ChangeUsername,GetSingleWorkoutSummary:GetSingleWorkoutSummary}
+module.exports = {GetWholeSummary:GetWholeSummary,GetUser:GetUser,ChangeUsername:ChangeUsername,GetSingleWorkoutSummary:GetSingleWorkoutSummary,GenerateSummary:GenerateSummary}
