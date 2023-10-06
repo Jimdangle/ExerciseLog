@@ -17,7 +17,8 @@ const REQUIRED_KEYS = {
     "/rem": ["goal_id"],
     "/ls": true,
     "/lsr": ["start","end"],
-    "/get": ["goal_id"]
+    "/get": ["goal_id"],
+    "/cmp": ["goal_id"]
 }
 
 
@@ -39,4 +40,5 @@ GoalRouter.get('/ls', GoalContoller.ListGoals);
 GoalRouter.post('/lsr', GoalContoller.ListGoalsRange);
 GoalRouter.post('/addObj', GoalContoller.AddObj);
 GoalRouter.delete('/remObj', GoalContoller.RemoveObj);
+GoalRouter.post('/cmp', GoalContoller.CompareGoal);
 module.exports = {GoalRouter:GoalRouter}

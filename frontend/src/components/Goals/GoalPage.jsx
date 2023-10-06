@@ -27,6 +27,7 @@ export default function GoalPage({goal,setViewingGoal}){
                 const bod = await response.json();
                 console.log(bod);
                 setGoalData(bod.goal);
+                CompareGoal();
             }
         }
         catch(e)
@@ -34,6 +35,32 @@ export default function GoalPage({goal,setViewingGoal}){
             console.log(e.message)
         }
     }
+
+    async function CompareGoal(){
+        try{
+            const response = await fetch('http://localhost:3001/goals/cmp',{
+                method: "post",
+                headers: {
+                    'Origin': 'http://127.0.0.1:3000',
+                    'Content-Type': 'application/json',
+                    'authorization': token
+                },
+                mode:'cors',
+                body: JSON.stringify({goal_id: goal._id})
+            })
+
+            if(response.ok){
+                const bod = await response.json();
+                console.log(bod);
+            }
+        }
+        catch(e)
+        {
+            console.log(e.message)
+        }
+    }
+    
+    
 
     
 

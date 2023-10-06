@@ -1,7 +1,6 @@
 const User = require('../models/mUsers.js')
 const {Workout} = require('../models/mWorkout.js');
-const { GetDate } = require('../util/dateutil.js');
-const {ExerciseVolume} = require('../util/summaryutil.js');
+
 const {SummaryData} = require('../util/dutil.js');
 //Get user information based on the presence of the user token in the header 
 async function GetUser(req,res,next){

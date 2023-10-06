@@ -115,36 +115,23 @@ async function CompareGoal(req,res,next){
     try{
         const goal = await Goals.findOne({_id:goal_id}).populate("objectives");
         const {start,end} = goal;
-        const workouts_in_range = await Workout.find({user_id:user,createdAt: {$gte: new Date(end), $lte: new Date(start)}})
+        console.log(`Start: ${typeof start} / End: ${typeof end}`)
+        const workouts_in_range = await Workout.find({user_id:user,createdAt:{$gte: start, $lte: end}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
         var data = new SummaryData();
         var goal_data= {};
+        console.log(`Comparing Goals found ${workouts_in_range.length} workouts`)
         workouts_in_range.forEach((item,index)=>{
             data.total_workouts +=1;
             GetSingleWorkoutSummary(item,data);
         }) // build summary data object
 
         //Pull out objectives and use them to access the summary data for comparison
-        goal.objectives.forEach((item,index)=>{
-            switch(item.context){
-                case 0:
-                    goal_data[item.name] = data[item.target] - item.value
-                    break;
-                case 1:
-                    goal_data[item.name] = data.exercise_totals[item.target] - item.value
-                    break;
-                case 2:
-                    goal_data[item.name] = data.muscles[item.target.type][item.target.muscle] - item.value;
-                case 3:
-                    var key = {}
-                    if(item.target.subtarget === "n"){key = "n"}
-                    else{
-                        const pairs = item.subtarget.split(",");
-
-                    }
-                    break;
-            }
-
-        })
+        if(workouts_in_range.length > 0 ){
+            goal.objectives.forEach((item,index)=>{
+                goal_data[item.name] = parseObjective(item,data);
+            })
+        }   
+        res.send({difference: goal_data});
 
     }
     catch(e){
@@ -153,5 +140,26 @@ async function CompareGoal(req,res,next){
 }
 
 
+function parseObjective(objective, data){
+    console.log(`Parsing ${objective.name} with ${objective.type}`)
+    switch(objective.context){
+        case 0:
+            return data[objective.target] - objective.value
+        case 1:
+            return data.exercise_totals[objective.target] - objective.value
+            
+        case 2:
+            return data.muscles[objective.target.type][objective.target.muscle] - objective.value;
+        case 3:
+            if(objective.target.subtarget === "n"){
+                return data.exercise_summary[objective.target.exercise_name]["n"] - objective.value;
+            }
+            else{
+                const [key,subkey] = objective.subtarget.split(",");
+                return data.exercise_summary[objective.target.exercise_name][key][subkey][(key==="r" ? 0 : 1)] - objective.value;  
+            }
+    }
+}
 
-module.exports = {CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
+
+module.exports = {CompareGoal:CompareGoal,CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
