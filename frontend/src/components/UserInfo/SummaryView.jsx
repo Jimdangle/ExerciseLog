@@ -14,32 +14,32 @@ export default function SummaryView({Summary}){
 
         <div className="flex flex-col mt-3 pt-3 border-t-2 text-white">
             {/* General Summary Info*/}
-            <h2 className="text-white text-xl mt-3 font-semibold">General</h2>
+            <h2 className="h1-white mt-3">General</h2>
             <p>{Summary.total_workouts >1 ? "Total Workouts:" +Summary.total_workouts : ""}</p>    
             <p>Total Exercises: {Summary.total_exercises}</p>    
             {/* Map the index of the array to the type it is and display the total*/}
-            <h2 className="text-white text-xl font-semibold mt-3">Breakdown by Type</h2>
+            <h2 className="h1-white mt-3">Breakdown by Type</h2>
             {Summary.exercise_totals.map( (item,index)=>{
                 
                 
-                return ((index==overlay || overlay==4) ? <p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: <span className="text-green-400">{item}{index==0 ? "lb" : "lb*s"}</span></p> : <></>)
+                return ((index==overlay || overlay==4) ? <p key={"urRacistFatherInLaw"+index}>{TranslateType(index)} Total: <span className="info-blue-lg">{item}{index==0 ? "lb" : "lb*s"}</span></p> : <></>)
             })}
 
             {/**Impact map and controls for overlay */}
-            <h2 className="text-white text-center text-xl font-semibold mt-3">Impact Map</h2>
+            <h2 className="h1-white text-center mt-3">Impact Map</h2>
             <SummaryCanvas summaryData={Summary} overlay={overlay}></SummaryCanvas>
             <div className='flex flex-row justify-center'>
-                <button className={'button button-e-green' + (overlay==0 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(0)}}>Lifts</button>
-                <button className={'button button-e-green' + (overlay==1 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(1)}}>Cardio</button>
-                <button className={'button button-e-green'+ (overlay==2 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(2)}}>Holds</button>
+                <button className={'button ' + (overlay==0 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(0)}}>Lifts</button>
+                <button className={'button ' + (overlay==1 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(1)}}>Cardio</button>
+                <button className={'button '+ (overlay==2 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(2)}}>Holds</button>
             </div>
-            <button className={'button button-e-green'+ (overlay==4 ? ' bg-white text-green-400' : '')} onClick={()=>{setOverlay(4)}}>Total</button>
+            <button className={'button '+ (overlay==4 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(4)}}>Total</button>
             
             
     
 
 
-            <h2 className="text-white text-lg mt-3 font-semibold">Muscle Breakdown by Type</h2>
+            <h2 className="h1-white mt-3">Muscle Breakdown by Type</h2>
             {/* Going to list of the % impact on each muscle group for each type this could probably and should probably be turned into a component*/}
             {Summary.muscles.map((impact_map,index)=>{
                 const map_total = Summary.exercise_totals[index];//get the total, then map a division onto the impacts
@@ -80,7 +80,7 @@ export default function SummaryView({Summary}){
                 )
             })}
 
-            <h2 className="text-white text-xl mt-3 font-semibold">Exercise Summary</h2>
+            <h2 className="h1-white mt-3">Exercise Summary</h2>
             <div className="w-auto h-124 overflow-y-scroll">
                 {
                 Summary.exercise_summary ? 
@@ -93,17 +93,17 @@ export default function SummaryView({Summary}){
                     ?
                     <div key={"fffffff"+index} className="mt-5 flex flex-col">
                         <div className="flex border-b-2 mb-2 pb-2 border-dashed border-green-400">
-                            <h3 className="mt-2 font-semibold">{key}</h3>
+                            <h3 className="mt-2 h2-white">{key}</h3>
                             <h3 className="ml-1 text-sm justify-self-end text-green-400">{TranslateType(exercise.type)}</h3>
-                        </div>
+                        </div> 
                         <div>
                             <p>Total Sets : {exercise.n}</p>
                             <p>Total Contribution: {Summary.exercise_totals[exercise.type] !=0 ? Math.round((impact/Summary.exercise_totals[exercise.type])*100) : ""}%</p>
                         </div>
                         <div>
-                            <h3 className="ml-2 font-semibold">{exercise.type==0 ? "Reps" : "Time"}</h3>
+                            <h3 className="ml-2 h3-white">{exercise.type==0 ? "Reps" : "Time"}</h3>
                             {Object.keys(exercise.values).map((key,index)=>{return (<p className="ml-3 text-sm" key={exercise.name+key+index}>{key} : {exercise.values[key]}</p>)})}
-                            <h3 className="ml-2 font-semibold">Weight</h3>
+                            <h3 className="ml-2 h3-white">Weight</h3>
                             {Object.keys(exercise.weights).map((key,index)=>{return (<p className="ml-3 text-sm" key={exercise.name+key+index}>{key} : {exercise.weights[key]}</p>)})}
                         </div>
                         

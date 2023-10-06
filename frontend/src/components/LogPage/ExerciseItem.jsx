@@ -37,7 +37,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
             <div className='h-auto w-auto -mt-12 bg-slate-600 mx-2 rounded-md shadow-sm'>
                 <div className='grid grid-cols-4 place-items-center text-green-400'>
                     <div className='text-sm font-semibold text-white'>Set #</div> 
-                    <div className='text-sm font-semibold text-white'>{motionData.type==0 ? "Reps" : "Time(s)"}</div>
+                    <div className='text-sm font-semibold text-white'>{motionData.type==0 ? "Reps" : "Time(min)"}</div>
                     <div className='text-sm font-semibold text-white'>Weight(lbs)</div>
                     <div></div>       
                 
@@ -45,13 +45,13 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                         item.sets ? 
                         item.sets.map( (set, subindex) => {
                             return(
-                                <SetItem set={set} key={subindex} number={subindex+1} RemoveSet={RemoveSet} exercise_id={item._id}></SetItem>)
+                                <SetItem set={set} key={subindex} number={subindex+1} RemoveSet={RemoveSet} exercise_id={item._id} type={motionData.type}></SetItem>)
                         })
                         :
                         <></>
                     }
                     
-                    <SetAdder exercise_id={item._id} refresh={refresh}></SetAdder>
+                    <SetAdder exercise_id={item._id} refresh={refresh} type={motionData.type}></SetAdder>
                 </div>
             </div>
             <div className='flex justify-center mt-2'>

@@ -1,6 +1,6 @@
 
 
-export default function SetItem({set, RemoveSet, number, exercise_id}){
+export default function SetItem({set, RemoveSet, number, exercise_id, type}){
     return(
 
         <>

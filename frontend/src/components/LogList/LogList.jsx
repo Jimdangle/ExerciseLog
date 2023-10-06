@@ -154,11 +154,11 @@ export default function LogList({SelectPage}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <div key={index} className="workout-log">
+                        <div key={index} className="workout-item">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="font-bold text-green-400 text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
-                                <p>Created:{item.createdAt}</p>
-                                <p>Edited:{item.updatedAt}</p>
+                                <h1 className="h2-green">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
+                                <p className='info-blue-s'>Created:{item.createdAt.slice(0,16)}</p>
+                                <p className='info-blue-s'>Edited:{item.updatedAt.slice(0,16)}</p>
                             </div>
                             <div className='flex justify-center'>
                                 <button className='button button-e-red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>
