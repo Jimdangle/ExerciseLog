@@ -10,7 +10,9 @@ export default function Exercise({setTarget}){
     const [subTarget, setSubTarget] = useState("")
     useEffect(()=>{
         GetMotions();
+        setTarget({exercise_name:"",subTarget:""})
     },[])
+
 
 
     useEffect(()=>{
@@ -57,7 +59,7 @@ export default function Exercise({setTarget}){
 
             <div className="flex flex-row">
                 <p>Option: </p>
-                <select name="volume_select" className="w-24 bg-slate-600" onChange={(e)=>{setSubTarget(e.target.value)}}>
+                <select name="volume_select" className="bg-slate-600" onChange={(e)=>{setSubTarget(e.target.value)}}>
                             <option value="n">Sets</option>
                             <option value="r,min">Rep/Time Min</option>
                             <option value="r,max">Rep/Time Max</option>

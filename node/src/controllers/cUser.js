@@ -26,6 +26,7 @@ async function GetWholeSummary(req,res,next){
     var data = new SummaryData();
     try{
         const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: endDate}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
+        console.log(workouts)
         console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(endDate).toString()}: found ${workouts.length} workouts`)
         if(workouts.length > 0){
             workouts.forEach( (workout) => {

@@ -7,6 +7,7 @@ export default function GoalPage({goal,setViewingGoal}){
     const token = useContext(TokenContext);
     const [addingObjective, setAddingObjective] = useState(false)
     const [goalData,setGoalData] = useState({})
+    const [goalComp, setGoalComp] = useState({})
 
     useEffect(()=>{GetGoalData()},[addingObjective])
 
@@ -52,6 +53,7 @@ export default function GoalPage({goal,setViewingGoal}){
             if(response.ok){
                 const bod = await response.json();
                 console.log(bod);
+                setGoalComp(bod.difference)
             }
         }
         catch(e)
@@ -68,8 +70,8 @@ export default function GoalPage({goal,setViewingGoal}){
     <div className="flex flex-col">
         <h1 className="text-center text-white font-semibold">{goal.name}</h1>
         {goalData.objectives ? goalData.objectives.map((item,index)=>{
-            console.log(item)
-            return <ObjectiveItem key={index+"llcoolObj"} objective={item} goal_id={goal._id} GetGoalData={GetGoalData}></ObjectiveItem>
+            
+            return <ObjectiveItem key={index+"llcoolObj"} objective={item} goal_id={goal._id} GetGoalData={GetGoalData} cmp={goalComp ? goalComp[index]: [0,0]}></ObjectiveItem>
         }): <></>}
         <button className="place-self-center button button-e-green" onClick={()=>{setAddingObjective(!addingObjective)}}>Add Objective</button>
         {addingObjective ? <ObjectiveAdder goal_id={goal._id} GetGoalData={GetGoalData}></ObjectiveAdder> : ""}

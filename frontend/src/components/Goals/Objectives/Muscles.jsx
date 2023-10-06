@@ -11,7 +11,7 @@ export default function Muscles({setTarget}){
     <div className="flex flex-col text-white my-2">
         <div className="flex flex-row">
             <p>Muscle: </p>
-            <select name="volume_select" className="w-24 bg-slate-600" onChange={(e)=>{setMuscle(e.target.value)}}>
+            <select name="volume_select" className=" bg-slate-600" onChange={(e)=>{setMuscle(e.target.value)}}>
                         <option value="0">Chest</option>
                         <option value="1">Back</option>
                         <option value="2">Hamstrings</option>
@@ -24,7 +24,7 @@ export default function Muscles({setTarget}){
         
         <div className="flex flex-row">
             <p>Type: </p>
-            <select name="volume_select" className="w-24 bg-slate-600" onChange={(e)=>{setType(e.target.value)}}>
+            <select name="volume_select" className=" bg-slate-600" onChange={(e)=>{setType(e.target.value)}}>
                         <option value="0">Lifts</option>
                         <option value="1">Cardio</option>
                         <option value="2">Holds</option>

@@ -1,8 +1,10 @@
 import { TranslateType } from "../../../utils/goalutil"
 import { TokenContext } from "../../../views/Home";
 import { useContext } from "react";
-export default function ObjectiveItem({objective, goal_id, GetGoalData}){
+export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp}){
     const token = useContext(TokenContext)
+
+    
 
     async function RemoveObjective(){
         try{
@@ -31,7 +33,8 @@ export default function ObjectiveItem({objective, goal_id, GetGoalData}){
 
     return (
     <div>
-        <p><span className="text-green-400 font">{TranslateType(objective.context)}</span> --{objective.target ? Object.keys(objective.target).map((item,index)=>{return <span key={index+"l"+index} className="text-white"> {item}: {objective.target[item] },</span>}) : <></>}-- <span className="text-red-400">{objective.value}</span></p>
+        <p><span className="text-green-400 font">{TranslateType(objective.context)}</span> --{objective.target ? Object.keys(objective.target).map((item,index)=>{return <span key={index+"l"+index} className="text-white"> {item}: {objective.target[item] },</span>}) : <></>}-- <span className="text-red-400">{objective.value}</span> v.s <span className="text-green-400 font">{cmp ? cmp[1]: cmp}</span></p>
         <p className="text-red-400 font-semibold hover:text-white" onClick={RemoveObjective}>Remove</p>
+        
     </div>)
 }
