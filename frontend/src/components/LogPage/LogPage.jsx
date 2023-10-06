@@ -11,7 +11,7 @@ import { isTimeString, GetLocal } from '../../utils/date';
 import ExerciseItem from './ExerciseItem';
 import SummaryView from '../UserInfo/SummaryView';
 
-
+import { FaHeart } from "react-icons/fa";
 
 export default function LogPage({item, SelectPage}){
     
@@ -148,7 +148,7 @@ export default function LogPage({item, SelectPage}){
     return (
             <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
                 
-                <h2 className='font-semibold text-center text-green-400 text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))}</h2>
+                <h2 className='font-semibold text-center text-green-400 text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaHeart /></h2>
                 {
                     
                     logData.exercises ? 
