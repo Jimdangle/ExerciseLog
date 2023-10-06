@@ -4,6 +4,7 @@ import LogPage from "../components/LogPage/LogPage";
 import UserInfo from "../components/UserInfo/UserInfo";
 import { createContext, useState, useEffect } from "react";
 import NavBar from "../components/NavBar/NavBar";
+import Goals from '../components/Goals/Goals'
 
 import { recentPage } from "../config/cfUtil";
 //Home Show recent workouts and let user edit items in the list
@@ -44,6 +45,8 @@ export default function Home({signout,test}){
                 return <LogPage SelectPage={SetPage}></LogPage>
             case 2:
                 return <UserInfo></UserInfo>
+            case 3:
+                return <Goals></Goals>
             default:
                 return <LogList SelectPage={SetPage}></LogList>
         }

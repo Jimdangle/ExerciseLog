@@ -16,6 +16,7 @@ const WorkoutR = require('./src/routes/rWorkout').WorkoutRouter;
 const Admin = require('./src/routes/rAdmin').AdminRouter;
 const User = require('./src/routes/rUser').UserRouter;
 const MotionR = require('./src/routes/rMotion').MotionRouter;
+const GoalsR = require('./src/routes/rGoals').GoalRouter;
 
 const corsOpts = require('./src/config/cfCors').corsOpts;
 const dutil = require('./src/util/dutil');
@@ -38,6 +39,7 @@ app.use('/workout/', WorkoutR);
 app.use('/admin/', Admin);
 app.use('/user/', User);
 app.use('/motion/', MotionR);
+app.use('/goals/',GoalsR);
 
 
 

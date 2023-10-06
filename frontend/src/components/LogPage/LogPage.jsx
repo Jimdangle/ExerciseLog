@@ -3,7 +3,7 @@ import {useContext, useEffect, useState} from 'react'
 import {recentLog} from '../../config/cfUtil';
 import ExerciseAdder from '../ExerciseAdder/ExerciseAdder';
 
-import { TokenContext } from '../../views/Home';
+import { TokenContext, PageContext } from '../../views/Home';
 
 
 
@@ -16,6 +16,7 @@ import SummaryView from '../UserInfo/SummaryView';
 export default function LogPage({item, SelectPage}){
     
     const token = useContext(TokenContext)
+    const setPage = useContext(PageContext);
     const [logData, setLogData] = useState({})
     const [addingExercise, setAddingExercise] = useState(false);
     const [summary,setSummary] = useState({})
@@ -49,7 +50,7 @@ export default function LogPage({item, SelectPage}){
                     GetWholeSummary(bod.workout.createdAt);
                 }
                 else{
-                    setLogData({name:"Non valid workout selected"})
+                    setPage(0);
                 }
             }
         }
@@ -140,6 +141,8 @@ export default function LogPage({item, SelectPage}){
                 console.log(e);
             }
         }
+
+        
     
 
     return (
@@ -154,7 +157,7 @@ export default function LogPage({item, SelectPage}){
                             return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={Refresh}></ExerciseItem>
                         })
                         :
-                        <p>No Exercises</p>
+                        <></>
                     
                 }
                 <div className='grid grid-row-2'>
