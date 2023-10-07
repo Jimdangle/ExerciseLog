@@ -7,7 +7,7 @@ export default function SetAdder({exercise_id, refresh, type}){
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
     
-    const [time,setTime] = useState({})
+    const [time,setTime] = useState({hours:"",min:"",sec:""})
 
     useEffect(()=>{console.log(time)},[time])
 
@@ -76,7 +76,7 @@ export default function SetAdder({exercise_id, refresh, type}){
             
 
            
-            <input className="w-12 my-2 rounded-lg text-center text-gun" type="number" value={weight} placeholder="additional weight" min={"0"} max={"1000"} onChange={(v)=>{
+            <input className="w-12 my-2 rounded-lg text-center text-gun" type="number" value={weight} placeholder={type==0 ? "Weight" : "Dist"} min={"0"} max={"1000"} onChange={(v)=>{
                 if(v.target.value >= 0 && v.target.value < 1000){
                     setWeight(v.target.value)
                 }
