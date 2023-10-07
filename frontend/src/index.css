@@ -14,13 +14,85 @@
         @apply inline px-3 text-sm text-white scale-100
     }
     .nav-a-item {
-        @apply inline px-3 text-green-400 scale-110
+        @apply inline px-3 text-ogreen scale-110
     }
 
     /*General Typography*/
-    .info-green{
-        @apply m-3 font-semibold  text-green-400
+    /* Info */
+    .info-green-lg{
+        @apply m-2 text-lg  text-ogreen
     }
+    .info-blue-lg{
+        @apply m-2 text-lg  text-oblue
+    }
+    .info-red-lg{
+        @apply m-2 text-lg  text-ored
+    }
+    .info-green{
+        @apply m-2  text-ogreen
+    }
+    .info-red{
+        @apply m-2  text-ored
+    }
+    .info-blue{
+        @apply m-2  text-oblue
+    }
+    .info-green-s{
+        @apply m-2 text-sm  text-ogreen
+    }
+    .info-red-s{
+        @apply m-2 text-sm  text-ored
+    }
+    .info-blue-s{
+        @apply m-2 text-sm  text-oblue
+    }
+
+
+    /* Headers */
+    .h1-white {
+        @apply text-white text-2xl font-semibold
+    }
+    .h2-white{
+        @apply text-white text-xl font-semibold
+    }
+    .h3-white{
+        @apply text-white text-lg font-semibold
+    }
+    .h1-green {
+        @apply text-ogreen text-2xl font-semibold
+    }
+    .h2-green{
+        @apply text-ogreen text-xl font-semibold
+    }
+    .h3-green{
+        @apply text-ogreen text-lg font-semibold
+    }
+    .h1-gun {
+        @apply text-gun text-2xl font-semibold
+    }
+    .h2-gun{
+        @apply text-gun text-xl font-semibold
+    }
+    .h3-gun{
+        @apply text-gun text-lg font-semibold
+    }
+
+    /*Strong*/
+    .str-gun{
+        @apply font-semibold text-gun
+    }
+    .str-white{
+        @apply font-semibold text-white
+    }
+    .str-green{
+        @apply font-semibold text-ogreen
+    }
+
+
+    .error{
+        @apply text-ored font-semibold
+    }
+
 
     /*Form Inputs (kinda dont like these anymore)*/
     .form-nonactive-input{
@@ -36,17 +108,26 @@
     }
 
     /*Containers*/
+    /*Root style*/
+    .app{
+        @apply bg-gun font-mono h-full w-full
+    }
+
     .login-center-card{
         @apply w-auto h-auto text-center mx-12 bg-slate-600 rounded-b-lg rounded-t-md shadow-lg;
     }
 
-    .workout-log{
-        @apply text-center mx-8 my-6 text-white bg-slate-600 rounded-md shadow-md
+    .workout-item{
+        @apply text-center mx-8 my-6 bg-white rounded-md shadow-md
     }
 
     .exercise-item{
         @apply  bg-slate-600 rounded-md shadow-md
     }
+
+    
+
+
 
     /*Buttons, e=enabled, d=disabled*/
     .button{
@@ -54,12 +135,26 @@
     }
 
     .button-e-green{
-        @apply bg-green-400 text-white scale-100
+        @apply bg-ogreen text-white scale-100
+    }
+    .button-e-blue{
+        @apply bg-oblue text-white scale-100
+    }
+    .button-e-red{
+        @apply bg-ored text-white scale-100
     }
 
-    .button-e-red{
-        @apply bg-red-400 text-white scale-100
+    .button-a-green{
+        @apply bg-white text-ogreen
     }
+    .button-a-blue{
+        @apply bg-white text-oblue
+    }
+    .button-a-red{
+        @apply bg-white text-ored
+    }
+
+    
 
 
     .button-d{

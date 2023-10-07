@@ -59,13 +59,13 @@ export default function SummaryCanvas({summaryData,overlay}){
     
     function getColorFromZ(score){
         if(!score|| score<=0){
-            return "blue";
+            return "#4392f1";
         }
         else if(score<=1){ // good use range
-            return "green";
+            return "#87a330";
         }
         else{ // over used
-            return "red";
+            return "#fE5F55";
         }
     }
 

@@ -136,17 +136,17 @@ export default function LogList({SelectPage}){
     return(
         <div className="w-auto justify-center">
             <div className='flex flex-col justify-center'>
-                <button className='button button-e-green' onClick={AddWorkout}>Start New</button>
+                <button className='button button-e-blue' onClick={AddWorkout}>Start New</button>
                 <input type="text" placeholder='Name(optional)' value={newWorkoutName } className='mx-6 h-8 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
             </div>
             
-            <h1 className='text-2xl ml-4 mt-32 text-white' onClick={()=>{setShowWorkouts(!showWorkouts)}}> Past Workouts: <span className='info-green'>{rawList.length}</span> <button>{showWorkouts ? "v" : ">"}</button></h1>
+            <h1 className='h1-white ml-4 mt-32' onClick={()=>{setShowWorkouts(!showWorkouts)}}> Past Workouts: <span className='info-blue'>{rawList.length}</span> <button>{showWorkouts ? "v" : ">"}</button></h1>
             
             {
             showWorkouts ? 
             <>
             <div className="w-full h-auto flex flex-col">
-                <h1 className="text-center font-semibold text-white text-3xl">Search</h1>
+                <h1 className="text-center mt-2 h2-white">Search</h1>
                 <input type="text" className='mx-6 h-8 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{searchLogs(value.target.value)}}></input>
                 <h2 className='text-white text-center'>{displayList.length} / {rawList.length}</h2>
             </div>
@@ -154,11 +154,11 @@ export default function LogList({SelectPage}){
                 {displayList.map((item,index) => {
                     
                     return (
-                        <div key={index} className="workout-log">
+                        <div key={index} className="workout-item">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="font-bold text-green-400 text-lg">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
-                                <p>Created:{item.createdAt}</p>
-                                <p>Edited:{item.updatedAt}</p>
+                                <h1 className="h2-green">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
+                                <p className='info-blue-s'>Created:{item.createdAt.slice(0,16)}</p>
+                                <p className='info-blue-s'>Edited:{item.updatedAt.slice(0,16)}</p>
                             </div>
                             <div className='flex justify-center'>
                                 <button className='button button-e-red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>

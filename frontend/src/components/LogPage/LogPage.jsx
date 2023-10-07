@@ -146,9 +146,9 @@ export default function LogPage({item, SelectPage}){
     
 
     return (
-            <div className="w-auto h-auto mx-2 p-2 overflow-scroll shadow-lg rounded-md">
+            <div className="w-auto h-auto mx-2 p-2">
                 
-                <h2 className='font-semibold text-center text-green-400 text-2xl'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaHeart /></h2>
+                <h2 className='text-center h1-green'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaHeart /></h2>
                 {
                     
                     logData.exercises ? 
@@ -161,7 +161,7 @@ export default function LogPage({item, SelectPage}){
                     
                 }
                 <div className='grid grid-row-2'>
-                    <button className='m-2 rounded-md p-2 bg-green-400 focus:scale-90 duration-75 text-white font-semibold justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
+                    <button className='m-2 button button-e-blue justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
                     {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
                 </div>
                 
