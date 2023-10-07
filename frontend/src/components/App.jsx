@@ -3,10 +3,7 @@ import { useState } from 'react'
 import LoginSignup from '../views/LoginSignup'
 import Home from '../views/Home'
 import lsPrefix from '../config/cfUtil'
-import LogList from './LogList/LogList'
-import LogView from '../views/LogView'
-import ExerciseAdder from './ExerciseAdder/ExerciseAdder'
-import Goals from './Goals/Goals'
+
 function App() {
   
   const [isSignedIn, setIsSignedIn] = useState(false);

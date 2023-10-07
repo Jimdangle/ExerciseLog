@@ -1,11 +1,30 @@
-import { TokenContext } from "../../views/Home"
-import { useContext, useState } from "react"
+import { TokenContext } from "../../../views/Home"
+import { useContext, useState, useEffect } from "react"
+
 
 export default function SetAdder({exercise_id, refresh, type}){
     const token = useContext(TokenContext);
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
-    const [timeDisplay, setTimeDisplay] = useState("")
+    
+    const [time,setTime] = useState({hours:0,min:0,sec:0})
+
+    useEffect(()=>{console.log(time)},[time])
+
+    function updateTime(event){
+        const t = event.target;
+        if(Number(t.value) && Number(t.value) < 60 && Number(t.value) > -1){
+        setTime({
+            ...time,
+            [t.name]: t.value
+        })
+        }
+
+    }
+
+    function timeToSec(){
+        return Number((time.hours*60*60)) + Number((time.min*60)) + Number(time.sec)
+    }
 
     async function AddSet(){
         console.log(JSON.stringify({rep_or_time:reps, weight:weight, exercise_id:exercise_id}))
@@ -18,7 +37,7 @@ export default function SetAdder({exercise_id, refresh, type}){
                     'authorization': token
                 },
                 mode:'cors',
-                body:JSON.stringify({rep_or_time:reps, weight:weight, exercise_id:exercise_id})
+                body:JSON.stringify({rep_or_time:(type===0? rep_or_time : timeToSec()), weight:weight, exercise_id:exercise_id})
             })
 
             if(response.ok){
@@ -43,13 +62,11 @@ export default function SetAdder({exercise_id, refresh, type}){
                 }
             }></input>
             :
-            <input className="text-center rounded-lg text-gun w-12 my-2" type="text" value={timeDisplay} placeholder="reps or time" min={"1"} onChange={(v)=>{
-                const val = v.target.value;
-                const len = val.length;
-
-                
-
-            }}></input>
+            <div className="flex flex-row">
+                <input className="number w-8" name="hours" placeholder="hh" onChange={(e)=>{updateTime(e)}} value={time['hours']}></input>:
+                <input className="number w-8" name="min" placeholder="mm" onChange={(e)=>{updateTime(e)}} value={time['min']}></input>:
+                <input className="number w-8" name="sec" placeholder="ss" onChange={(e)=>{updateTime(e)}} value={time['sec']}></input>
+            </div>
             }
             
 

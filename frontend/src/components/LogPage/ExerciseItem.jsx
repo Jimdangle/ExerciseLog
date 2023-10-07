@@ -1,4 +1,4 @@
-import SetAdder from '../SetAdder/SetAdder';
+import SetAdder from './SetAdder/SetAdder';
 import SetItem from './SetItem';
 import { TranslateMuscle, TranslateType } from '../../utils/muscle';
 import {useEffect, useState} from 'react'
@@ -37,8 +37,8 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
             <div className='h-auto w-auto -mt-12 mx-1 workout-item'>
                 <div className='grid grid-cols-4 place-items-center text-oblue'>
                     <div className='str-gun'>Set #</div> 
-                    <div className='str-gun'>{motionData.type==0 ? "Reps" : "Time(min)"}</div>
-                    <div className='str-gun'>Weight(lbs)</div>
+                    <div className='str-gun'>{motionData.type==0 ? "Reps" : "Time"}</div>
+                    <div className='str-gun'>{motionData.type==0 ? "Weight(lbs)" : "Distance(mi)"}</div>
                     <div></div>       
                 
                     {
