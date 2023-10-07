@@ -86,7 +86,7 @@ export default function UserInfo(){
     return(
         <div className="rounded-sm mx-8 text-white my-24 px-6 flex flex-col w-auto ">
             <div className="flex flex-row text-center">
-                <h1 className="font-semibold text-xl">Summary for<span className="info-green">{userInfo.email} - {userInfo.username}</span></h1>
+                <h1 className="h2-white">Summary for<span className="info-blue">{userInfo.email} - {userInfo.username}</span></h1>
                 
 
             </div>

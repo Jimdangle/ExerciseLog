@@ -48,7 +48,7 @@ export default function SummarySettings({update}){
                     </div>
                     
                     
-                    <button className='button button-e-green' onClick={(GetWholeSummary)}>Generate</button>
+                    <button className='button button-e-blue' onClick={(GetWholeSummary)}>Generate</button>
                 </div>
                 <div className="flex flex-row">
                     <p>{new Date(startDate).toString().slice(0,15)}</p>

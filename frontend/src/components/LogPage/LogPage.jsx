@@ -11,7 +11,7 @@ import { isTimeString, GetLocal } from '../../utils/date';
 import ExerciseItem from './ExerciseItem';
 import SummaryView from '../UserInfo/SummaryView';
 
-import { FaHeart } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 
 export default function LogPage({item, SelectPage}){
     
@@ -148,7 +148,7 @@ export default function LogPage({item, SelectPage}){
     return (
             <div className="w-auto h-auto mx-2 p-2">
                 
-                <h2 className='text-center h1-green'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaHeart /></h2>
+                <h2 className='text-center h1-blue'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaEdit /></h2>
                 {
                     
                     logData.exercises ? 
@@ -174,7 +174,7 @@ export default function LogPage({item, SelectPage}){
                 <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
 
                 {/**Button to return doesnt set nav bar */}
-                <button className='button button-e-green' onClick={()=>{SelectPage(0)}}>Return</button>
+                <button className='button button-e-blue' onClick={()=>{SelectPage(0)}}>Return</button>
 
                  {/**Literal filler, large height, large vertical margin, invisible text */}
                 <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>

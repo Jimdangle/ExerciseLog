@@ -23,7 +23,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
 
     return (
         // Main container card for exercise
-        <div className='my-1 border-b-2 border-b-ogreen'>
+        <div className='my-1'>
             
             {/** Main info about the exercise, name, type, and the muscles it impacts */}
             <div className='flex flex-row'>

@@ -97,7 +97,7 @@ function GetExerciseSummary(exercise, summaryData){
         weight.min[0] = weight.min[1] < set.added_weight ? weight.min[0] : set.rep_or_time // assoc reps for weight min
 
         weight.max[1] = weight.max[1] > set.added_weight ? weight.max[1] : set.added_weight // weight max
-        weight.max[0] = weight.min[1] > set.added_weight ? weight.max[0] : set.rep_or_time // assoc reps for max
+        weight.max[0] = weight.max[1] > set.added_weight ? weight.max[0] : set.rep_or_time // assoc reps for max
         weight.avg += set.added_weight
     });
 
@@ -124,7 +124,7 @@ function GetExerciseSummary(exercise, summaryData){
             },
             weights: {
                 min: (weight.min[1] < cur_sum.weights.min[1] ? weight.min : cur_sum.weights.min),
-                max: (weight.max[1] < cur_sum.weights.max[1] ? weight.max : cur_sum.weights.max),
+                max: (weight.max[1] > cur_sum.weights.max[1] ? weight.max : cur_sum.weights.max),
                 avg: ((cur_sum.weights.avg*cur_sum.n) +(weight.avg*m))/(m+cur_sum.n)
             },
             muscles: cur_sum.muscles.map ((item,index) => {return item+impact[index]})

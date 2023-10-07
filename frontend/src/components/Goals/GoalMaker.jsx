@@ -38,14 +38,14 @@ export default function GoalMaker(){
         </div>
         <div className='flex flex-row my-2'>
             <p>Start</p>
-            <input type="date" placeholder={startDate.toString()} className="ml-auto  text-black " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
+            <input type="date" placeholder={startDate.toString()} className="ml-auto text-black " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className='flex flex-row'>
             <p>End</p>
-            <input type="date" placeholder={endDate.toString()} className="ml-auto  text-black" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
+            <input type="date" placeholder={endDate.toString()} className="ml-auto text-black" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className="flex place-items-center justify-center">
-            <button className="button button-e-green" onClick={AddGoal}>Add</button>
+            <button className="button button-e-blue" onClick={AddGoal}>Add</button>
         </div>
 
         </div>)

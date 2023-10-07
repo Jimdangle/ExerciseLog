@@ -31,11 +31,11 @@ export default function SummaryView({Summary}){
             <h2 className="h1-white text-center mt-3">Impact Map</h2>
             <SummaryCanvas summaryData={Summary} overlay={overlay}></SummaryCanvas>
             <div className='flex flex-row justify-center'>
-                <button className={'button ' + (overlay==0 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(0)}}>Lifts</button>
-                <button className={'button ' + (overlay==1 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(1)}}>Cardio</button>
-                <button className={'button '+ (overlay==2 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(2)}}>Holds</button>
+                <button className={'button ' + (overlay==0 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(0)}}>Lifts</button>
+                <button className={'button ' + (overlay==1 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(1)}}>Cardio</button>
+                <button className={'button '+ (overlay==2 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(2)}}>Holds</button>
             </div>
-            <button className={'button '+ (overlay==4 ? 'button-a-green' : 'button-e-green')} onClick={()=>{setOverlay(4)}}>Total</button>
+            <button className={'button '+ (overlay==4 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(4)}}>Total</button>
             
             
     
