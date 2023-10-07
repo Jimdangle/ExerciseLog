@@ -63,15 +63,15 @@ export default function Login({signin}){
             <div className="justify-center">
                 <div  className="w-auto login-center-card">
                     <h2 className="bname">BoatLog</h2>
-                    <p className='h2-green'>Sign into your account!</p>
-                    <div className=''>
+                    
+                    <div className='mt-3'>
                         <input name="email" onChange={handleChange}  className="focus:form-active-input form-nonactive-input form-gen-input duration-150"  type="email" placeholder="Email"></input>
                         <br></br>
                         <br></br>
                         <input name="pass" onChange={handleChange} required type="password" placeholder="Password" className="focus:form-active-input form-nonactive-input form-gen-input duration-150"></input>
                         <br></br>
                         <br></br>
-                        <button disabled={state["email"] && state["email"].indexOf("@") != -1 && state["pass"] ? false : true} className='button button-e-green disabled:button-d duration-150' onClick={handleLogin}>Login</button>
+                        <button disabled={state["email"] && state["email"].indexOf("@") != -1 && state["pass"] ? false : true} className='button button-e-blue disabled:button-d duration-150' onClick={handleLogin}>Login</button>
                         <p className='pt-2 error'>{errMessage}</p>
                     </div>
                 </div>

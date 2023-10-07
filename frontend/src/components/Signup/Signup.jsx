@@ -62,7 +62,7 @@ export default function Signup({onClick}){
         <div className="justify-center">
             <div className="w-auto login-center-card">
                 <h2 className="bname">BoatLog</h2>
-                <p className='h2-green'>Create a new account!</p>
+                
                 <div className='pt-4'>
                     <input name="email" onChange={handleChange}  className="focus:form-active-input form-nonactive-input form-gen-input duration-150"  type="email" placeholder="Email"></input>
                     <p className='error pt-2'>{state["email"] && state["email"].indexOf("@")==-1 ?  "Please enter a semi valid email" : ""}</p>
@@ -77,7 +77,7 @@ export default function Signup({onClick}){
                     <p className='error pt-2'>{state["pass"]!=state["cpass"] ? "Please ensure passwords match" : ""}</p>
                     <br></br>
                     <br></br>
-                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='button button-e-green disabled:button-d duration-150' onClick={handleSignup}>Signup</button>
+                    <button disabled={formValid() && (state["pass"]==state["cpass"]) ? false : true}  className='button button-e-blue disabled:button-d duration-150' onClick={handleSignup}>Signup</button>
                     <p className='pt-2 error'>{errMessage}</p>
                 </div>
             </div>
