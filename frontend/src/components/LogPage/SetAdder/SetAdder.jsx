@@ -5,7 +5,43 @@ export default function SetAdder({exercise_id, refresh, type}){
     const token = useContext(TokenContext);
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
-    const [timeDisplay, setTimeDisplay] = useState("")
+    
+    const [time,setTime] = useState("00:00:00")
+    const [cursor,setCursor] = useState(0);
+    //                                     v              v             v              v                  v
+    // take some string xx:yy:zz    xx:yy:zz        xx:yy:z1        xx:yy:10        xx:y1:01        xx:yy:01 
+    function updateTime(event){// user types 1    types 0         types 1       types del 
+        const key = event.key
+        const skip_b = (cursor-2) % 3 == 0;
+        
+        const skip = 1
+
+        console.log(cursor)
+        if(key==="Backspace" || key==="Delete" && cursor > 0){
+            
+            setCursor(cursor-skip)
+            console.log(`delete : ${cursor} `)
+        }
+        else if(((cursor % 3 == 0  && (Number(key) < 6)) || ((cursor-1 % 3 == 0) && Number(key) < 9)) && cursor < 7){
+            setCursor(cursor+skip)
+            console.log(`okay cursor ${cursor} : ${key}`)
+        }
+        
+    }
+
+    const rev = (str) =>{ return str.split("").reverse().join("") }
+
+
+    function decrement(){
+        
+        
+        
+    }
+
+    function increment(val){
+        
+    }
+    
 
     async function AddSet(){
         console.log(JSON.stringify({rep_or_time:reps, weight:weight, exercise_id:exercise_id}))
@@ -43,12 +79,8 @@ export default function SetAdder({exercise_id, refresh, type}){
                 }
             }></input>
             :
-            <input className="text-center rounded-lg text-gun w-12 my-2" type="text" value={timeDisplay} placeholder="reps or time" min={"1"} onChange={(v)=>{
-                const val = v.target.value;
-                const len = val.length;
-
-                
-
+            <input className="text-center rounded-lg text-gun w-24 my-2"  type="text" value={time} onKeyDown={(v)=>{
+                updateTime(v)
             }}></input>
             }
             
