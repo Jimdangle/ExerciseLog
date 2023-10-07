@@ -4,6 +4,7 @@ import { TranslateMuscle, TranslateType } from "../../utils/muscle";
 import { percentageColor, percentageColorRed, stdColorRed } from "../../utils/styleutil";
 import SummaryCanvas from "./SummaryCanvas";
 import ExerciseSummary from "./ExerciseSummary";
+import TypeSummary from "./TypeSummary";
 export default function SummaryView({Summary}){
 
     const [overlay,setOverlay] = useState(0);
@@ -43,40 +44,13 @@ export default function SummaryView({Summary}){
             <h2 className="h1-white mt-3">Muscle Breakdown by Type</h2>
             {/* Going to list of the % impact on each muscle group for each type this could probably and should probably be turned into a component*/}
             {Summary.muscles.map((impact_map,index)=>{
-                const should_render = (overlay ==4 || index == overlay ) 
+                const should_render = (overlay ==4 || index == overlay )
                 const map_total = Summary.exercise_totals[index];//get the total, then map a division onto the impacts
-
-                const percents = impact_map.map((impact)=>{return Math.round((impact/map_total*100))});
-                
-                const avg = impact_map.reduce((t,v)=>{return t+v},0)/impact_map.length;
-                var stdev = impact_map.reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/(impact_map.length-1);
-                stdev = Math.sqrt(stdev);
-
-                const std_scores = impact_map.map((item,index)=>{
-                    const zeta = (item-stdev)/avg // # of stdevs away from mean
-                    
-                    return zeta;
-                })
 
                 return ( should_render
                 ? 
                 
-                    <div key={"reactishomophobic"+index} className="flex flex-col">
-                         {/* You might ask whats up with the keys, but I can't seem to not get the unique key warning without some obscene shit so here we are maybe ur upset bc you feel targeted but its not personal*/}
-                        <h3 className="ml-2 text-start str-white underline">{TranslateType(index)}{index==0 || index==2 ? "s" : ""}</h3>
-                        <div className="flex flex-col">
-                            {std_scores.map((score,subindex)=>{
-                                if(index == 2 && subindex==6){console.log(`View\n\tstd:${stdev} z:${score}, avg:${avg} -> ${stdColorRed(score)}`)}
-                                return (
-                                    score ?
-                                    <p className={"ml-4"} key={"urCoolCat"+subindex+"urMom"+index}>{TranslateMuscle(subindex)} : <span className={stdColorRed(score)}>{percents[subindex]}%</span> </p>
-                                    :
-                                    <p key={"urCoolCunt"+subindex+"urMom"+index}>{/*Weird that this one doesnt show up as a normal element */}</p>
-                                    )
-                                })}
-                        </div>
-                        
-                    </div>
+                <TypeSummary key={"idontlikeuniquekeys"+index} imp_map={impact_map} map_tot={map_total} ind={index}></TypeSummary>
                 :
                 <div key={"reactisextremelyhomophobic"+index}></div>
                 )
