@@ -1,4 +1,4 @@
-import SetAdder from '../SetAdder/SetAdder';
+import SetAdder from './SetAdder/SetAdder';
 import SetItem from './SetItem';
 import { TranslateMuscle, TranslateType } from '../../utils/muscle';
 import {useEffect, useState} from 'react'

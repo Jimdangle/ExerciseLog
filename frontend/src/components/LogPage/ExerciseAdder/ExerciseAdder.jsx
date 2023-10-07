@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { TokenContext } from "../../views/Home";
+import { TokenContext } from "../../../views/Home";
 import MotionAdder from "./MotionAdder";
 // Create a dropdown list from the motions stored on the db
 

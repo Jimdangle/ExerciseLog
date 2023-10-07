@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react'
 
 import {recentLog} from '../../config/cfUtil';
-import ExerciseAdder from '../ExerciseAdder/ExerciseAdder';
+import ExerciseAdder from './ExerciseAdder/ExerciseAdder';
 
 import { TokenContext, PageContext } from '../../views/Home';
 

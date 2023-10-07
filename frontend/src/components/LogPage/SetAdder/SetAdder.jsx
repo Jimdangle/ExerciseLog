@@ -1,4 +1,4 @@
-import { TokenContext } from "../../views/Home"
+import { TokenContext } from "../../../views/Home"
 import { useContext, useState } from "react"
 
 export default function SetAdder({exercise_id, refresh, type}){

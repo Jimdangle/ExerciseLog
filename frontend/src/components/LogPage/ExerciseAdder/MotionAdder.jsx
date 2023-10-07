@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { TokenContext } from "../../views/Home";
-import { TranslateMuscle, muscles } from "../../utils/muscle";
+import { TokenContext } from "../../../views/Home";
+import { TranslateMuscle, muscles } from "../../../utils/muscle";
 
 
 // Open a little window for people to create new motions 
