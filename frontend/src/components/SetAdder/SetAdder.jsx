@@ -35,15 +35,15 @@ export default function SetAdder({exercise_id, refresh, type}){
     }
 
     return(<>
-            <p className="text-slate-200">New Set</p>
+            <p className="str-gun">New Set</p>
             {type === 0 ?
-            <input className="text-center rounded-lg text-slate-800 w-12 my-2" type="number" value={reps} placeholder="reps or time" min={"1"} onChange={(v)=>{
+            <input className="text-center rounded-lg text-gun w-12 my-2" type="number" value={reps} placeholder="reps or time" min={"1"} onChange={(v)=>{
                 if(v.target.value >= 0){
                     setReps(v.target.value)}
                 }
             }></input>
             :
-            <input className="text-center rounded-lg text-slate-800 w-12 my-2" type="text" value={timeDisplay} placeholder="reps or time" min={"1"} onChange={(v)=>{
+            <input className="text-center rounded-lg text-gun w-12 my-2" type="text" value={timeDisplay} placeholder="reps or time" min={"1"} onChange={(v)=>{
                 const val = v.target.value;
                 const len = val.length;
 
@@ -54,7 +54,7 @@ export default function SetAdder({exercise_id, refresh, type}){
             
 
            
-            <input className="w-12 my-2 rounded-lg text-center text-slate-800" type="number" value={weight} placeholder="additional weight" min={"0"} max={"1000"} onChange={(v)=>{
+            <input className="w-12 my-2 rounded-lg text-center text-gun" type="number" value={weight} placeholder="additional weight" min={"0"} max={"1000"} onChange={(v)=>{
                 if(v.target.value >= 0 && v.target.value < 1000){
                     setWeight(v.target.value)
                 }
@@ -63,7 +63,7 @@ export default function SetAdder({exercise_id, refresh, type}){
             
 
             
-            <button className='w-8 h-8 rounded-full text-center hover:text-green-400 text-lg font-bold' onClick={()=>{AddSet()}}>+</button>
+            <button className='w-8 h-8 rounded-full text-center hover:text-ogreen text-lg font-bold' onClick={()=>{AddSet()}}>+</button>
             
             
     </>)

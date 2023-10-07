@@ -96,7 +96,7 @@ function GetExerciseSummary(exercise, summaryData){
         weight.min[1] = weight.min[1] < set.added_weight ? weight.min[1] : set.added_weight //Weight min
         weight.min[0] = weight.min[1] < set.added_weight ? weight.min[0] : set.rep_or_time // assoc reps for weight min
 
-        weight.max[1] = weight.min[1] > set.added_weight ? weight.max[1] : set.added_weight // weight max
+        weight.max[1] = weight.max[1] > set.added_weight ? weight.max[1] : set.added_weight // weight max
         weight.max[0] = weight.min[1] > set.added_weight ? weight.max[0] : set.rep_or_time // assoc reps for max
         weight.avg += set.added_weight
     });

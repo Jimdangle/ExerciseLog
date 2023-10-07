@@ -67,6 +67,26 @@
     .h3-green{
         @apply text-ogreen text-lg font-semibold
     }
+    .h1-gun {
+        @apply text-gun text-2xl font-semibold
+    }
+    .h2-gun{
+        @apply text-gun text-xl font-semibold
+    }
+    .h3-gun{
+        @apply text-gun text-lg font-semibold
+    }
+
+    /*Strong*/
+    .str-gun{
+        @apply font-semibold text-gun
+    }
+    .str-white{
+        @apply font-semibold text-white
+    }
+    .str-green{
+        @apply font-semibold text-ogreen
+    }
 
 
     .error{
@@ -104,6 +124,8 @@
     .exercise-item{
         @apply  bg-slate-600 rounded-md shadow-md
     }
+
+    
 
 
 

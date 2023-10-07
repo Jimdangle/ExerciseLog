@@ -151,8 +151,6 @@ async function GoalSummary(req,res,next){
 
 
 
-
-
 /**  Compare a singular goal with out using the request data (a goal object, user id), I want this to return maybe a % towards the goal completion or something 
  *  @returns {Object} Goal Data: [ [summary_value,objective_value]]
 */
