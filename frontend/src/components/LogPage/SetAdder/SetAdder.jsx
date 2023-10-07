@@ -1,47 +1,30 @@
 import { TokenContext } from "../../../views/Home"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
+
 
 export default function SetAdder({exercise_id, refresh, type}){
     const token = useContext(TokenContext);
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
     
-    const [time,setTime] = useState("00:00:00")
-    const [cursor,setCursor] = useState(0);
-    //                                     v              v             v              v                  v
-    // take some string xx:yy:zz    xx:yy:zz        xx:yy:z1        xx:yy:10        xx:y1:01        xx:yy:01 
-    function updateTime(event){// user types 1    types 0         types 1       types del 
-        const key = event.key
-        const skip_b = (cursor-2) % 3 == 0;
-        
-        const skip = 1
+    const [time,setTime] = useState({hours:0,min:0,sec:0})
 
-        console.log(cursor)
-        if(key==="Backspace" || key==="Delete" && cursor > 0){
-            
-            setCursor(cursor-skip)
-            console.log(`delete : ${cursor} `)
+    useEffect(()=>{console.log(time)},[time])
+
+    function updateTime(event){
+        const t = event.target;
+        if(Number(t.value) && Number(t.value) < 60 && Number(t.value) > -1){
+        setTime({
+            ...time,
+            [t.name]: t.value
+        })
         }
-        else if(((cursor % 3 == 0  && (Number(key) < 6)) || ((cursor-1 % 3 == 0) && Number(key) < 9)) && cursor < 7){
-            setCursor(cursor+skip)
-            console.log(`okay cursor ${cursor} : ${key}`)
-        }
-        
+
     }
 
-    const rev = (str) =>{ return str.split("").reverse().join("") }
-
-
-    function decrement(){
-        
-        
-        
+    function timeToSec(){
+        return Number((time.hours*60*60)) + Number((time.min*60)) + Number(time.sec)
     }
-
-    function increment(val){
-        
-    }
-    
 
     async function AddSet(){
         console.log(JSON.stringify({rep_or_time:reps, weight:weight, exercise_id:exercise_id}))
@@ -54,7 +37,7 @@ export default function SetAdder({exercise_id, refresh, type}){
                     'authorization': token
                 },
                 mode:'cors',
-                body:JSON.stringify({rep_or_time:reps, weight:weight, exercise_id:exercise_id})
+                body:JSON.stringify({rep_or_time:(type===0? rep_or_time : timeToSec()), weight:weight, exercise_id:exercise_id})
             })
 
             if(response.ok){
@@ -79,9 +62,11 @@ export default function SetAdder({exercise_id, refresh, type}){
                 }
             }></input>
             :
-            <input className="text-center rounded-lg text-gun w-24 my-2"  type="text" value={time} onKeyDown={(v)=>{
-                updateTime(v)
-            }}></input>
+            <div className="flex flex-row">
+                <input className="number w-8" name="hours" placeholder="hh" onChange={(e)=>{updateTime(e)}} value={time['hours']}></input>:
+                <input className="number w-8" name="min" placeholder="mm" onChange={(e)=>{updateTime(e)}} value={time['min']}></input>:
+                <input className="number w-8" name="sec" placeholder="ss" onChange={(e)=>{updateTime(e)}} value={time['sec']}></input>
+            </div>
             }
             
 
