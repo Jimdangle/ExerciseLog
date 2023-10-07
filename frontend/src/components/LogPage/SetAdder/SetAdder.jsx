@@ -7,13 +7,15 @@ export default function SetAdder({exercise_id, refresh, type}){
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
     
-    const [time,setTime] = useState({hours:0,min:0,sec:0})
+    const [time,setTime] = useState({})
 
     useEffect(()=>{console.log(time)},[time])
 
     function updateTime(event){
         const t = event.target;
-        if(Number(t.value) && Number(t.value) < 60 && Number(t.value) > -1){
+        console.log(t.value)
+        console.log(t.value== "")
+        if((Number(t.value) && Number(t.value) < 60 && Number(t.value) > -1) || t.value===""){
         setTime({
             ...time,
             [t.name]: t.value
@@ -23,7 +25,10 @@ export default function SetAdder({exercise_id, refresh, type}){
     }
 
     function timeToSec(){
-        return Number((time.hours*60*60)) + Number((time.min*60)) + Number(time.sec)
+        const h = time.hours ? time.hours : 0
+        const m = time.min ? time.min : 0
+        const s = time.sec ? time.sec : 0
+        return Number((h*60*60)) + Number((m*60)) + Number(s)
     }
 
     async function AddSet(){
