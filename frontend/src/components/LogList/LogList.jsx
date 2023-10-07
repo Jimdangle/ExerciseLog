@@ -156,9 +156,9 @@ export default function LogList({SelectPage}){
                     return (
                         <div key={index} className="workout-item">
                             <div   onClick={()=>{SetAndSwap(item._id)}}>
-                                <h1 className="h2-green">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
-                                <p className='info-blue-s'>Created:{item.createdAt.slice(0,16)}</p>
-                                <p className='info-blue-s'>Edited:{item.updatedAt.slice(0,16)}</p>
+                                <h1 className="h2-blue">{(item.name && isTimeString(item.name) ? GetLocal(item.name).slice(0,12) : item.name.slice(0,12))}</h1>
+                                <p className='info-green-s'>Created:{item.createdAt.slice(0,16)}</p>
+                                <p className='info-green-s'>Edited:{item.updatedAt.slice(0,16)}</p>
                             </div>
                             <div className='flex justify-center'>
                                 <button className='button button-e-red' onClick={()=>{RemoveWorkout(item._id)}}>Delete</button>

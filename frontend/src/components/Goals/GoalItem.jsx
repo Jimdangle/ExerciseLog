@@ -6,7 +6,7 @@ export default function GoalItem({goal, setGoal, setViewingGoal, RemoveGoal}){
 
     
     return(
-    <div className="w-64 bg-slate-600 flex flex-col mt-3 justify-center" >
+    <div className="w-auto mx-2 bg-white rounded-md pl-2 flex flex-col mt-3 justify-center" >
         <div className="flex-flex-col" onClick={()=>{setGoal(goal);setViewingGoal(true)}}>
         <h1>{goal.name ? goal.name.slice(0,15) : "No Name"}</h1>
         <h2>Start: {goal.start.toString()}</h2>

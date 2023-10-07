@@ -74,7 +74,7 @@ export default function ObjectiveAdder({goal_id,GetGoalData}){
 
 
             <div className="flex justify-center">
-                <button className="button button-e-green" onClick={AddObjective}>Add!</button>
+                <button className="button button-e-blue" onClick={AddObjective}>Add!</button>
             </div>
 
         </div>)

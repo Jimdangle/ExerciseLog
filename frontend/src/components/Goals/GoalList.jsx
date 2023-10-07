@@ -63,7 +63,7 @@ export default function GoalList({setGoal,setViewingGoal,addedGoal}){
 
     return (
     <div>
-        <button className='button button-e-green' onClick={GetGoals}>Refresh List</button>
+        <button className='button button-e-blue' onClick={GetGoals}>Refresh List</button>
         <input type="text" className='text-black' placeholder='search' value={search} onChange={(e)=>{setSearch(e.target.value)}}></input>
         <div className='flex flex-col place-items-center'>
             {/**The Mad Lad one liner search */}

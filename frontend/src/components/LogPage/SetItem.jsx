@@ -5,7 +5,7 @@ export default function SetItem({set, RemoveSet, number, exercise_id, type}){
 
         <>
             <div className="">
-                <p className="str-green">{number}.</p>
+                <p className="str-blue">{number}.</p>
                 
             </div>
             <div className="">

@@ -73,7 +73,7 @@ export default function GoalPage({goal,setViewingGoal}){
             
             return <ObjectiveItem key={index+"llcoolObj"} objective={item} goal_id={goal._id} GetGoalData={GetGoalData} cmp={goalComp ? goalComp[index]: [0,0]}></ObjectiveItem>
         }): <></>}
-        <button className="place-self-center button button-e-green" onClick={()=>{setAddingObjective(!addingObjective)}}>Add Objective</button>
+        <button className="place-self-center button button-e-blue" onClick={()=>{setAddingObjective(!addingObjective)}}>Add Objective</button>
         {addingObjective ? <ObjectiveAdder goal_id={goal._id} GetGoalData={GetGoalData}></ObjectiveAdder> : ""}
         <button className="button button-e-red" onClick={()=>{setViewingGoal(false)}}>Return</button>
     </div>)
