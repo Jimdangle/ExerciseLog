@@ -20,7 +20,7 @@ export default function TypeSummary({imp_map, map_tot, ind}){
         })
         setScores(std_scores)
         console.log(std_scores)
-    },[])
+    },[imp_map,map_tot])
     
 
     return (
