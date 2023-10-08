@@ -164,6 +164,7 @@ async function CompareAGoal(goal,user){
     
     //Pull out objectives and use them to access the summary data for comparison
     if(data){
+        console.log(data);
         goal.objectives.forEach((item,index)=>{
             //console.log(item)
             goal_data[index] = [parseObjective(item,data),item.value];
@@ -180,6 +181,7 @@ async function CompareAGoal(goal,user){
 */
 function parseObjective(objective, data){
     const target = objective.target;
+    console.log(target)
     switch(objective.context){
         case 0: //Type 0 -> We are accessing the first layer of the summary object
             return data[target.target];
@@ -195,8 +197,8 @@ function parseObjective(objective, data){
                 
                 const [key,subkey] = target.subTarget.split(",");
                 const [l,r] = (key==="r" ? ["values",0] :  ["weights",1]) // if we are looking at values aka reps we want the first element of the array contained in the obj
-               
-                return data.exercise_summary[target.exercise_name] ? data.exercise_summary[target.exercise_name][l][subkey][r] : 0 //return value unless we arent in there then just say 0
+                
+                return data.exercise_summary[target.exercise_name] ? (subkey!=="avg" ? data.exercise_summary[target.exercise_name][l][subkey][r] : data.exercise_summary[target.exercise_name][l][subkey] ): 0 //return value unless we arent in there then just say 0
             }
     }
 }

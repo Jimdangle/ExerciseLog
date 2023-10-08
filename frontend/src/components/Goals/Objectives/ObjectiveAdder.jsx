@@ -67,7 +67,7 @@ export default function ObjectiveAdder({goal_id,GetGoalData}){
             
 
             <div className="flex flex-row">
-                <p>Target Value:</p>
+                <p className="text-white">Target Value:</p>
                 <input type="number" min="0" onChange={(e)=>{setValue(e.target.value)}}></input>
             </div>
             

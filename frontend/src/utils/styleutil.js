@@ -1,10 +1,10 @@
 export function percentageColor(num){
     console.log(num)
-    return (num >= 0.5) ? 'text-ogreen' : ( (num >=0.2) ? 'text-yellow-500' : 'text-oblue' ) 
+    return (num >= 0.5) ? 'text-ogreen' : ( (num >=0.2) ? 'text-oyell' : 'text-oblue' ) 
 }
 
 export function percentageColorRed(num){
-    return (num >= 0.5) ? 'text-ogreen' : ( (num >=0.2) ? 'text-yellow-500' : 'text-ored' ) 
+    return (num >= 0.5) ? 'text-ogreen' : ( (num >=0.2) ? 'text-oyell' : 'text-ored' ) 
 }
 
 export function stdColorRed(zScore){

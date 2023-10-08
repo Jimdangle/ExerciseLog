@@ -10,3 +10,5 @@ export function TranslateType(type){
         default: return "N/A"
     }
 }
+
+
