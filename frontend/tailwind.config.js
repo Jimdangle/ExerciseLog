@@ -15,7 +15,8 @@ export default {
       red: colors.red,
       blue: colors.blue,
       green: colors.green,
-      slate: colors.slate
+      slate: colors.slate,
+      oyell: '#FFB627'
     }
     
   },

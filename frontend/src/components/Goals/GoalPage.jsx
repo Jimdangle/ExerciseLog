@@ -7,9 +7,9 @@ export default function GoalPage({goal,setViewingGoal}){
     const token = useContext(TokenContext);
     const [addingObjective, setAddingObjective] = useState(false)
     const [goalData,setGoalData] = useState({})
-    const [goalComp, setGoalComp] = useState({})
+    const [goalComp, setGoalComp] = useState(null)
 
-    useEffect(()=>{GetGoalData()},[addingObjective])
+    useEffect(()=>{GetGoalData();CompareGoal();},[addingObjective])
 
     async function GetGoalData(){
         try{
@@ -28,7 +28,7 @@ export default function GoalPage({goal,setViewingGoal}){
                 const bod = await response.json();
                 console.log(bod);
                 setGoalData(bod.goal);
-                CompareGoal();
+                
             }
         }
         catch(e)
@@ -52,7 +52,7 @@ export default function GoalPage({goal,setViewingGoal}){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod);
+                console.log(bod.difference);
                 setGoalComp(bod.difference)
             }
         }
@@ -68,14 +68,16 @@ export default function GoalPage({goal,setViewingGoal}){
 
     return (
     <div className="flex flex-col">
-        <h1 className="text-center text-white font-semibold">{goal.name}</h1>
-        {goalData.objectives ? goalData.objectives.map((item,index)=>{
-            
+        <h1 className="text-center h1-white">{goal.name}</h1>
+        {goalData.objectives && goalComp ? goalData.objectives.map((item,index)=>{
+            console.log(goalComp)
             return <ObjectiveItem key={index+"llcoolObj"} objective={item} goal_id={goal._id} GetGoalData={GetGoalData} cmp={goalComp ? goalComp[index]: [0,0]}></ObjectiveItem>
         }): <></>}
         <button className="place-self-center button button-e-blue" onClick={()=>{setAddingObjective(!addingObjective)}}>Add Objective</button>
         {addingObjective ? <ObjectiveAdder goal_id={goal._id} GetGoalData={GetGoalData}></ObjectiveAdder> : ""}
-        <button className="button button-e-red" onClick={()=>{setViewingGoal(false)}}>Return</button>
+        {/**Literal filler, large height, large vertical margin, invisible text */}
+        <div className='h-124 mt-64'><p className='text-gun'>t</p></div>
+        <button className="button button-e-red w-24 justify-center place-self-center" onClick={()=>{setViewingGoal(false)}}>Return</button>
     </div>)
 
 }

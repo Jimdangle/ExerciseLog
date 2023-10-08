@@ -42,7 +42,7 @@ export default function SetAdder({exercise_id, refresh, type}){
                     'authorization': token
                 },
                 mode:'cors',
-                body:JSON.stringify({rep_or_time:(type===0? rep_or_time : timeToSec()), weight:weight, exercise_id:exercise_id})
+                body:JSON.stringify({rep_or_time:(type===0? reps : timeToSec()), weight:weight, exercise_id:exercise_id})
             })
 
             if(response.ok){

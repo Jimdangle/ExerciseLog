@@ -1,6 +1,8 @@
 import { TranslateType } from "../../../utils/goalutil"
 import { TokenContext } from "../../../views/Home";
 import { useContext } from "react";
+
+import { percentageColor } from "../../../utils/styleutil";
 export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp}){
     const token = useContext(TokenContext)
 
@@ -32,9 +34,23 @@ export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp}){
     }
 
     return (
-    <div>
-        <p><span className="text-green-400 font">{TranslateType(objective.context)}</span> --{objective.target ? Object.keys(objective.target).map((item,index)=>{return <span key={index+"l"+index} className="text-white"> {item}: {objective.target[item] },</span>}) : <></>}-- <span className="text-red-400">{objective.value}</span> v.s <span className="text-green-400 font">{cmp ? cmp[1]: cmp}</span></p>
-        <p className="text-red-400 font-semibold hover:text-white" onClick={RemoveObjective}>Remove</p>
+    <div className="flex flex-col mx-3 py-2 border-b-2 border-dashed border-b-white">
+        {console.log(objective.target)}
+        <div className="flex flex-row justify-between">
+            <p className="h2-blue">{TranslateType(objective.context)} </p>
+            
+        </div>
         
+        {objective && objective.target ? Object.keys(objective.target).map((key,index)=>{
+            
+            return <div key={index+"l"+index} className="flex flex-row justify-between" ><p className="h3-white">{key}:</p> <p className="str-blue mr-4">{objective.target[key]}</p></div>
+        })
+        :
+        <></>
+        }
+        <div className="flex flex-row justify-between"><p className="h3-white">Value: </p>  <p className="str-blue mr-4">{objective.value}</p></div>
+        {cmp&&cmp.length>1?<div className="flex flex-row justify-between"><p className="h3-white">Progress: </p> <p className={"font-semibold "+percentageColor(cmp[0]/cmp[1])}>{Math.round((cmp[0]/cmp[1])*100)}% <span className="text-slate-400">({cmp[0]})</span> </p></div>:<></>}
+        
+        <button className="button button-e-red w-24 place-self-end" onClick={RemoveObjective}>Remove</button>
     </div>)
 }
