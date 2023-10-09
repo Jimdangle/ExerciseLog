@@ -2,6 +2,7 @@ const {Goals, Objectives} = require('../models/mGoals');
 const {Workout} = require('../models/mWorkout.js');
 const {GenerateSummary} = require('../controllers/cUser');
 const { SummaryData, SummaryAcces } = require('../util/dutil');
+const { EX_TYPES, EX_MUSCLES } = require('../util/goalutil');
 
 /**Create a new goal */
 async function CreateNewGoal(req,res,next){
@@ -140,17 +141,17 @@ async function RecentGoals(req,res,next){
 
     //Locate maybe 5 goals
     try{
-        const findGoals = await Goals.find({user_id:user, start:{$lte: new Date(time)}, end: {$gte : new Date(time)}}).sort({end: 1}).limit(n) // find goals that are currently active, sort by lowest end date and only return n reuslts
-        console.log(findGoals);
+        const findGoals = await Goals.find({user_id:user, start:{$lte: new Date(time)}, end: {$gte : new Date(time)}}).populate("objectives").sort({end: 1}).limit(n) // find goals that are currently active, sort by lowest end date and only return n reuslts
+        console.log(`Generating Recent Goal Summary: found ${findGoals.length} goals `);
 
-        const return_data = {}
-        findGoals.forEach((goal,index)=>{
-            const summary_data = GenerateGoalSummary(goal,user)
-            return_data[goal.name] = summary_data ? summary_data : {overall_completion:0,percents:[]}
-        })
+        var out_data = []
+        for(const goal of findGoals){
+            const data = await GenerateGoalSummary(goal,user);
+            const english_objectives = goal.objectives.map((objective) => {return humanObjective(objective)})
+            out_data.push({name:goal.name, data:data, objectives: english_objectives, end: goal.end})
+        }
+        res.send({goal_data:out_data})
         
-        res.send({goal_data:return_data})
-
     }
     catch(e)
     {
@@ -163,19 +164,20 @@ async function RecentGoals(req,res,next){
 async function GenerateGoalSummary(goal,user){
     const goal_data = await CompareAGoal(goal, user); // array of objectives from this goal
 
-    if(!goal_data){return null;}
+    if(!goal_data){throw new Error("Could not generate goal data")}
 
     const percents = Object.keys(goal_data).map( (key,index) => { // get rounded percentages for objective completion
-        console.log(goal_data[key])
+        
         const fraction = goal_data[key][0]/goal_data[key][1]
         return Math.round( (fraction)*100)/100;
     });
 
-    const complete = percents.reduce( (total,i) => {return total+( (i>=1.0 ? 1 : 0))}) // add 1 if our percent is at 1.0 or higher
+    const complete = percents.reduce( (total,i) => {return total+( (i>=1.0 ? 1 : 0))},0) // add 1 if our percent is at 1.0 or higher
     const objective_completion = Math.round((complete / percents.length)*100)/100; // get the percentage for how many we have completed
     console.log(`Total Complete: ${objective_completion}`)
-    console.log(percents);
-    return {overall_completion: objective_completion, percents: percents}
+    
+    
+    return {overall_completion: objective_completion, percents: percents, obj_data:goal_data}
 }
 
 /**  Compare a singular goal with out using the request data (a goal object, user id), I want this to return maybe a % towards the goal completion or something 
@@ -191,11 +193,11 @@ async function CompareAGoal(goal,user){
     
     //Pull out objectives and use them to access the summary data for comparison
     console.log(`Number of Objectives in ${goal.name} : ${goal.objectives.length}`)
-    console.log(data);
+    
     if(data && goal.objectives.length > 0){
         
         goal.objectives.forEach((item,index)=>{
-            console.log(item)
+            
             
             goal_data[index] = [parseObjective(item,data),item.value];
         })
@@ -234,7 +236,37 @@ function parseObjective(objective, data){
     }
 }
 
-
+function humanObjective(objective){
+    const target = objective.target;
+    
+    switch(objective.context){
+        case 0: //Type 0 -> We are accessing the first layer of the summary object
+            switch(target.target){
+                case "total_workouts":
+                    return "Total Workouts";
+                case "total_exercises":
+                    return "Total Exercises";
+                case "total_sets":
+                    return "Total Sets"
+            }
+        case 1: //Type 1 -> We are accessing one of the exercise_totals, the target tells us which type of total
+            return "Total" + EX_TYPES[target.target]
+        case 2://Type 2 -> We are accessing a particular mucle target for a particular type
+            return EX_MUSCLES[target.muscle] + " " + EX_TYPES[target.type]
+        case 3://Type 3 -> We are targeting something in the exercise_summary object
+            if(target.subTarget === "n"){ //sets is easy
+                return "Total " + exercise_name + " sets"
+                
+            }
+            else if(!target.subTarget){return 0}
+            else{ // Basically all the options of the select on the front end correspond to this
+                
+                const [key,subkey] = target.subTarget.split(",");
+                const [l,r] = (key==="r" ? ["Values",0] :  ["Weights",1]) // if we are looking at values aka reps we want the first element of the array contained in the obj
+                return target.exercise_name + " " + l + " " +subkey
+            }
+    }
+}
 
 
 

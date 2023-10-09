@@ -8,7 +8,7 @@ export default function GoalList({setGoal,setViewingGoal,addedGoal}){
     const [search, setSearch] = useState("")
     
 
-    useEffect(()=>{GetGoals(),RecentGoals()},[])
+    useEffect(()=>{GetGoals()},[])
 
     async function GetGoals(){
         try{
@@ -35,31 +35,7 @@ export default function GoalList({setGoal,setViewingGoal,addedGoal}){
         }
     }
 
-    async function RecentGoals(){
-        try{
-            const response = await fetch('http://localhost:3001/goals/rec',{
-                method: "POST",
-                headers: {
-                    'Origin': 'http://127.0.0.1:3000',
-                    'Content-Type': 'application/json',
-                    'authorization': token
-                },
-                mode:'cors',
-                body: JSON.stringify({n:5})
-            })
-
-            if(response.ok){
-                const bod = await response.json();
-                console.log(bod);
-               
-                
-            }
-        }
-        catch(e)
-        {
-            console.log(e.message)
-        }
-    }
+    
 
 
 

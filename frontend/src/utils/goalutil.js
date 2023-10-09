@@ -12,3 +12,6 @@ export function TranslateType(type){
 }
 
 
+export function TranslateObjective(objective){
+    
+}
