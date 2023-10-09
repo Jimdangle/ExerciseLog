@@ -195,7 +195,22 @@ async function RemoveSet(req, res, next) {
     }
 
 }
+
+async function EditWorkoutName(req, res, next) {
+    const {workout_id, name} = res.locals.bodyData;
+
+    try {
+        const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$set: {name:name}});
+        res.send({"updated": true, assocWorkout: assocWorkout});
+    }
+    catch (e) {
+        console.log('Error editing name for workout')
+        console.log(e);
+        next(e.message);
+    }
+}
+
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
 
-module.exports = {GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    

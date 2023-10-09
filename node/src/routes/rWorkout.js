@@ -19,7 +19,8 @@ const REQUIRED_KEYS = {
     "/remEx": ["exercise_id", "workout_id"],
     "/addSet": ["rep_or_time", "weight", "exercise_id"],
     "/remSet": ["set_id", "exercise_id"],
-    "/get": ["workout_id"]
+    "/get": ["workout_id"],
+    "/editName": ["workout_id", "name"],
 }
 
 WorkoutRouter.use(bodyParser.json());
@@ -78,7 +79,9 @@ WorkoutRouter.delete('/remSet', async(req, res, next) => {
     WorkoutControllers.RemoveSet(req, res, next);
 })
 
+WorkoutRouter.post('/editName', WorkoutControllers.EditWorkoutName);
 
-WorkoutRouter.get('/lsm', WorkoutControllers.ListMyWorkouts)
+
+WorkoutRouter.get('/lsm', WorkoutControllers.ListMyWorkouts);
 
 module.exports = {WorkoutRouter: WorkoutRouter}

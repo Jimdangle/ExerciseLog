@@ -20,6 +20,8 @@ export default function LogPage({item, SelectPage}){
     const [logData, setLogData] = useState({})
     const [addingExercise, setAddingExercise] = useState(false);
     const [summary,setSummary] = useState({})
+    const [name,setName] = useState("");
+    const [isEditingName, setIsEditingName] = useState(false);
     useEffect(()=>{Refresh()}, []);
 
     async function Refresh(){
@@ -59,10 +61,24 @@ export default function LogPage({item, SelectPage}){
         }
     }
 
-    
-    
+    async function EditWorkoutName(){
+        try {
+            const response = await fetch('http://localhost:3001/workout/editName',{
+            method: "POST",
+            headers: {
+                'Origin': 'http://127.0.0.1:3000',
+                'Content-Type': 'application/json',
+                'authorization': token
+            },
+            mode:'cors',
+            body: JSON.stringify( {workout_id:localStorage.getItem(recentLog), name:name})
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
-   
 
     function AddedExercise(){
         setAddingExercise(false);
@@ -143,14 +159,28 @@ export default function LogPage({item, SelectPage}){
         }
 
         
-    
+    function startEditingName() {setName(logData.name); setIsEditingName(true);}
+
+    async function handleUserAction(e) {
+        /* Get the keycode from the event */
+        const {key} = e;
+        /* Enter -> Submit the name change */
+        if (key == "Enter"){await EditWorkoutName(); setIsEditingName(false); await GetWorkoutInfo();}
+        /* Escape -> backout of the edit */
+        if (key == "Escape"){setIsEditingName(false);}
+    }
 
     return (
             <div className="w-auto h-auto mx-2 p-2">
-                
-                <h2 className='text-center h1-blue'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaEdit /></h2>
                 {
-                    
+                    isEditingName ? 
+                        <div className="flex justify-center">
+                            <input type="text" value={name} className="text-center h1-blue bg-gun place-self-center" onChange={(e)=>setName(e.target.value)} onKeyDown={async (e)=>handleUserAction(e)}></input>
+                        </div>
+                        :
+                        <h2 className='text-center h1-blue'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaEdit className="inline" onClick={()=>startEditingName()} /></h2>
+                }
+                {
                     logData.exercises ? 
                         logData.exercises.map((item, index) =>{
                             //console.log(item)
@@ -158,7 +188,6 @@ export default function LogPage({item, SelectPage}){
                         })
                         :
                         <></>
-                    
                 }
                 <div className='grid grid-row-2'>
                     <button className='m-2 button button-e-blue justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
