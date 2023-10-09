@@ -1,7 +1,7 @@
 const {Goals, Objectives} = require('../models/mGoals');
 const {Workout} = require('../models/mWorkout.js');
 const {GenerateSummary} = require('../controllers/cUser');
-const { SummaryData } = require('../util/dutil');
+const { SummaryData, SummaryAcces } = require('../util/dutil');
 
 /**Create a new goal */
 async function CreateNewGoal(req,res,next){
@@ -10,7 +10,7 @@ async function CreateNewGoal(req,res,next){
     const name = res.locals.bodyData.name !== "" ? res.locals.bodyData.name : "default"
 
     if(start > end){ next("Please select a end date that is after the start date")}; // make sure dates are okay
-    console.log(res.locals.bodyData)
+   
     try{
         const newGoal = new Goals({user_id:user,name:name,start:new Date(start),end:new Date(end)})
 
@@ -88,8 +88,7 @@ async function AddObj(req,res,next){
             res.send({added:true, objectives:assocGoal.objectives});
         }
         catch(e){
-            console.log('Error adding objective to goal')
-            console.log(e);
+            
             next(e.message);
         }
     }
@@ -128,28 +127,56 @@ async function CompareGoal(req,res,next){
 
     }
     catch(e){
+        console.log(e);
         next(e.message)
     }
 }
 
 
-async function GoalSummary(req,res,next){
-    var {start,end} = res.locals.bodyData; // Optional start and end date
-    start = start ? new Date(start) : 0;
-    end = end ? new Date(end) : new Date(Date.now());
+async function RecentGoals(req,res,next){
+    const time = Date.now();
+    const user = res.locals.user;
+    const {n} = res.locals.bodyData; // number to return
 
+    //Locate maybe 5 goals
+    try{
+        const findGoals = await Goals.find({user_id:user, start:{$lte: new Date(time)}, end: {$gte : new Date(time)}}).sort({end: 1}).limit(n) // find goals that are currently active, sort by lowest end date and only return n reuslts
+        console.log(findGoals);
 
-    //Maybe return most complete goals, least complete goals, and most recent goals
-    // I think limit people to like 6 goals at a time to reduce max query load and goals are made up of a lot of objectives anyways 
-    
-    // iterating all the goals now  
-    //   Generate a total objective completion % -> function to do this = Compare A Goal
-    //    as well as individual objective completion % / "you are 90% of the way to your objective of 225lbs on bench"
-    //    
+        const return_data = {}
+        findGoals.forEach((goal,index)=>{
+            const summary_data = GenerateGoalSummary(goal,user)
+            return_data[goal.name] = summary_data ? summary_data : {overall_completion:0,percents:[]}
+        })
+        
+        res.send({goal_data:return_data})
+
+    }
+    catch(e)
+    {
+        next(e.message)
+    }
 }
 
 
+//Want to return some kind of overall % completion, as well as individual 
+async function GenerateGoalSummary(goal,user){
+    const goal_data = await CompareAGoal(goal, user); // array of objectives from this goal
 
+    if(!goal_data){return null;}
+
+    const percents = Object.keys(goal_data).map( (key,index) => { // get rounded percentages for objective completion
+        console.log(goal_data[key])
+        const fraction = goal_data[key][0]/goal_data[key][1]
+        return Math.round( (fraction)*100)/100;
+    });
+
+    const complete = percents.reduce( (total,i) => {return total+( (i>=1.0 ? 1 : 0))}) // add 1 if our percent is at 1.0 or higher
+    const objective_completion = Math.round((complete / percents.length)*100)/100; // get the percentage for how many we have completed
+    console.log(`Total Complete: ${objective_completion}`)
+    console.log(percents);
+    return {overall_completion: objective_completion, percents: percents}
+}
 
 /**  Compare a singular goal with out using the request data (a goal object, user id), I want this to return maybe a % towards the goal completion or something 
  *  @returns {Object} Goal Data: [ [summary_value,objective_value]]
@@ -163,10 +190,13 @@ async function CompareAGoal(goal,user){
     const data = await GenerateSummary(user,start,end)
     
     //Pull out objectives and use them to access the summary data for comparison
-    if(data){
-        console.log(data);
+    console.log(`Number of Objectives in ${goal.name} : ${goal.objectives.length}`)
+    console.log(data);
+    if(data && goal.objectives.length > 0){
+        
         goal.objectives.forEach((item,index)=>{
-            //console.log(item)
+            console.log(item)
+            
             goal_data[index] = [parseObjective(item,data),item.value];
         })
     }   
@@ -181,7 +211,7 @@ async function CompareAGoal(goal,user){
 */
 function parseObjective(objective, data){
     const target = objective.target;
-    console.log(target)
+    
     switch(objective.context){
         case 0: //Type 0 -> We are accessing the first layer of the summary object
             return data[target.target];
@@ -193,6 +223,7 @@ function parseObjective(objective, data){
             if(target.subTarget === "n"){ //sets is easy
                 return data.exercise_summary[target.exercise_name]["n"]
             }
+            else if(!target.subTarget){return 0}
             else{ // Basically all the options of the select on the front end correspond to this
                 
                 const [key,subkey] = target.subTarget.split(",");
@@ -206,4 +237,5 @@ function parseObjective(objective, data){
 
 
 
-module.exports = {CompareGoal:CompareGoal,CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
+
+module.exports = {RecentGoals:RecentGoals, CompareGoal:CompareGoal,CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}

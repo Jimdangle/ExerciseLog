@@ -1,7 +1,7 @@
 const User = require('../models/mUsers.js')
 const {Workout} = require('../models/mWorkout.js');
 
-const {SummaryData} = require('../util/dutil.js');
+const {SummaryData, SummaryAcces} = require('../util/dutil.js');
 //Get user information based on the presence of the user token in the header 
 async function GetUser(req,res,next){
     const user = res.locals.user;
@@ -25,6 +25,7 @@ async function GetWholeSummary(req,res,next){
     //Our final result object
     const summaryData = await GenerateSummary(user,start,endDate);
     if(summaryData){
+        console.log(SummaryAcces(summaryData, ["exercise_summary","Haram Sandwhic", "morgpie"]))
         res.send({summary:summaryData})
     }
     else{
@@ -38,7 +39,7 @@ async function GenerateSummary(user,start,end){
     var data = new SummaryData();
     try{
         const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: new Date(end)}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
-        console.log(workouts)
+        
         console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(end).toString()}: found ${workouts.length} workouts`)
         if(workouts.length > 0){
             workouts.forEach( (workout) => {

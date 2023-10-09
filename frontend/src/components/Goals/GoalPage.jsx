@@ -52,7 +52,7 @@ export default function GoalPage({goal,setViewingGoal}){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod.difference);
+                console.log(bod);
                 setGoalComp(bod.difference)
             }
         }
@@ -72,7 +72,7 @@ export default function GoalPage({goal,setViewingGoal}){
         {goalData.objectives && goalComp ? goalData.objectives.map((item,index)=>{
             console.log(goalComp)
             return <ObjectiveItem key={index+"llcoolObj"} objective={item} goal_id={goal._id} GetGoalData={GetGoalData} cmp={goalComp ? goalComp[index]: [0,0]}></ObjectiveItem>
-        }): <></>}
+        }): <p className="info-red">Could not Load Objectives or Goal Completion</p>}
         <button className="place-self-center button button-e-blue" onClick={()=>{setAddingObjective(!addingObjective)}}>Add Objective</button>
         {addingObjective ? <ObjectiveAdder goal_id={goal._id} GetGoalData={GetGoalData}></ObjectiveAdder> : ""}
         {/**Literal filler, large height, large vertical margin, invisible text */}
