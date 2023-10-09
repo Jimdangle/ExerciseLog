@@ -1,7 +1,8 @@
 //database util
 
 const fs = require('fs');
-const path = require('node:path')
+const path = require('node:path');
+const { type } = require('os');
 
 
 const pp = path.join(__dirname,'../','config','workouts.txt')
@@ -43,8 +44,19 @@ class SummaryData   {
     }
 }
 
+/**Access the summary object better
+ * @param {SummaryData} data : summary data object
+ * @param {List} keys : a list of keys in order telling us how to access the object 
+ *  */  
+function SummaryAcces(data,keys){
+    if(!data || !keys){return null}
 
-module.exports = {GetMotionArray:GetMotionArray,SummaryData:SummaryData}
+    const val = keys.reduce((acum,val)=>{return acum[val] ? acum[val] : acum},data)
+    console.log(`Summary access on ${keys} return ${val}`)
+    return typeof val== Number? val : null;
+}
+
+module.exports = {GetMotionArray:GetMotionArray,SummaryData:SummaryData, SummaryAcces:SummaryAcces}
 const p2p = path.join(__dirname,'../','config','workouts_out.txt')
 async function WriteArray(){
     const inp = await GetMotionArray();

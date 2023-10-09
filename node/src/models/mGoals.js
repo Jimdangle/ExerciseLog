@@ -32,6 +32,14 @@ const ObjectiveSchema = new mongoose.Schema({
     },
 })
 
+const BObjectiveSchema = new mongoose.Schema({
+    keys : [{type: String, required: true}],
+    value:{
+        type: Number,
+        required: true
+    }
+    
+})
 
 const GoalSchema = new mongoose.Schema({
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
@@ -44,11 +52,12 @@ const GoalSchema = new mongoose.Schema({
         type:Date,
         required: true,  
     },
-    objectives: [{type: mongoose.Schema.Types.ObjectId, ref:'Objectives'}]
+    objectives: [{type: mongoose.Schema.Types.ObjectId, ref:'Objectives'}],
+    bobjectives: [{type: mongoose.Schema.Types.ObjectId, ref:'BObjectives'}]
 })
 GoalSchema.index({user_id:1,start:1,end:1,name:1}, {unique: true}); // a unique goal should have different dates, and name per user 
 
-
+const BObjectives = mongoose.model("BObjectives", BObjectiveSchema)
 const Objectives = mongoose.model("Objectives", ObjectiveSchema);
 const Goals = mongoose.model("Goals", GoalSchema);
 
