@@ -70,15 +70,15 @@ export default function Home({signout,test}){
     return(
         <div className="flex flex-row justify-center">
         
-        <div className="flex flex-col">
-        <div className="flex pt-2 pr-2 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(true)}}></FaBars></div> 
-        <div className="">
-            <TokenContext.Provider value={token}>
-                <PageContext.Provider value={SetPage}>
-                    {SelectPage()}
-                </PageContext.Provider>
-            </TokenContext.Provider>
-        </div>
+        <div className={"flex flex-col md:w-2/3 sm:w-1/2"}>
+            <div className="flex pt-2 pr-2 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(!isNavDisplayed)}}></FaBars></div> 
+            <div onClick={()=>{setIsNavDisplayed(false)}}>
+                <TokenContext.Provider value={token}>
+                    <PageContext.Provider value={SetPage}>
+                        {SelectPage()}
+                    </PageContext.Provider>
+                </TokenContext.Provider>
+            </div>
             
             
             {/**Literal filler, large height, large vertical margin, invisible text */}
