@@ -14,7 +14,7 @@ export default function NavBar({SetPage, logout,active, setIsNavDisplayed, isNav
     return(
         
 
-        <div className={" rounded-l-md bg-slate-600 py-2  text-center font-semibold text-xl shadow-md border-b-2 flex flex-col duration-300 transition-all absolute " + (isNavDisplayed ? "left-1/3 w-2/3 lg:left-2/3 lg:w-1/3 h-full" : "left-full w-0 h-0")}>
+        <div className={" rounded-l-md bg-slate-600 py-2  text-center font-semibold text-xl shadow-md border-b-2 flex flex-col duration-300 transition-all absolute " + (isNavDisplayed ? "left-2/3 w-1/3 h-full" : "left-full w-0 h-0")}>
             <a className={"duration-200 py-2 "+(active==0 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{SetPage(0); }}>Home</a>
             <a className={"duration-200 py-2 "+(active==1 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{ SetPage(1);}}>Log</a>
             <a className={"duration-200 py-2 "+(active==2 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{ SetPage(2);}}>Summary</a>

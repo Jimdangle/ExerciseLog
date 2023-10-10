@@ -137,9 +137,11 @@ export default function LogList({SelectPage}){
     return(
         <div className="w-auto justify-center">
             <div className='flex flex-col justify-center'>
-                <input type="text" placeholder='Name(optional)' value={newWorkoutName } className='mx-6 h-8 my-2 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
+                <p className='text-center info-blue'>New Workout Name</p>
+                <input type="text" placeholder='(optional)' value={newWorkoutName } className='mx-6 h-8 my-2 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
                 <button className='button button-e-blue w-36 place-self-center' onClick={AddWorkout}>Start New</button>
             </div>
+            <div className='mt-10'><p className='text-gun'>t</p></div>
            
             <RecentGoals></RecentGoals>
             <h1 className='h1-white ml-4 mt-32' onClick={()=>{setShowWorkouts(!showWorkouts)}}> Past Workouts: <span className='info-blue'>{rawList.length}</span> <button>{showWorkouts ? "v" : ">"}</button></h1>
