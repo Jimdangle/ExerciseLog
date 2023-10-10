@@ -11,10 +11,10 @@
 
     /*Nav Bar styles*/
     .nav-item {
-        @apply inline px-3 text-sm text-white scale-100
+        @apply inline px-3  text-white 
     }
     .nav-a-item {
-        @apply inline px-3 text-oblue scale-110
+        @apply inline px-3 text-lg text-oblue 
     }
 
     /*General Typography*/

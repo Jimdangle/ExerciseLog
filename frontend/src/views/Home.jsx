@@ -7,6 +7,7 @@ import NavBar from "../components/NavBar/NavBar";
 import Goals from '../components/Goals/Goals'
 
 import { recentPage } from "../config/cfUtil";
+import { FaBars ,FaIndent} from "react-icons/fa";
 //Home Show recent workouts and let user edit items in the list
 // Two Components I think
 // 1) Log List : displays a list of workout logs with edit buttons and delete buttons
@@ -16,6 +17,9 @@ export const TokenContext = createContext(null);
 export const PageContext = createContext(null);
 
 export default function Home({signout,test}){
+
+    const [isNavDisplayed, setIsNavDisplayed] = useState(false); // state for managing navbar
+
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
         signout();
@@ -64,20 +68,27 @@ export default function Home({signout,test}){
     
    
     return(
-        <>
-        <NavBar SetPage={SetPage} logout={logout} active={page}></NavBar>
+        <div className="flex flex-row justify-center">
         
-        <TokenContext.Provider value={token}>
-            <PageContext.Provider value={SetPage}>
-                {SelectPage()}
-            </PageContext.Provider>
-        </TokenContext.Provider>
+        <div className="flex flex-col">
+        <div className="flex pt-2 pr-2 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(true)}}></FaBars></div> 
+        <div className="">
+            <TokenContext.Provider value={token}>
+                <PageContext.Provider value={SetPage}>
+                    {SelectPage()}
+                </PageContext.Provider>
+            </TokenContext.Provider>
+        </div>
+            
+            
+            {/**Literal filler, large height, large vertical margin, invisible text */}
+            <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+            {/**Literal filler, large height, large vertical margin, invisible text */}
+            <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
+        </div>
+        <NavBar className="absolute" SetPage={SetPage} logout={logout} active={page} setIsNavDisplayed={setIsNavDisplayed} isNavDisplayed={isNavDisplayed}></NavBar>
         
-        {/**Literal filler, large height, large vertical margin, invisible text */}
-        <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
-        {/**Literal filler, large height, large vertical margin, invisible text */}
-        <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
-        </>
+        </div>
         
         
         
