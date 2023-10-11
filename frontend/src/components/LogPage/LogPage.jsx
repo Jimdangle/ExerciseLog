@@ -178,7 +178,7 @@ export default function LogPage({item, SelectPage}){
                             <input type="text" value={name} className="text-center h1-blue bg-gun place-self-center" onChange={(e)=>setName(e.target.value)} onKeyDown={async (e)=>handleUserAction(e)}></input>
                         </div>
                         :
-                        <h2 className='text-center h1-blue'>{(logData && logData.name && isTimeString(logData.name) ? GetLocal(logData.name).slice(0,24) : (logData.name ? logData.name : ""))} <FaEdit className="inline" onClick={()=>startEditingName()} /></h2>
+                        <h2 className='text-center h1-blue'>{ (logData && logData.name) ? logData.name.slice(0,16) : ""} <FaEdit className="inline" onClick={()=>startEditingName()} /></h2>
                 }
                 {
                     logData.exercises ? 

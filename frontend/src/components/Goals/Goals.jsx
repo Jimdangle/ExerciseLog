@@ -1,20 +1,15 @@
-import { useState } from "react";
-import GoalList from "./GoalList";
-import GoalMaker from "./GoalMaker";
-import GoalPage from "./GoalPage";
+import RecentGoals from "./RecentGoals";
 
-export default function Goals(){
+export default function Goals({setPage}){
 
-    const [addedGoal,setAddedGoal] = useState(false);
-    const [viewingGoal, setViewingGoal] = useState(false);
-    const [goal, setGoal] = useState({})
-   
-
-    
     return(
     <div className="flex flex-col">
-        {!viewingGoal ? <GoalMaker setAddedGoal={setAddedGoal}></GoalMaker> : <></>}
-        {viewingGoal ? <GoalPage goal={goal} setViewingGoal={setViewingGoal}></GoalPage> : <GoalList setGoal={setGoal} setViewingGoal={setViewingGoal} addedGoal={addedGoal}></GoalList>}
+        <RecentGoals></RecentGoals>
+
+        <div className="flex flex-row justify-center mt-10">
+            <button className="button button-e-blue" onClick={()=>{setPage(1)}}>Make New</button>
+            <button className="button button-e-blue" onClick={()=>{setPage(2)}}>View Old</button>
+        </div>
         
     </div>)
     }

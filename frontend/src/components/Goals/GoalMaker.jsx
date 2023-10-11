@@ -1,10 +1,10 @@
 import { TokenContext} from "../../views/Home"
 import {useContext, useState} from 'react'
 
-export default function GoalMaker(){
+export default function GoalMaker({setGoal,setPage}){
     const token = useContext(TokenContext);
-    const [startDate, setStartDate] = useState(0);
-    const [endDate, setEndDate] = useState(Date.now());
+    const [startDate, setStartDate] = useState(Date.now());
+    const [endDate, setEndDate] = useState(Date.now()+ 7*60*60*24*1000);
     const [name,setName] = useState("");
 
     async function AddGoal(){
@@ -22,27 +22,31 @@ export default function GoalMaker(){
 
             if(response.ok){
                 const bod = await response.json();
-                console.log(bod);
+                
+                setGoal(bod.baggage);
+                setPage(3)
+            
             }
         }
         catch(e)
         {
-            console.log(e.message)
+            console.error(e.message)
         }
     }
 
-    return(<div  className="flex flex-col text-white">
+    return(<div  className="flex flex-col text-white w-80">
+        <button className="button button-e-blue w-24" onClick={()=>{setPage(0)}}>Return</button>
         <h1>Goals Maker</h1>
         <div className="flex justify-center">
-            <input type="text" className="text-black" placeholder="(name)" value={name} onChange={(e)=>{setName(e.target.value)}}></input>
+            <input type="text" className="text-gun" placeholder="(name)" value={name} onChange={(e)=>{setName(e.target.value)}}></input>
         </div>
         <div className='flex flex-row my-2'>
             <p>Start</p>
-            <input type="date" placeholder={startDate.toString()} className="ml-auto text-black " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
+            <input type="date" value={new Date(Date.now()).toISOString().split('T')[0]} className="ml-auto text-gun " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className='flex flex-row'>
             <p>End</p>
-            <input type="date" placeholder={endDate.toString()} className="ml-auto text-black" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
+            <input type="date" value={new Date(Date.now() + 7*60*60*24*1000).toISOString().split('T')[0]} className="ml-auto text-gun" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className="flex place-items-center justify-center">
             <button className="button button-e-blue" onClick={AddGoal}>Add</button>

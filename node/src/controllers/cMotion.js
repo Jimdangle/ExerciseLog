@@ -24,8 +24,8 @@ async function ListUserMotions(req,res,next){
 async function ListAllMotions(req,res,next){
     const user = res.locals.user;
     try{
-        const motions = await Motion.find({},"name");
-        const uMotions = await UserMotion.find({user_id:user},"name");
+        const motions = await Motion.find({},"name type");
+        const uMotions = await UserMotion.find({user_id:user},"name type");
         
         
         const cated = motions.concat(uMotions) // combine results 

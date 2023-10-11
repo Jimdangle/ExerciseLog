@@ -69,7 +69,13 @@ async function GetGoalData(req,res,next){
     const {goal_id} = res.locals.bodyData;
     try{
         const match = await Goals.findOne({_id:goal_id}).populate("objectives");
-        res.send({goal:match})
+        
+        const fuckaround = match.objectives.map((item) => {
+            
+            return humanObjective(item)
+        })
+        
+        res.send({goal:match,translated: fuckaround})
     }
     catch(e){
         next(e.message);
@@ -142,8 +148,7 @@ async function RecentGoals(req,res,next){
     //Locate maybe 5 goals
     try{
         const findGoals = await Goals.find({user_id:user, start:{$lte: new Date(time)}, end: {$gte : new Date(time)}}).populate("objectives").sort({end: 1}).limit(n) // find goals that are currently active, sort by lowest end date and only return n reuslts
-        console.log(`Generating Recent Goal Summary: found ${findGoals.length} goals `);
-
+     
         var out_data = []
         for(const goal of findGoals){
             const data = await GenerateGoalSummary(goal,user);
@@ -174,7 +179,7 @@ async function GenerateGoalSummary(goal,user){
 
     const complete = percents.reduce( (total,i) => {return total+( (i>=1.0 ? 1 : 0))},0) // add 1 if our percent is at 1.0 or higher
     const objective_completion = Math.round((complete / percents.length)*100)/100; // get the percentage for how many we have completed
-    console.log(`Total Complete: ${objective_completion}`)
+    
     
     
     return {overall_completion: objective_completion, percents: percents, obj_data:goal_data}
@@ -192,7 +197,7 @@ async function CompareAGoal(goal,user){
     const data = await GenerateSummary(user,start,end)
     
     //Pull out objectives and use them to access the summary data for comparison
-    console.log(`Number of Objectives in ${goal.name} : ${goal.objectives.length}`)
+    
     
     if(data && goal.objectives.length > 0){
         
@@ -238,7 +243,7 @@ function parseObjective(objective, data){
 
 function humanObjective(objective){
     const target = objective.target;
-    
+   
     switch(objective.context){
         case 0: //Type 0 -> We are accessing the first layer of the summary object
             switch(target.target){
@@ -258,11 +263,11 @@ function humanObjective(objective){
                 return "Total " + exercise_name + " sets"
                 
             }
-            else if(!target.subTarget){return 0}
+            else if(!target.subTarget || !target.type){return ""}
             else{ // Basically all the options of the select on the front end correspond to this
                 
                 const [key,subkey] = target.subTarget.split(",");
-                const [l,r] = (key==="r" ? ["Values",0] :  ["Weights",1]) // if we are looking at values aka reps we want the first element of the array contained in the obj
+                const l = (key==="r" ? (target.type===0 ? "Reps" : "Time") :  (target.type===0 ? "Weight" : "Dist")) // if we are looking at values aka reps we want the first element of the array contained in the obj
                 return target.exercise_name + " " + l + " " +subkey
             }
     }

@@ -5,6 +5,8 @@
 import { FaBars ,FaIndent} from "react-icons/fa";
 import { useState } from "react"
 
+import {MdLogout} from 'react-icons/md'
+
 export default function NavBar({SetPage, logout,active, setIsNavDisplayed, isNavDisplayed}){
    
    
@@ -19,8 +21,8 @@ export default function NavBar({SetPage, logout,active, setIsNavDisplayed, isNav
             <a className={"duration-200 py-2 "+(active==1 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{ SetPage(1);}}>Log</a>
             <a className={"duration-200 py-2 "+(active==2 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{ SetPage(2);}}>Summary</a>
             <a className={"duration-200 py-2 "+(active==3 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>{ SetPage(3);}}>Goals</a>
-            <a className={"duration-200 py-2 "+(active==4 ? "nav-a-item" : "nav-item") + (isNavDisplayed ? " block" : " hidden")} onClick={()=>logout()}>Logout</a>
-            <FaIndent className="h1-white" onClick={()=>{setIsNavDisplayed(false)}}></FaIndent>
+            <a className={"duration-200 py-32 h1-white px-12" + (isNavDisplayed ? " block" : " hidden")} onClick={()=>logout()}><MdLogout></MdLogout></a>
+            
         </div>
             
         )

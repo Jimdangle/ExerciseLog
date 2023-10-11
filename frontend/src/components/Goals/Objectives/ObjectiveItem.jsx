@@ -3,7 +3,7 @@ import { TokenContext } from "../../../views/Home";
 import { useContext } from "react";
 
 import { percentageColor } from "../../../utils/styleutil";
-export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp}){
+export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp, translated}){
     const token = useContext(TokenContext)
 
     
@@ -35,19 +35,13 @@ export default function ObjectiveItem({objective, goal_id, GetGoalData, cmp}){
 
     return (
     <div className="flex flex-col mx-3 py-2 border-b-2 border-dashed border-b-white">
-        {console.log(objective.target)}
+        
         <div className="flex flex-row justify-between">
             <p className="h2-blue">{TranslateType(objective.context)} </p>
             
         </div>
+        <p className="h3-green">{translated}</p>
         
-        {objective && objective.target ? Object.keys(objective.target).map((key,index)=>{
-            
-            return <div key={index+"l"+index} className="flex flex-row justify-between" ><p className="h3-white">{key}:</p> <p className="str-blue mr-4">{objective.target[key]}</p></div>
-        })
-        :
-        <></>
-        }
         <div className="flex flex-row justify-between"><p className="h3-white">Value: </p>  <p className="str-blue mr-4">{objective.value}</p></div>
         {cmp&&cmp.length>1?<div className="flex flex-row justify-between"><p className="h3-white">Progress: </p> <p className={"font-semibold "+percentageColor(cmp[0]/cmp[1])}>{Math.round((cmp[0]/cmp[1])*100)}% <span className="text-slate-400">({cmp[0]})</span> </p></div>:<></>}
         
