@@ -4,7 +4,7 @@ import { TranslateMuscle } from '../../utils/muscle';
 export default function SummaryCanvas({summaryData,overlay}){
     const canvasRef = useRef(null);
     
-    useEffect(()=>{console.log(summaryData)},[])
+   
     
     useEffect(()=>{
         initCanvas()
@@ -98,7 +98,7 @@ export default function SummaryCanvas({summaryData,overlay}){
             //3 standard deviations
             var stdevs = summaryData.muscles.map( (muscle_map,index) => {
                 return (muscle_map.reduce((t,v)=>{
-                    if(index==2){console.log(avgs[index])}
+                    
                     return t+((v-avgs[index])*(v-avgs[index]))},0)/(muscle_map.length-1))})
             
             stdevs = stdevs.map((d)=>{return Math.sqrt(d)})
@@ -127,8 +127,6 @@ export default function SummaryCanvas({summaryData,overlay}){
                     all_muscles[index].map((muscle,subindex)=>{
                         const z = zScore(muscle,all_avgs[index],stdev);
                         muscle_group_shapes[subindex].map((shape_key)=>{
-
-                            if(index==2 && subindex==6){console.log(`Canvas:\n\tstd:${stdev}, z:${z}, avg:${all_avgs[index]} -> ${getColorFromZ(z)}`)}
                             fillShape(ctx,shapes[shape_key],getColorFromZ(z))
                         })
                     })

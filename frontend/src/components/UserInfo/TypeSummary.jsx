@@ -11,15 +11,14 @@ export default function TypeSummary({imp_map, map_tot, ind}){
         const avg = imp_map.reduce((t,v)=>{return t+v},0)/imp_map.length;
         var stdev = imp_map.reduce((t,v)=>{return t+((v-avg)*(v-avg))},0)/(imp_map.length-1);
         stdev = Math.sqrt(stdev);
-        setPercents(percents)
-        console.log(percents)
+        
         const std_scores = imp_map.map((item)=>{
             const zeta = (item-stdev)/avg // # of stdevs away from mean
             
             return zeta;
         })
         setScores(std_scores)
-        console.log(std_scores)
+        
     },[imp_map,map_tot])
     
 

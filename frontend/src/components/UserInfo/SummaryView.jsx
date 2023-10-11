@@ -35,7 +35,7 @@ export default function SummaryView({Summary}){
                 <button className={'button ' + (overlay==1 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(1)}}>Cardio</button>
                 <button className={'button '+ (overlay==2 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(2)}}>Holds</button>
             </div>
-            <button className={'button '+ (overlay==4 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(4)}}>Total</button>
+            <button className={'button place-self-center w-24 '+ (overlay==4 ? 'button-a-blue' : 'button-e-blue')} onClick={()=>{setOverlay(4)}}>Total</button>
             
             
     

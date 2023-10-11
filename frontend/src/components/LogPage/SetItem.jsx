@@ -1,5 +1,23 @@
-
+import { useState, useEffect} from "react";
 export default function SetItem({set, RemoveSet, number, exercise_id, type}){
+    const [spawn,setSpawn] = useState(" opacity-0 -translate-y-5")
+
+    function delaySpawn(){
+        setTimeout( ()=>{
+            setSpawn(" opacity-100 translate-y-0")
+            console.log(spawn)
+        },50)
+    }
+
+    function deSpawn(){
+        setSpawn(" opacity-0 -translate-y-5")
+        setTimeout(() => {
+            RemoveSet(exercise_id,set._id)
+        }, (200));
+    }
+
+    useEffect( ()=> {delaySpawn()}, [])
+
     function convertSecondsTime(){
         const val = set.rep_or_time;
         // have a value in seconds
@@ -15,19 +33,16 @@ export default function SetItem({set, RemoveSet, number, exercise_id, type}){
 
     return(
 
-        <>
-            <div className="">
-                <p className="str-blue">{number}.</p>
-                
-            </div>
-            <div className="">
+        <div className={"duration-200 grid grid-cols-4 "+spawn}>
+            <p className="text-ogreen">{number}.</p>
+            <p className="">
                 {type==0 ? set.rep_or_time : convertSecondsTime()}
-            </div>
-            <div className="">
+            </p>
+            <p className="">
                 {set.added_weight}
-            </div>
-            <button className='justify-end text-ored font-bold text-lg text-center' onClick={()=>{RemoveSet(exercise_id,set._id) }}>-</button>
-        </>
+            </p>
+            <button className='justify-end text-ored font-bold text-lg text-center' onClick={()=>{deSpawn() }}>-</button>
+        </div>
                 
       
         );

@@ -2,14 +2,14 @@ import { TokenContext } from "../../../views/Home"
 import { useContext, useState, useEffect } from "react"
 
 
-export default function SetAdder({exercise_id, refresh, type}){
+export default function SetAdder({exercise_id, refresh, type, nextNum}){
     const token = useContext(TokenContext);
     const [reps, setReps] = useState(1);
     const [weight, setWeight] = useState(0);
     
     const [time,setTime] = useState({hours:"",min:"",sec:""})
 
-    useEffect(()=>{console.log(time)},[time])
+    
 
     function updateTime(event){
         const t = event.target;
@@ -58,16 +58,17 @@ export default function SetAdder({exercise_id, refresh, type}){
         }
     }
 
-    return(<>
-            <p className="str-gun">New Set</p>
+    return(
+    <div className="grid grid-cols-4">
+            <p className="str-gun">{nextNum+1}</p>
             {type === 0 ?
-            <input className="text-center rounded-lg text-gun w-12 my-2" type="number" value={reps} placeholder="reps or time" min={"1"} onChange={(v)=>{
+            <input className="text-center place-self-center rounded-lg text-gun w-12 my-2" type="number" value={reps} placeholder="reps or time" min={"1"} onChange={(v)=>{
                 if(v.target.value >= 0){
                     setReps(v.target.value)}
                 }
             }></input>
             :
-            <div className="flex flex-row">
+            <div className="flex flex-row place-self-center">
                 <input className="number w-8" name="hours" placeholder="hh" onChange={(e)=>{updateTime(e)}} value={time['hours']}></input>:
                 <input className="number w-8" name="min" placeholder="mm" onChange={(e)=>{updateTime(e)}} value={time['min']}></input>:
                 <input className="number w-8" name="sec" placeholder="ss" onChange={(e)=>{updateTime(e)}} value={time['sec']}></input>
@@ -76,7 +77,7 @@ export default function SetAdder({exercise_id, refresh, type}){
             
 
            
-            <input className="w-12 my-2 rounded-lg text-center text-gun" type="number" value={weight} placeholder={type==0 ? "Weight" : "Dist"} min={"0"} max={"1000"} onChange={(v)=>{
+            <input className="w-12 my-2 place-self-center rounded-lg text-center text-gun" type="number" value={weight} placeholder={type==0 ? "Weight" : "Dist"} min={"0"} max={"1000"} onChange={(v)=>{
                 if(v.target.value >= 0 && v.target.value < 1000){
                     setWeight(v.target.value)
                 }
@@ -85,8 +86,8 @@ export default function SetAdder({exercise_id, refresh, type}){
             
 
             
-            <button className='w-8 h-8 rounded-full text-center hover:text-ogreen text-lg font-bold' onClick={()=>{AddSet()}}>+</button>
+            <button className='w-8 h-8 place-self-center rounded-full text-center text-ogreen text-lg font-bold' onClick={()=>{AddSet()}}>+</button>
             
             
-    </>)
+    </div>)
 }
