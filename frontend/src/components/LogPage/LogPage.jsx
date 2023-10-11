@@ -171,7 +171,7 @@ export default function LogPage({item, SelectPage}){
     }
 
     return (
-            <div className="w-auto h-auto mx-2 p-2">
+            <div className="w-auto h-auto mx-2 p-2 flex flex-col justify-center">
                 {
                     isEditingName ? 
                         <div className="flex justify-center">

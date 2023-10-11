@@ -40,7 +40,8 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                     <div className='str-gun'>{motionData.type==0 ? "Reps" : "Time"}</div>
                     <div className='str-gun'>{motionData.type==0 ? "Weight(lbs)" : "Distance(mi)"}</div>
                     <div></div>       
-                
+                </div>
+                <div>
                     {
                         item.sets ? 
                         item.sets.map( (set, subindex) => {
@@ -51,7 +52,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                         <></>
                     }
                     
-                    <SetAdder exercise_id={item._id} refresh={refresh} type={motionData.type}></SetAdder>
+                    <SetAdder exercise_id={item._id} refresh={refresh} type={motionData.type} nextNum={item.sets.length}></SetAdder>
                 </div>
             </div>
             <div className='flex justify-center'>

@@ -73,7 +73,7 @@ export default function ExerciseAdder({workout_id, complete}){
     }
 
     return(<>
-        <div className="lg:w-96 max-md:w-124 h-124 bg-white rounded-md overflow-scroll">
+        <div className="h-124 bg-white rounded-md overflow-scroll">
             
             {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
             <h1 className="font-semibold ml-3">Select a motion</h1>
