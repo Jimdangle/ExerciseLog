@@ -9,6 +9,7 @@ import Goals from '../components/Goals/Goals'
 import { recentPage } from "../config/cfUtil";
 import { FaBars ,FaIndent} from "react-icons/fa";
 import GoalHome from "../components/Goals/GoalHome";
+import LogMaker from "../components/LogMaker/LogMaker";
 //Home Show recent workouts and let user edit items in the list
 // Two Components I think
 // 1) Log List : displays a list of workout logs with edit buttons and delete buttons
@@ -52,8 +53,10 @@ export default function Home({signout,test}){
                 return <UserInfo></UserInfo>
             case 3:
                 return <GoalHome></GoalHome>
-            default:
+            case 4:
                 return <LogList SelectPage={SetPage}></LogList>
+            default:
+                return <LogMaker setPage={SetPage}></LogMaker>
         }
         
     }
@@ -72,7 +75,7 @@ export default function Home({signout,test}){
         <div className="flex flex-row justify-center">
         
         <div className={"flex flex-col w-2/3 duration-300"+ (isNavDisplayed ? " -translate-x-1/3" : "")}>
-            <div className="flex pt-2 pr-2 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(!isNavDisplayed)}}></FaBars></div> 
+            <div className="flex pt-2 translate-x-5 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(!isNavDisplayed)}}></FaBars></div> 
             <div onClick={()=>{setIsNavDisplayed(false)}}>
                 <TokenContext.Provider value={token}>
                     <PageContext.Provider value={SetPage}>

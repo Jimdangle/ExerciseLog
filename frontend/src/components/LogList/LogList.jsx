@@ -66,30 +66,7 @@ export default function LogList({SelectPage}){
     }
     
     
-    async function AddWorkout(){
-        try{
-            const response = await fetch('http://localhost:3001/workout/add', {
-                method: "POST",
-                headers: {
-                    'Origin': 'http://127.0.0.1:3000',
-                    'Content-Type': 'application/json',
-                    'authorization': token
-                },
-                mode:'cors',
-                body: JSON.stringify({name:newWorkoutName})
-            })
-            const bod = await response.json();
-            if(response.ok){
-                console.log(bod);
-                GetList();
-                setNewWorkoutName("");
-                SetAndSwap(bod.id);
-            }
-        }
-        catch(e){
-            console.log(e);
-        }
-    }
+   
     
     async function RemoveWorkout(workout_id){
         try{
@@ -136,18 +113,7 @@ export default function LogList({SelectPage}){
 
     return(
         <div className=" justify-center">
-            <div className='flex flex-col justify-center'>
-                <p className='text-center info-blue'>New Workout Name</p>
-                <input type="text" placeholder='(optional)' value={newWorkoutName } className='mx-6 h-8 my-2 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
-                <button className='button button-e-blue w-36 place-self-center' onClick={AddWorkout}>Start New</button>
-            </div>
-            <div className='mt-10'><p className='text-gun'>t</p></div>
-           
-            <RecentGoals></RecentGoals>
-            <h1 className='h1-white ml-4 mt-32' onClick={()=>{setShowWorkouts(!showWorkouts)}}> Past Workouts: <span className='info-blue'>{rawList.length}</span> <button>{showWorkouts ? "v" : ">"}</button></h1>
             
-            {
-            showWorkouts ? 
             <>
             <div className="w-full h-auto flex flex-col">
                 <h1 className="text-center mt-2 h2-white">Search</h1>
@@ -173,9 +139,7 @@ export default function LogList({SelectPage}){
                 })}
             </ul>
             </>
-            :
-            <></>
-            }
+           
             {/**Literal filler, large height, large vertical margin, invisible text */}
             <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
             <div className='h-124 mt-64'><p className='text-slate-800'>t</p></div>
