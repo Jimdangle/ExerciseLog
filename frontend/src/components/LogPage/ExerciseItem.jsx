@@ -3,7 +3,7 @@ import SetItem from './SetItem';
 import { TranslateMuscle, TranslateType } from '../../utils/muscle';
 import {useEffect, useState} from 'react'
 
-export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh}){
+export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh, isMax}){
     const [motionData, setMotionData] = useState({});
     const [spawn, setSpawn] = useState(" opacity-0 -translate-x-full")
 
@@ -16,8 +16,10 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
     function deSpawn(){
         setSpawn(" opacity-0 -translate-x-full")
         setTimeout(()=>{
+            setSpawn(" hidden")
             RemoveExercise(item._id)
-        },300)
+            
+        },250)
         
     }
     
@@ -71,9 +73,14 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                     <SetAdder exercise_id={item._id} refresh={refresh} type={motionData.type} nextNum={item.sets.length}></SetAdder>
                 </div>
             </div>
+            {isMax ?
             <div className='flex justify-center'>
-             <button className='button button-e-red' onClick={()=>{deSpawn()}}>Remove</button>
-            </div>
+                <button className='button button-e-red' onClick={()=>{deSpawn()}}>Remove</button>
+            </div> 
+            :
+            <></>   
+        }
+            
             
         </div>
         )

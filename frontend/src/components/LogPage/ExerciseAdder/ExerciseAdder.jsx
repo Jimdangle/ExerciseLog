@@ -6,7 +6,7 @@ import MotionAdder from "./MotionAdder";
 export default function ExerciseAdder({workout_id, complete}){
     const token = useContext(TokenContext);
     useEffect(()=>{GetMotions(); delaySpawn();},[])
-
+    
     const [motions, setMotions] = useState([])
     const [displayMotions, setDisplayMotions] = useState([]);
     const [spawn, setSpawn] = useState(" opacity-0 -translate-x-full")
@@ -17,10 +17,13 @@ export default function ExerciseAdder({workout_id, complete}){
         },50)
     }
 
+   
+
     function deSpawn(item){
         setSpawn(" opacity-0 translate-x-full")
         setTimeout(()=>{
             AddExerciseToLog(item._id)
+            setSpawn(" hidden")
         },220)
     }
 

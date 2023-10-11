@@ -45,10 +45,10 @@ export default function LogPage({item, SelectPage}){
             const bod = await response.json();
             if(response.ok)
             {
-                console.log(bod)
+                
                 if(bod.workout){
                     setLogData(bod.workout);
-                    console.log('Gettting summary')
+                    
                     GetWholeSummary(bod.workout.createdAt);
                 }
                 else{
@@ -86,25 +86,32 @@ export default function LogPage({item, SelectPage}){
     }
 
     async function RemoveExercise(exercise_id){
-        try{
-            const response = await fetch('http://localhost:3001/workout/remEx',{
-                method:"DELETE",
-                headers: {
-                    'Origin': 'http://127.0.0.1:3000',
-                    'Content-Type': 'application/json',
-                    'authorization': token
-                },
-                mode:'cors',
-                body:JSON.stringify({workout_id:localStorage.getItem(recentLog),exercise_id:exercise_id})
-            })
+        const ex = logData.exercises ? logData.exercises[logData.exercises.length-1] : null
+        console.log(ex)
+        if(ex){
+            try{
+                const response = await fetch('http://localhost:3001/workout/remEx',{
+                    method:"DELETE",
+                    headers: {
+                        'Origin': 'http://127.0.0.1:3000',
+                        'Content-Type': 'application/json',
+                        'authorization': token
+                    },
+                    mode:'cors',
+                    body:JSON.stringify({workout_id:localStorage.getItem(recentLog),exercise_id:ex._id})
+                })
 
-            if(response.ok){
-                const bod = await response.json();
-                Refresh();
+                if(response.ok){
+                    const bod = await response.json();
+                    Refresh();
+                }
+            }
+            catch(e){
+                console.log(e)
             }
         }
-        catch(e){
-            console.log(e)
+        else{
+            console.log("No exercises to delete")
         }
     }
 
@@ -149,7 +156,7 @@ export default function LogPage({item, SelectPage}){
 
                 if(response.ok){
                     const bod = await response.json();
-                    console.log(bod);
+                    
                     setSummary(bod.summary);
                 }
             }
@@ -184,14 +191,15 @@ export default function LogPage({item, SelectPage}){
                     logData.exercises ? 
                         logData.exercises.map((item, index) =>{
                             //console.log(item)
-                            return <ExerciseItem key={index} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={Refresh}></ExerciseItem>
+                            return <ExerciseItem key={index} isMax={(logData.exercises.length-1==index)} item={item} RemoveExercise={RemoveExercise} RemoveSet={RemoveSet} refresh={Refresh}></ExerciseItem>
                         })
                         :
                         <></>
                 }
+                
                 <div className='grid grid-row-2'>
                     <button className='m-2 button button-e-blue justify-self-center' onClick={()=>{var t = addingExercise; setAddingExercise(!t);}}>{addingExercise ?  "Cancel" : "Add Exercise" }</button>
-                    {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
+                    {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise} addingExercise={addingExercise}></ExerciseAdder> : <></>}
                 </div>
                 
                 

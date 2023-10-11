@@ -9,7 +9,7 @@ export default function SetAdder({exercise_id, refresh, type, nextNum}){
     
     const [time,setTime] = useState({hours:"",min:"",sec:""})
 
-    useEffect(()=>{console.log(time)},[time])
+    
 
     function updateTime(event){
         const t = event.target;
