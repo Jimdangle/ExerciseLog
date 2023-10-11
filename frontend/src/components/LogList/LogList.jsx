@@ -135,7 +135,7 @@ export default function LogList({SelectPage}){
     
 
     return(
-        <div className="w-auto justify-center">
+        <div className=" justify-center">
             <div className='flex flex-col justify-center'>
                 <p className='text-center info-blue'>New Workout Name</p>
                 <input type="text" placeholder='(optional)' value={newWorkoutName } className='mx-6 h-8 my-2 pl-2 text-center focus:text-start duration-150' onChange={(value)=>{setNewWorkoutName(value.target.value)}}></input>
