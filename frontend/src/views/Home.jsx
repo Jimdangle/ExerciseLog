@@ -6,7 +6,7 @@ import { createContext, useState, useEffect } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import Goals from '../components/Goals/Goals'
 
-import { recentPage } from "../config/cfUtil";
+import { recentPage, recentLog} from "../config/cfUtil";
 import { FaBars ,FaIndent} from "react-icons/fa";
 import GoalHome from "../components/Goals/GoalHome";
 import LogMaker from "../components/LogMaker/LogMaker";
@@ -24,6 +24,8 @@ export default function Home({signout,test}){
 
     const logout = () => {
         localStorage.removeItem(lsPrefix+"actk");
+        localStorage.removeItem(recentPage)
+        localStorage.removeItem(recentLog)
         signout();
         
     }
