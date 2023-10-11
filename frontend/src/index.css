@@ -168,6 +168,9 @@
     .button-e-blue{
         @apply bg-oblue text-white scale-100
     }
+    .button-e-white{
+        @apply bg-white text-oblue scale-100
+    }
     .button-e-red{
         @apply bg-ored text-white scale-100
     }
