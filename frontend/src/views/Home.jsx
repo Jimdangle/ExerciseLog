@@ -71,7 +71,7 @@ export default function Home({signout,test}){
     return(
         <div className="flex flex-row justify-center">
         
-        <div className={"flex flex-col sm:w-[100%] md:w-2/3 duration-300"+ (isNavDisplayed ? " -translate-x-1/3" : "")}>
+        <div className={"flex flex-col w-2/3 duration-300"+ (isNavDisplayed ? " -translate-x-1/3" : "")}>
             <div className="flex pt-2 pr-2 justify-end"><FaBars className="h1-white" onClick={()=>{setIsNavDisplayed(!isNavDisplayed)}}></FaBars></div> 
             <div onClick={()=>{setIsNavDisplayed(false)}}>
                 <TokenContext.Provider value={token}>
