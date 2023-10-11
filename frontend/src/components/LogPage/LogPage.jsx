@@ -194,9 +194,7 @@ export default function LogPage({item, SelectPage}){
                     {addingExercise ? <ExerciseAdder workout_id={localStorage.getItem(recentLog)} complete={AddedExercise}></ExerciseAdder> : <></>}
                 </div>
                 
-                <div className='mt-5 flex justify-center'>
-                    <h1 className='font-semibold text-xl text-white'>Workout Summary</h1>
-                </div>
+                
                 {summary ? <SummaryView Summary={summary}></SummaryView> : <></>}
                 
                 {/**Literal filler, large height, large vertical margin, invisible text */}

@@ -12,7 +12,7 @@ export default function RecentGoalItem({item}){
             {
                 item.objectives.map((obj,index)=>{
                     return (
-                    <div key={obj.slice(0,5)+index} className="grid grid-cols-3">
+                    <div key={obj.slice(0,5)+index} className="grid grid-cols-3 mt-3">
                         <p className="text-sm">{obj}</p>
                         <p className="text-center"> {item.data.obj_data[index][0]}/{item.data.obj_data[index][1]} </p> 
                         <p className={"text-center " + percentageColorRed(item.data.percents[index])}>{item.data.percents[index]*100}%</p>

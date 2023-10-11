@@ -34,7 +34,7 @@ export default function GoalMaker({setGoal,setPage}){
         }
     }
 
-    return(<div  className="flex flex-col text-white w-80">
+    return(<div  className="flex flex-col text-white">
         <button className="button button-e-blue w-24" onClick={()=>{setPage(0)}}>Return</button>
         <h1>Goals Maker</h1>
         <div className="flex justify-center">
