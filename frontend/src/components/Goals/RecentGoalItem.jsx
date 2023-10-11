@@ -1,7 +1,7 @@
 import { percentageColorRed } from "../../utils/styleutil";
 export default function RecentGoalItem({item}){
     return(
-    <div  className="flex flex-col bg-white my-2">
+    <div  className="flex flex-col bg-white rounded-md px-2 my-2">
         <div className="grid grid-cols-3">
             <p className="h2-blue justify-self-start">{item.name}</p>
             <p className="text-slate-400 text-center text-sm">{new Date(new Date(item.end) - Date.now()).getDate()} more days</p>
