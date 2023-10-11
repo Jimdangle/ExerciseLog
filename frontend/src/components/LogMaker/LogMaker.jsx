@@ -54,6 +54,8 @@ export default function LogMaker({setPage}){
             <div className='mt-10'><p className='text-gun'>t</p></div>
            
             <RecentGoals></RecentGoals>
+
+            <button className='button button-e-white mt-24 w-64 place-self-center' onClick={()=>{setPage(1)}}>Jump Back In</button>
         </div>
     )
 }

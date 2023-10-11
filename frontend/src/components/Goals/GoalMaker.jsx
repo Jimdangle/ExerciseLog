@@ -3,7 +3,7 @@ import {useContext, useState} from 'react'
 
 export default function GoalMaker({setGoal,setPage}){
     const token = useContext(TokenContext);
-    const [startDate, setStartDate] = useState(Date.now());
+    const [startDate, setStartDate] = useState(Date.now()-(1000*60*60*24));
     const [endDate, setEndDate] = useState(Date.now()+ 7*60*60*24*1000);
     const [name,setName] = useState("");
 
@@ -42,11 +42,11 @@ export default function GoalMaker({setGoal,setPage}){
         </div>
         <div className='flex flex-row my-2'>
             <p>Start</p>
-            <input type="date" value={new Date(Date.now()).toISOString().split('T')[0]} className="ml-auto text-gun " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
+            <input type="date" value={new Date(startDate).toISOString().split('T')[0]} className="ml-auto text-gun " onChange={(e)=>{setStartDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className='flex flex-row'>
             <p>End</p>
-            <input type="date" value={new Date(Date.now() + 7*60*60*24*1000).toISOString().split('T')[0]} className="ml-auto text-gun" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
+            <input type="date" value={new Date(endDate).toISOString().split('T')[0]} className="ml-auto text-gun" onChange={(e)=>{setEndDate(e.target.valueAsNumber)}}></input>
         </div>
         <div className="flex place-items-center justify-center">
             <button className="button button-e-blue" onClick={AddGoal}>Add</button>
