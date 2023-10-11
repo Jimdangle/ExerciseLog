@@ -79,7 +79,7 @@ export default function ExerciseAdder({workout_id, complete}){
             <h1 className="font-semibold ml-3">Select a motion</h1>
             <input type="text" className="px-2 mx-2" placeholder="search" onChange={(val)=>{searchMotions(val.target.value)}}></input>
             <p className="inline text-slate-500">{displayMotions.length}</p>
-            <button className="px-4 mx-1 inline button button-e-green bg-green-300 scale-70 text-black" onClick={()=>{setAddingNew(true)}}>Add New</button>
+            <button className="px-4 mx-1 inline button button-e-blue scale-70 text-black" onClick={()=>{setAddingNew(true)}}>Add New</button>
             {
                 motions ? 
                 displayMotions.map((item,index)=>{

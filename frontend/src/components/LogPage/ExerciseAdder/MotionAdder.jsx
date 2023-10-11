@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { TokenContext } from "../../../views/Home";
 import { TranslateMuscle, muscles } from "../../../utils/muscle";
-
+import { percentageColor, percentageColorRed } from "../../../utils/styleutil";
 
 // Open a little window for people to create new motions 
 export default function MotionAdder({update,refresh}){
@@ -81,14 +81,7 @@ export default function MotionAdder({update,refresh}){
 
 
     // return a tailwind text color class based on a float between 0-1 that represents a percentage
-    function percentageColor(num){
-        console.log(num)
-        return (num >= 0.5) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-slate-300' ) 
-    }
-
-    function percentageColorRed(num){
-        return (num == 1) ? 'text-green-400' : ( (num >=0.2) ? 'text-yellow-500' : 'text-red-600' ) 
-    }
+    
 
     return (<>
     <div className="justify-center w-full rounded-md border-4 border-green-400">
