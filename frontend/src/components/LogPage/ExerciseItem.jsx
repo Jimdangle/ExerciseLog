@@ -5,11 +5,27 @@ import {useEffect, useState} from 'react'
 
 export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh}){
     const [motionData, setMotionData] = useState({});
-   
+    const [spawn, setSpawn] = useState(" opacity-0 -translate-x-full")
+
+    function delaySpawn(){
+        setTimeout(()=>{
+            setSpawn(" opacity-100 translate-x-0")
+        },50)
+    }
+
+    function deSpawn(){
+        setSpawn(" opacity-0 -translate-x-full")
+        setTimeout(()=>{
+            RemoveExercise(item._id)
+        },300)
+        
+    }
+    
     
     const init = item.motion.motion ? item.motion.motion : item.motion.umotion; // handle differences between user motions and server motions
     useEffect(()=>{
         setMotionData(init);
+        delaySpawn();
     },[])
   
     function SortedMuscleIndex(data){
@@ -23,7 +39,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
 
     return (
         // Main container card for exercise
-        <div className='my-1'>
+        <div className={'my-1 duration-300 ' + spawn}>
             
             {/** Main info about the exercise, name, type, and the muscles it impacts */}
             <div className='flex flex-row'>
@@ -36,9 +52,9 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
            {/**Container for the sets, and set adder component */}
             <div className='h-auto w-auto -mt-12 mx-1 workout-item'>
                 <div className='grid grid-cols-4 place-items-center text-oblue'>
-                    <div className='str-gun'>Set #</div> 
-                    <div className='str-gun'>{motionData.type==0 ? "Reps" : "Time"}</div>
-                    <div className='str-gun'>{motionData.type==0 ? "Weight(lbs)" : "Distance(mi)"}</div>
+                    <p className='str-gun'>Set #</p> 
+                    <p className='text-gun text-center'>{motionData.type==0 ? "Reps" : "Time"}</p>
+                    <p className='text-gun text-center pl-6'>{motionData.type==0 ? "Weight(lbs)" : "Distance(mi)"}</p>
                     <div></div>       
                 </div>
                 <div>
@@ -56,7 +72,7 @@ export default function ExerciseItem({item, RemoveExercise, RemoveSet, refresh})
                 </div>
             </div>
             <div className='flex justify-center'>
-             <button className='button button-e-red' onClick={()=>{RemoveExercise(item._id)}}>Remove</button>
+             <button className='button button-e-red' onClick={()=>{deSpawn()}}>Remove</button>
             </div>
             
         </div>

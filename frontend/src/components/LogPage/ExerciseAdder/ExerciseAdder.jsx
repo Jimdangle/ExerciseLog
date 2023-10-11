@@ -5,10 +5,24 @@ import MotionAdder from "./MotionAdder";
 
 export default function ExerciseAdder({workout_id, complete}){
     const token = useContext(TokenContext);
-    useEffect(()=>{GetMotions()},[])
+    useEffect(()=>{GetMotions(); delaySpawn();},[])
 
     const [motions, setMotions] = useState([])
     const [displayMotions, setDisplayMotions] = useState([]);
+    const [spawn, setSpawn] = useState(" opacity-0 -translate-x-full")
+
+    function delaySpawn(){
+        setTimeout(()=>{
+            setSpawn(" opacity-100 translate-x-0")
+        },50)
+    }
+
+    function deSpawn(item){
+        setSpawn(" opacity-0 translate-x-full")
+        setTimeout(()=>{
+            AddExerciseToLog(item._id)
+        },220)
+    }
 
     const [addingNew, setAddingNew] = useState(false);
 
@@ -73,7 +87,7 @@ export default function ExerciseAdder({workout_id, complete}){
     }
 
     return(<>
-        <div className="h-124 bg-white rounded-md overflow-scroll">
+        <div className={"h-124 duration-200  bg-white rounded-md overflow-scroll" + spawn}>
             
             {addingNew ? <MotionAdder update={setAddingNew} refresh={GetMotions}></MotionAdder> : <></>}
             <h1 className="font-semibold ml-3">Select a motion</h1>
@@ -85,7 +99,7 @@ export default function ExerciseAdder({workout_id, complete}){
                 displayMotions.map((item,index)=>{
                     
                     return (
-                        <button key={index} className="px-4 mx-1 border-2 inline button h-auto scale-70" onClick={()=>{AddExerciseToLog(item._id)}}>{item.name}</button>
+                        <button key={index} className="px-4 mx-1 border-2 inline button h-auto scale-70" onClick={()=>{deSpawn(item);}}>{item.name}</button>
                     )
                 })
                 :

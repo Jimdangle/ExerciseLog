@@ -34,7 +34,7 @@ export default function SetItem({set, RemoveSet, number, exercise_id, type}){
     return(
 
         <div className={"duration-200 grid grid-cols-4 "+spawn}>
-            <p className="">{number}.</p>
+            <p className="text-ogreen">{number}.</p>
             <p className="">
                 {type==0 ? set.rep_or_time : convertSecondsTime()}
             </p>
