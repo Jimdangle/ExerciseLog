@@ -3,8 +3,6 @@ import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect} from 'react'
 //Contain Calls to handle the rendering of components that can make up the 
 
-const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);}
-const passValidation = (e) => {const t= e.target; return (t.value.length > 9)}
 
 
 export default function Signup(){
@@ -12,6 +10,11 @@ export default function Signup(){
     const [resp,setResp] = useState(null)
     const [payload,setPayload] = useState({email:'',user:'', pass:''})
 
+
+    //Validators
+    const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);}
+    const passValidation = (e) => {const t= e.target; return (t.value.length > 9)}
+    const passConfirmation = (e) => {const t=e.target; return (t.value === state['Password'])}
     // Update the real data we plan on sending to the server
     useEffect(()=>{
         setPayload({email:state.Email, pass:state.Confirm})
@@ -45,7 +48,7 @@ export default function Signup(){
             name: "Confirm", 
             type: "password",
             value: state['Confirm'],
-            validation: passValidation,
+            validation: passConfirmation,
             placeholder:"One More Time"
          },
     ]
