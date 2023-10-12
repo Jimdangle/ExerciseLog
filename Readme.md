@@ -35,3 +35,7 @@ The general idea is to create an app that allows users to track their workouts. 
 
 ### Sugar
 * Ideally I want the users to be able to add, edit, and remove their workouts logs in an offline esq state where it does not require a http request for each and every exercise you want to add to a log. 
+
+
+
+## I deleted all of main so im gonna make this branch to hopefully store a copy of this while i redo it all again :
