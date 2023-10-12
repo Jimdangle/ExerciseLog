@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { rightSlide} from '../../../utility/animations';
+import { rightSlide, Animation} from '../../../utility/animations';
 
 export default function CoolInput({props, index,level, setData ,onKey}){
     const {name, value, validation, type, placeholder} = props; // get the things that define us
@@ -9,8 +9,12 @@ export default function CoolInput({props, index,level, setData ,onKey}){
 
     
    
-
-    const anim_frames = rightSlide; // our frames for the animation
+    const fade = new Animation({
+        spawn: 'block -translate-x-1/3 opacity-50',
+        move_in: 'translate-x-0 opacity=100 rotate-45',
+        move_out: 'translate-x-full rotate-180'
+    });
+    const anim_frames = fade; // our frames for the animation
 
     
 

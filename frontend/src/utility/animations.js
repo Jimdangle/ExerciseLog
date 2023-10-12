@@ -6,7 +6,7 @@
  */
 export class Animation {
     /**
-    * Pass in an object containing the following fields (by default they will return an animation that fades in and out)
+    * Pass in an object(REQUIRED) containing the following fields (by default they will return an animation that fades in and out)
     * @param {string} spawn - What to do first thing
     * @param {string} move_in - What to do when we begin being animated
     * @param {string} rendered - What to do after we have animated
