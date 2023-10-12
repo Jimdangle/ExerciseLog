@@ -72,6 +72,7 @@ export default function Signup(){
     
     return(
         <div className='flex flex-col justify-center' >
+            <p className='bname'>BoatLog</p>
             <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={HandleSignin}></CoolForm>
         </div>
     )
