@@ -1,4 +1,4 @@
-import Singup from "./pages/Signup/Signup"
+import LSMain from "./pages/SignupLogin/Main"
 
 
 
@@ -11,7 +11,7 @@ function App() {
     
     <div className="app">
       <h1>Hello Again</h1>
-      <Singup></Singup>
+      <LSMain></LSMain>
     </div>
     
   ) 
