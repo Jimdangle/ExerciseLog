@@ -1,25 +1,34 @@
 import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
+import useFetch from '../../../hooks/requests/useFetch';
+
 //Contain Calls to handle the rendering of components that can make up the 
 
 
 
 export default function Signup(){
     const [state, setState ] = useState({Email:'',Username:'', Password:'', Confirm: ''});
-    const [resp,setResp] = useState(null)
-    const [payload,setPayload] = useState({email:'',user:'', pass:''})
+    const [response,setResponse] = useState(null)
+
 
 
     //Validators
     const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);}
     const passValidation = (e) => {const t= e.target; return (t.value.length > 9)}
     const passConfirmation = (e) => {const t=e.target; return (t.value === state['Password'])}
-    // Update the real data we plan on sending to the server
-    useEffect(()=>{
-        setPayload({email:state.Email, pass:state.Confirm})
-    },[state])
+    
+    const payload = {"email":state.Email, "user":state.Username, "pass":state.pass};
 
+
+    async function handleSignin(){
+        console.log(payload)
+       await request('/login/signup', setResponse, 'p', payload);
+    }
+    
+    useEffect(()=>{
+        console.log(response)
+    },[response])
 
     // Define our form inputs for CoolForms
     const inputs = [
@@ -63,20 +72,12 @@ export default function Signup(){
         })
     }
 
-    // Response hanlding
-    useEffect(()=>{
-        console.log(resp)
-    },[resp])
-
-    async function HandleSignin(){
-        await request('/login/signup',setResp,'p',payload);
-    }
-
+    
     
     return(
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={HandleSignin}></CoolForm>
+            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={handleSignin} ></CoolForm>
         </div>
     )
 }
