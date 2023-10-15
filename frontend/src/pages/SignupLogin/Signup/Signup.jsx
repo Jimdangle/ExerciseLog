@@ -1,13 +1,12 @@
 import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect, useCallback} from 'react'
-import useFetch from '../../../hooks/requests/useFetch';
 
 //Contain Calls to handle the rendering of components that can make up the 
 
 
 
-export default function Signup(){
+export default function Signup({login}){
     const [state, setState ] = useState({Email:'',Username:'', Password:'', Confirm: ''});
     const [response,setResponse] = useState(null)
 
@@ -27,7 +26,11 @@ export default function Signup(){
     }
     
     useEffect(()=>{
-        console.log(response)
+        if(response && !responde.data.message ){
+            if(response.data.access_token){
+                login(response.data.access_token)
+            }
+        }
     },[response])
 
     // Define our form inputs for CoolForms

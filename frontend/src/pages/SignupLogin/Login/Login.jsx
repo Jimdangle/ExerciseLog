@@ -2,7 +2,8 @@ import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect} from 'react'
 
-export default function Login(){
+
+export default function Login({login}){
     const [state,setState] = useState({"Email":"","Password": ""})
     
     const [resp,setResp] = useState(null);
@@ -50,7 +51,12 @@ export default function Login(){
 
     // Response hanlding
     useEffect(()=>{
-        console.log(resp)
+        
+        if(resp && !resp.data.message){
+            if(resp.data.access_token){
+                login(resp.data.access_token)
+            }
+        }
     },[resp])
 
 

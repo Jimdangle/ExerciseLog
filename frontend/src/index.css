@@ -12,7 +12,7 @@
 
     /*Brand name style*/
     .bname {
-        @apply text-3xl font-bold text-oblue underline pt-5
+        @apply text-3xl font-bold text-oblue underline pt-5 text-center
     }
 
     
