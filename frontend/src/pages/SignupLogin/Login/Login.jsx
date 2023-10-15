@@ -4,16 +4,13 @@ import {useState, useEffect} from 'react'
 
 export default function Login(){
     const [state,setState] = useState({"Email":"","Password": ""})
-    const [payload,  setPayload] = useState({'email':'','pass':''})
+    
     const [resp,setResp] = useState(null);
 
     //Validators
-    const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);} // check for @ symbol
+    const emailValidation = (value) => {  return (value ? value.indexOf('@')>0 : false);} // check for @ symbol
 
-    // Update the real data we plan on sending to the server
-    useEffect(()=>{
-        setPayload({email:state.Email, pass:state.Confirm})
-    },[state])
+    const payload = {'email': state.Email, 'pass': state.Password}
 
 
     // Form state change event
@@ -27,26 +24,28 @@ export default function Login(){
     }
 
     //Form inputs 
-    const inputs = [
-        {
-            name: "Email", 
+    const inputs = {
+        "Email":{
+            
             type: "email",
             value: state['Email'],
             validation: emailValidation,
-            placeholder:"@swaggins.com"
+            placeholder:"@swaggins.com",
+            error: "Enter a valid email"
         },
-        {
-            name: "Password", 
+        "Password":{
+           
             type: "password",
             value: state['Password'],
-            validation: ()=>{return true;},
-            placeholder:"shire!9@asdas"
+            validation: (v)=>{return (v.length > 0);},
+            placeholder:"shire!9@asdas",
+            error: "Type in a password"
         },
-    ]
+    }
 
     //Form action
     async function action(){
-        await request('/login/login',setState,'p',payload);
+        await request('/login/login',setResp,'p',payload);
     }
 
     // Response hanlding

@@ -14,11 +14,11 @@ export default function Signup(){
 
 
     //Validators
-    const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);}
-    const passValidation = (e) => {const t= e.target; return (t.value.length > 9)}
-    const passConfirmation = (e) => {const t=e.target; return (t.value === state['Password'])}
+    const emailValidation = (value) => { return (value.indexOf('@')>0);}
+    const passValidation = (value) => { return (value.length > 9)}
+    const passConfirmation = (value) => { return (value === state['Password'])}
     
-    const payload = {"email":state.Email, "user":state.Username, "pass":state.pass};
+    const payload = {"email":state.Email, "user":state.Username, "pass":state.Password};
 
 
     async function handleSignin(){
@@ -31,36 +31,36 @@ export default function Signup(){
     },[response])
 
     // Define our form inputs for CoolForms
-    const inputs = [
-        {
-            name: "Email", 
+    const inputs = {
+        "Email": {
             type: "email",
             value: state['Email'],
             validation: emailValidation,
+            error: "Please us a valid email",
             placeholder:"bilbo@swaggins.com"
          },
-         {
-            name: "Username", 
+        'Username':{
             type: "text",
             value: state['Username'],
-            validation: (e)=>{return true},
+            validation: (v)=>{return true},
+            error: "",
             placeholder:"Bilbo"
          },
-        {
-            name: "Password", 
+        'Password':{
             type: "password",
             value: state['Password'],
             validation: passValidation,
+            error: "Make sure your password is more than 9 characters",
             placeholder:"shire!9@asdas"
          },
-        {
-            name: "Confirm", 
+        'Confirm':{
             type: "password",
             value: state['Confirm'],
             validation: passConfirmation,
+            error: "Make sure both passwords match",
             placeholder:"One More Time"
          },
-    ]
+    }
     
     // Form state change event
     function handleChange(event){

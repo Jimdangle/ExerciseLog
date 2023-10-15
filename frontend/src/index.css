@@ -135,8 +135,14 @@
     
 
     /*Containers*/
+    .form-container {
+        @apply mx-6 rounded-sm flex justify-center appearance-none
+    }
     
-    
+
+    .padder {
+        @apply mt-64 w-full bg-gun text-gun
+    }
 
     
 
@@ -147,6 +153,7 @@
         @apply mx-2 my-2 h-10 w-auto px-3 font-mono rounded-md font-semibold
     }
 
+    /* Enabled Buttons : allowed to press */
     .button-e-green{
         @apply bg-ogreen text-white scale-100
     }
@@ -160,6 +167,7 @@
         @apply bg-ored text-white scale-100
     }
 
+    /* Active buttons : pressed */
     .button-a-green{
         @apply bg-white text-ogreen
     }
@@ -170,12 +178,24 @@
         @apply bg-white text-ored
     }
 
-    
-
-
+    /* Disabled buttons : not allowed to press */
     .button-d{
         @apply bg-slate-300 bg-opacity-75 hover:ring-4 hover:ring-red-600 scale-90
     }
 
+
+
+    /* Inputs */
+    .input-slick{
+        @apply bg-gun outline-none border-b-white border-b-2 h-10 text-white text-xl
+    }
+
+    .input-slick-i{
+        @apply border-b-ored text-ored
+    }
+
+    .input-slick-v{
+        @apply border-b-ogreen text-ogreen
+    }
 
 }
