@@ -26,7 +26,7 @@ export default function Signup({login}){
     }
     
     useEffect(()=>{
-        if(response && !responde.data.message ){
+        if(response && !response.data.message ){
             if(response.data.access_token){
                 login(response.data.access_token)
             }
