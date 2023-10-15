@@ -16,6 +16,7 @@ function ValidateKeys(inObj, reqKeys)
       continue
     }
     else{
+      console.log(`Key ${reqKeys[k]} not found`)
       return false;
     }
   }

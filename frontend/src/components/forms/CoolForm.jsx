@@ -2,37 +2,38 @@ import { useState } from "react";
 import CoolInput from "./inputs/CoolInput";
 
 export default function CoolForm({name,inputs,setData,action}){
-    // given some inputs {name:,type:, value:, onChange, placeholder}
-    // go one by one, animating each one with a fade and drop in
-    // when a user finishes typing in a form and hits enter drop the next one in
-    // if a field is empty and the user hits backspace remove one (unless at top)
-    const [level,setLevel] = useState(0); // our current level
+    
+   const [error,setError] = useState("")
+   
+   const valid = Object.keys(inputs).map( (key) => {
+     if(inputs[key].validation(inputs[key].value) && inputs[key].value.length > 0) //our data is valid 
+     {
+        return 0
+     }
+     else{
+        return 1 //data is not valid
+     }
+   })
+
+   const isValidated = valid.reduce((a,v) => {return a+v})
+
 
   
-    //This controls what items are being rendered, 
-   function handleKey(event){
-     const {key} = event;
-     //Enter has been pressed, we validate our event against validators, and increasing the level wont violate our bounds
-     if((key==="Enter" ) && inputs[level].validation(event) && level <inputs.length){setLevel(level+1)}
-
-     //Backspace was pressed, We are not the topmost element, 
-     if(key==="Backspace" && level>0 && event.target.value.length == 0 ){setLevel(level-1)}
-   }
-
 
     return(
-        <div className=" bg-slate-800 mx-6 rounded-sm flex align-center justify-center">
+        <div className="form-container">
             <div className="flex-col">
-            {inputs.map((input,index)=>{
+                <p className="absolute">{error}</p>
+                {Object.keys(inputs).map((input_name,index)=>{
                 
-                return <CoolInput key={"cf/"+name+"/"+index} props={input} setData={setData} level={level} index={index} onKey={handleKey}></CoolInput>
-            })}
+                    return <CoolInput key={"cf/"+name+"/"+index} name={input_name}  props={inputs[input_name]} setData={setData} ></CoolInput>
+                })}
 
-            {/* Submit (use form action) */}
-            {level === inputs.length ? <button className="button button-e-white" onClick={action}>Submit {name}</button> : <></>}
-            
-            {/* Filler */}
-            <div className={`mt-64 w-full text-gun`}>t</div>
+                {/* Submit (use form action) */}
+                <div className="flex justify-center slideb ">
+                    <button className="button button-e-white disabled:button-d  slideb" disabled={(isValidated)} onClick={action}>Submit {name}</button>
+                </div>
+        
             </div>
             
         </div>

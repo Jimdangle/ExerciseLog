@@ -1,57 +1,66 @@
 import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
+import useFetch from '../../../hooks/requests/useFetch';
+
 //Contain Calls to handle the rendering of components that can make up the 
 
 
 
 export default function Signup(){
     const [state, setState ] = useState({Email:'',Username:'', Password:'', Confirm: ''});
-    const [resp,setResp] = useState(null)
-    const [payload,setPayload] = useState({email:'',user:'', pass:''})
+    const [response,setResponse] = useState(null)
+
 
 
     //Validators
-    const emailValidation = (e) => { const t = e.target; return (t.value.indexOf('@')>0);}
-    const passValidation = (e) => {const t= e.target; return (t.value.length > 9)}
-    const passConfirmation = (e) => {const t=e.target; return (t.value === state['Password'])}
-    // Update the real data we plan on sending to the server
-    useEffect(()=>{
-        setPayload({email:state.Email, pass:state.Confirm})
-    },[state])
+    const emailValidation = (value) => { return (value.indexOf('@')>0);}
+    const passValidation = (value) => { return (value.length > 9)}
+    const passConfirmation = (value) => { return (value === state['Password'])}
+    
+    const payload = {"email":state.Email, "user":state.Username, "pass":state.Password};
 
+
+    async function handleSignin(){
+        console.log(payload)
+       await request('/login/signup', setResponse, 'p', payload);
+    }
+    
+    useEffect(()=>{
+        console.log(response)
+    },[response])
 
     // Define our form inputs for CoolForms
-    const inputs = [
-        {
-            name: "Email", 
+    const inputs = {
+        "Email": {
             type: "email",
             value: state['Email'],
             validation: emailValidation,
+            error: "Please us a valid email",
             placeholder:"bilbo@swaggins.com"
          },
-         {
-            name: "Username", 
+        'Username':{
             type: "text",
             value: state['Username'],
-            validation: (e)=>{return true},
+            validation: (v)=>{return true},
+            error: "",
             placeholder:"Bilbo"
          },
-        {
-            name: "Password", 
+        'Password':{
             type: "password",
             value: state['Password'],
             validation: passValidation,
+            error: "Make sure your password is more than 9 characters",
             placeholder:"shire!9@asdas"
          },
-        {
-            name: "Confirm", 
+        'Confirm':{
             type: "password",
             value: state['Confirm'],
             validation: passConfirmation,
+            error: "Make sure both passwords match",
             placeholder:"One More Time"
          },
-    ]
+    }
     
     // Form state change event
     function handleChange(event){
@@ -63,20 +72,12 @@ export default function Signup(){
         })
     }
 
-    // Response hanlding
-    useEffect(()=>{
-        console.log(resp)
-    },[resp])
-
-    async function HandleSignin(){
-        await request('/login/signup',setResp,'p',payload);
-    }
-
+    
     
     return(
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={HandleSignin}></CoolForm>
+            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={handleSignin} ></CoolForm>
         </div>
     )
 }
