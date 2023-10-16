@@ -1,13 +1,12 @@
 import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect, useCallback} from 'react'
-import useFetch from '../../../hooks/requests/useFetch';
 
 //Contain Calls to handle the rendering of components that can make up the 
 
 
 
-export default function Signup(){
+export default function Signup({login}){
     const [state, setState ] = useState({Email:'',Username:'', Password:'', Confirm: ''});
     const [response,setResponse] = useState(null)
 
@@ -26,9 +25,6 @@ export default function Signup(){
        await request('/login/signup', setResponse, 'p', payload);
     }
     
-    useEffect(()=>{
-        console.log(response)
-    },[response])
 
     // Define our form inputs for CoolForms
     const inputs = {
@@ -62,22 +58,21 @@ export default function Signup(){
          },
     }
     
-    // Form state change event
-    function handleChange(event){
-        
-        const t = event.target;
-        setState({
-            ...state,
-            [t.name]: t.value
-        })
-    }
 
-    
+    //Response handler
+    useEffect(()=>{
+        if(response && !response.data.message ){
+            if(response.data.access_token){
+                login(response.data.access_token)
+            }
+        }
+    },[response])
+
     
     return(
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={handleSignin} ></CoolForm>
+            <CoolForm name="Signup" inputs={inputs} setData={setState} action={handleSignin} ></CoolForm>
         </div>
     )
 }

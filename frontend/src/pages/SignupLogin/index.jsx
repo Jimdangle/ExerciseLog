@@ -3,7 +3,7 @@ import Login from './Login/Login'
 import Signup from './Signup/Signup'
 import {useState, useEffect} from 'react'
 //Contain Calls to handle the rendering of components that can make up the 
-export default function LSMain({inputs}){
+export default function LSMain({login}){
     const [isUser, setIsUser] = useState(true)
     
     
@@ -11,11 +11,11 @@ export default function LSMain({inputs}){
         <div>
             {!isUser 
                 ?
-                <Signup></Signup>
+                <Signup login={login}></Signup>
                 :
-                <Login></Login>
+                <Login login={login}></Login>
             }
-            <button className='button button-e-blue' onClick={()=>setIsUser(!isUser)}>{isUser? "Create Account" : "Login"}</button>
+            <p className='text-white' onClick={()=>setIsUser(!isUser)}>{isUser? "Don't have an account?" : "Login to existing account"}</p>
         </div>
         
         

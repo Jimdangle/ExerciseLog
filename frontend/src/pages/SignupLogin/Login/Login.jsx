@@ -2,7 +2,8 @@ import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect} from 'react'
 
-export default function Login(){
+
+export default function Login({login}){
     const [state,setState] = useState({"Email":"","Password": ""})
     
     const [resp,setResp] = useState(null);
@@ -11,17 +12,6 @@ export default function Login(){
     const emailValidation = (value) => {  return (value ? value.indexOf('@')>0 : false);} // check for @ symbol
 
     const payload = {'email': state.Email, 'pass': state.Password}
-
-
-    // Form state change event
-    function handleChange(event){
-    
-        const t = event.target;
-        setState({
-            ...state,
-            [t.name]: t.value
-        })
-    }
 
     //Form inputs 
     const inputs = {
@@ -50,14 +40,19 @@ export default function Login(){
 
     // Response hanlding
     useEffect(()=>{
-        console.log(resp)
+        
+        if(resp && !resp.data.message){
+            if(resp.data.access_token){
+                login(resp.data.access_token)
+            }
+        }
     },[resp])
 
 
     return (
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Login" inputs={inputs} setData={handleChange} action={action}></CoolForm>
+            <CoolForm name="Login" inputs={inputs} setData={setState} action={action}></CoolForm>
         </div>
     )
 

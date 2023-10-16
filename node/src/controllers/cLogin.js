@@ -28,7 +28,9 @@ async function HandleSignup(req,res,next)
         
         await newUser.save(); // save it to our db
 
-        res.send({"created": true});
+        var token = jwt.sign({id:user._id},Config.jwtSecret);
+
+        res.send({"created": true, 'access_token': token});
     }
     catch(e){
         console.log(e);
