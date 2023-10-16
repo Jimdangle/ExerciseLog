@@ -13,17 +13,6 @@ export default function Login({login}){
 
     const payload = {'email': state.Email, 'pass': state.Password}
 
-
-    // Form state change event
-    function handleChange(event){
-    
-        const t = event.target;
-        setState({
-            ...state,
-            [t.name]: t.value
-        })
-    }
-
     //Form inputs 
     const inputs = {
         "Email":{
@@ -63,7 +52,7 @@ export default function Login({login}){
     return (
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Login" inputs={inputs} setData={handleChange} action={action}></CoolForm>
+            <CoolForm name="Login" inputs={inputs} setData={setState} action={action}></CoolForm>
         </div>
     )
 

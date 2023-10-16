@@ -25,13 +25,6 @@ export default function Signup({login}){
        await request('/login/signup', setResponse, 'p', payload);
     }
     
-    useEffect(()=>{
-        if(response && !response.data.message ){
-            if(response.data.access_token){
-                login(response.data.access_token)
-            }
-        }
-    },[response])
 
     // Define our form inputs for CoolForms
     const inputs = {
@@ -65,22 +58,21 @@ export default function Signup({login}){
          },
     }
     
-    // Form state change event
-    function handleChange(event){
-        
-        const t = event.target;
-        setState({
-            ...state,
-            [t.name]: t.value
-        })
-    }
 
-    
+    //Response handler
+    useEffect(()=>{
+        if(response && !response.data.message ){
+            if(response.data.access_token){
+                login(response.data.access_token)
+            }
+        }
+    },[response])
+
     
     return(
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Signup" inputs={inputs} setData={handleChange} action={handleSignin} ></CoolForm>
+            <CoolForm name="Signup" inputs={inputs} setData={setState} action={handleSignin} ></CoolForm>
         </div>
     )
 }
