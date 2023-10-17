@@ -19,13 +19,11 @@ export default function Signup({login}){
     
     const payload = {"email":state.Email, "user":state.Username, "pass":state.Password};
 
-
     async function handleSignin(){
         console.log(payload)
        await request('/login/signup', setResponse, 'p', payload);
     }
     
-
     // Define our form inputs for CoolForms
     const inputs = {
         "Email": {
@@ -58,7 +56,6 @@ export default function Signup({login}){
          },
     }
     
-
     //Response handler
     useEffect(()=>{
         if(response && !response.data.message ){

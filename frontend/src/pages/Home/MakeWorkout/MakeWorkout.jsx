@@ -1,17 +1,19 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import CoolForm from '../../../components/forms/CoolForm';
 import { request } from '../../../utility/request';
 
 export default function MakeWorkout(){
     
-    const [state,setState] = useState({'New Workout': ''})
-    const payload = {name:state['New Workout']};
-    const [response,setResponse] = useState(null);
+    const [state,setState] = useState({'New Workout': ''}) // user readable state corresponds to inputs
+    const payload = {name:state['New Workout']}; // actual payload for request
+    const [response,setResponse] = useState(null); // response data object
 
+    // Action for the form
     async function HandleNewWorkout(){
         await request('/workout/add', setResponse,'p',payload);
     }
 
+    // input for the form
     const inputs = {
         "New Workout" : {
             type: "text",
@@ -20,6 +22,14 @@ export default function MakeWorkout(){
             error: "",
         }
     }
+
+    useEffect(()=> {
+        // handle the response
+        console.log(response)
+    }, [response]) // this is only called when the response object has been changed 
+
+
+
 
     return (
     <div>

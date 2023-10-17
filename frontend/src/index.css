@@ -184,18 +184,18 @@
     }
 
 
-
+    
     /* Inputs */
     .input-slick{
         @apply bg-gun outline-none border-b-white border-b-2 h-10 text-white text-xl
     }
 
     .input-slick-i{
-        @apply border-b-ored text-ored
+        @apply border-b-ored text-white
     }
 
     .input-slick-v{
-        @apply border-b-ogreen text-ogreen
+        @apply border-b-ogreen text-white
     }
 
 }
