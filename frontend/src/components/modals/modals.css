@@ -12,6 +12,9 @@
         @apply bg-white rounded-sm shadow-md text-gun z-30 absolute top-5 left-1/4 w-1/2 
     }
 
+    .modal-cover{
+        @apply absolute top-0 left-0 bg-gun opacity-80 w-screen h-screen z-20
+    }
 
     
 }

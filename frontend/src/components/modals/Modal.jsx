@@ -5,7 +5,7 @@ export default function Modal({title, isOpen, onClose, children}){
 
     return (
         <div>
-            <div className={'modal-card '+(isOpen ? ' grow' : 'hidden')}>
+            <div className={'modal-card '+(isOpen ? ' modal-drop' : ' hidden')}>
                 <div className="flex">
                     <p className="modal-title">{title}</p>
                     <IoIosCloseCircleOutline onClick={onClose}></IoIosCloseCircleOutline>
@@ -14,7 +14,7 @@ export default function Modal({title, isOpen, onClose, children}){
                     {children}
                 </div>
             </div>
-            <div className={(isOpen? 'absolute top-0 left-0 bg-gun opacity-80 w-screen h-screen z-20': 'hidden')}></div>
+            <div className={(isOpen? 'modal-cover': 'hidden')}></div>
         </div>
     )
 }
