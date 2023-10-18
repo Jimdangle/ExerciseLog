@@ -2,9 +2,9 @@
 import NavBar from "../../components/nav/NavBar"
 import { useState } from "react"
 import useAnimation from "../../hooks/animation/useAnimation"
-export default function NavControl({active, setActive}){
+export default function NavControl({active, setActive,show}){
    
-    const {animate, animations} = useAnimation()
+    const {animate} = useAnimation(show)
     
 
 
@@ -30,7 +30,7 @@ export default function NavControl({active, setActive}){
     }
 
     return(
-        <div className={(animate ? 'slider' : 'slideh')}>
+        <div className={(show ? 'slidel2' : 'slideh')}>
             <NavBar nav={Nav} active={active}></NavBar>
         </div>
          

@@ -7,7 +7,7 @@
 @layer components {
     /*Root style*/
     #root{
-        @apply bg-gun font-mono h-full w-full text-white
+        @apply bg-gun font-mono h-full w-full text-white overflow-x-hidden
     }
 
     /*Brand name style*/

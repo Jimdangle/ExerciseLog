@@ -5,7 +5,7 @@ import NavControl from "../Nav";
 import Home from "../Home";
 import LSMain from "../SignupLogin";
 import Workout from "../Workout";
-
+import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export default function PageSelector({logout}){
 
@@ -38,12 +38,10 @@ export default function PageSelector({logout}){
                 {render_page}
             
             
-            <div className="absolute top-2 right-2 z-10">
-                {toggleNav ? 
-                    <NavControl active={active} setActive={changePage} show={toggleNav}></NavControl>
-                    :
-                    <FiChevronLeft className="h1-white" onClick={()=>setToggleNav(true)}></FiChevronLeft>
-                }
+            <div className="absolute top-2 right-2 z-10 overflow-hidden">
+                <FiChevronLeft className={"h1-white w-36" +(toggleNav? " slidelR" : " slideh")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronLeft>
+                <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
+                    
             </div>
         </div>
     </PageContext.Provider>)
