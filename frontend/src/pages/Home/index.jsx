@@ -13,9 +13,11 @@ export default function Home({logout}){
 
 
     return (
+        <div>
         <LogoutContext.Provider value={logout}>
             <MakeWorkout></MakeWorkout>
             <JumpIn></JumpIn>
             <p className="text-white" onClick={()=>{logout()}}>Click to Logout</p>
-        </LogoutContext.Provider>)
+        </LogoutContext.Provider>
+        </div>)
 }

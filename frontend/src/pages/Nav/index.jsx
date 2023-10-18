@@ -1,8 +1,9 @@
-import { setPage, getPage } from "../../utility/storage"
+
 import NavBar from "../../components/nav/NavBar"
 import { useState } from "react"
 export default function NavControl({active, setActive}){
    
+    
     
 
 
@@ -28,9 +29,9 @@ export default function NavControl({active, setActive}){
     }
 
     return(
-        <div>
-            <NavBar nav={Nav} active={active}></NavBar>
-        </div>
+        
+         <NavBar nav={Nav} active={active}></NavBar>
+        
     )
 
 }

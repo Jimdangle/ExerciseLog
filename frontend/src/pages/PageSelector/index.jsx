@@ -1,4 +1,5 @@
 import { setPage, getPage } from "../../utility/storage";
+import { FiChevronLeft } from "react-icons/fi";
 import {useState, createContext} from 'react'
 import NavControl from "../Nav";
 import Home from "../Home";
@@ -12,12 +13,14 @@ export default function PageSelector({logout}){
     
     const pagina = Number(getPage()) > 0 ? Number(getPage()) : 0
     const [active, setActive] = useState(pagina) // state setter for our active page
+    const [toggleNav,setToggleNav] = useState(false)
     
     /* Set our page state, and save our page  */
     function changePage(page){
         console.log(`New Page ${page}`)
         setPage(page);
         setActive(page);
+        setToggleNav(false)
     }
 
     //these pages should correspond to the numerical values in the NavControl component
@@ -30,7 +33,18 @@ export default function PageSelector({logout}){
 
     return (
     <PageContext.Provider value={changePage}>
-        {render_page}
-        <NavControl active={active} setActive={setActive}></NavControl>
+        <div className="">
+        
+                {render_page}
+            
+            
+            <div className="absolute top-2 right-2 z-10">
+                {toggleNav ? 
+                    <NavControl active={active} setActive={changePage}></NavControl>
+                    :
+                    <FiChevronLeft className="h1-white" onClick={()=>setToggleNav(true)}></FiChevronLeft>
+                }
+            </div>
+        </div>
     </PageContext.Provider>)
 }

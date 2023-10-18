@@ -5,7 +5,7 @@ export default function Workout(){
     const log = getLog()
     const {data,isLoading,error } = useFetch('/workout/get', "p", {'workout_id':log})
 
-    useEffect(()=>{console.log(data)},[data])
+    useEffect(()=>{},[data])
     return(
     <div className='text-white'>
         
