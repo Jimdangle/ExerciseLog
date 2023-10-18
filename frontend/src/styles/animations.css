@@ -57,3 +57,19 @@
         
     }
 }
+
+
+.slideh {
+    animation: 0.6s linear 0s 1 normal slideHide
+}
+
+@keyframes slideHide {
+    
+    99%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 0;
+        display: hidden;
+    }
+}

@@ -40,7 +40,7 @@ export default function PageSelector({logout}){
             
             <div className="absolute top-2 right-2 z-10">
                 {toggleNav ? 
-                    <NavControl active={active} setActive={changePage}></NavControl>
+                    <NavControl active={active} setActive={changePage} show={toggleNav}></NavControl>
                     :
                     <FiChevronLeft className="h1-white" onClick={()=>setToggleNav(true)}></FiChevronLeft>
                 }

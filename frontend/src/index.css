@@ -7,7 +7,7 @@
 @layer components {
     /*Root style*/
     #root{
-        @apply bg-gun font-mono h-full w-full
+        @apply bg-gun font-mono h-full w-full text-white
     }
 
     /*Brand name style*/
@@ -187,7 +187,7 @@
     
     /* Inputs */
     .input-slick{
-        @apply bg-gun outline-none border-b-white border-b-2 h-10 text-white text-xl
+        @apply bg-gun outline-none border-b-white border-b-2 h-10 text-xl
     }
 
     .input-slick-i{

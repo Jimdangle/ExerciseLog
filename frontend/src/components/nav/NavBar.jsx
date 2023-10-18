@@ -1,12 +1,13 @@
 import { getPage } from "../../utility/storage";
 import NavItem from "./NavItem/NavItem";
 import NavParent from "./NavParent/NavParent";
-import '../animations.css'
+
+import useAnimation from "../../hooks/animation/useAnimation";
 export default function NavBar({nav, active}){
     
 
     return(
-        <div className="h-full bg-slate-600 slider">
+        <div className={"h-full bg-slate-600 "}>
             
             {
             Object.keys(nav.links).map( (root_key, index) => {
