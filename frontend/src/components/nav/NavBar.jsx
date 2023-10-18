@@ -9,7 +9,7 @@ export default function NavBar({nav, active}){
             
             {
             Object.keys(nav.links).map( (root_key, index) => {
-                console.log(typeof nav.links[root_key])
+                
                 if( typeof nav.links[root_key] ===  'number'){
                     
                     //render a NavItem
