@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .modal-title{
+        @apply text-lg font-semibold text-center p-2
+    }
+
+    .modal-card{
+        @apply bg-white rounded-sm shadow-md text-gun
+    }
+}
