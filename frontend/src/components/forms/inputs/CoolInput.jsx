@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import '../../animations.css'
+import '../../../styles/animations.css'
 
 export default function CoolInput({name, props, setData ,onKey, active}){
     const { value, type, validation, error} = props; // get the things that define us

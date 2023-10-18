@@ -19,6 +19,7 @@ export function getLog(){
     return localStorage.getItem(log_name)
 }
 export function setLog(log_id){
+    console.log(`Setting new log to ${log_id}`)
     localStorage.setItem(log_name, log_id);
 }
 export function removeLog(){

@@ -1,15 +1,17 @@
 import { getPage } from "../../utility/storage";
 import NavItem from "./NavItem/NavItem";
 import NavParent from "./NavParent/NavParent";
+
+import useAnimation from "../../hooks/animation/useAnimation";
 export default function NavBar({nav, active}){
     
 
     return(
-        <div>
+        <div className={"h-full bg-slate-600 "}>
             
             {
             Object.keys(nav.links).map( (root_key, index) => {
-                console.log(typeof nav.links[root_key])
+                
                 if( typeof nav.links[root_key] ===  'number'){
                     
                     //render a NavItem
