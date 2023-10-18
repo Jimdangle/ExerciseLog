@@ -5,7 +5,7 @@ export default function Modal({title, isOpen, onClose, children}){
 
     return (
         <div>
-            <div className={'modal-card z-30 absolute top-5 left-1/4 w-1/2 '+(isOpen ? ' grow' : 'hidden')}>
+            <div className={'modal-card '+(isOpen ? ' grow' : 'hidden')}>
                 <div className="flex">
                     <p className="modal-title">{title}</p>
                     <IoIosCloseCircleOutline onClick={onClose}></IoIosCloseCircleOutline>

@@ -9,6 +9,9 @@
     }
 
     .modal-card{
-        @apply bg-white rounded-sm shadow-md text-gun
+        @apply bg-white rounded-sm shadow-md text-gun z-30 absolute top-5 left-1/4 w-1/2 
     }
+
+
+    
 }
