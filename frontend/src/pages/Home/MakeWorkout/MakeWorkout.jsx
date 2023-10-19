@@ -38,7 +38,7 @@ export default function MakeWorkout(){
 
     return (
     <div>
-        <CoolForm name="Workout" inputs={inputs} setData={setState} action={HandleNewWorkout}></CoolForm>
+        <CoolForm name="Workout" inputs={inputs} setData={setState} action={HandleNewWorkout} animations={{in_anim: 'slider', but_anim: 'slideb' }}></CoolForm>
     </div>)
 
 

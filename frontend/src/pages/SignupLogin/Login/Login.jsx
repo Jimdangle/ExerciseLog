@@ -52,7 +52,7 @@ export default function Login({login}){
     return (
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Login" inputs={inputs} setData={setState} action={action}></CoolForm>
+            <CoolForm name="Login" inputs={inputs} setData={setState} action={action} animations={{in_anim: 'slider', but_anim: 'slideb' }}></CoolForm>
         </div>
     )
 

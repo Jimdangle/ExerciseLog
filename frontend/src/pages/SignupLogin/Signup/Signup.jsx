@@ -2,6 +2,7 @@ import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect, useCallback} from 'react'
 
+
 //Contain Calls to handle the rendering of components that can make up the 
 
 
@@ -69,7 +70,7 @@ export default function Signup({login}){
     return(
         <div className='flex flex-col justify-center' >
             <p className='bname'>BoatLog</p>
-            <CoolForm name="Signup" inputs={inputs} setData={setState} action={handleSignin} ></CoolForm>
+            <CoolForm name="Signup" inputs={inputs} setData={setState} action={handleSignin} animations={{in_anim: 'slider', but_anim: 'slideb' }} ></CoolForm>
         </div>
     )
 }
