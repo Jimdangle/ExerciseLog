@@ -6,7 +6,7 @@ export default function ModalContainer({children}){
     const closeModal = () => {setToggleModal(false)}
 
     return (
-        <div>
+        <div className=''>
             <button className='button button-e-white content-end' onClick={openModal}>Open Modal</button>
             {children(closeModal,toggleModal)}
         </div>

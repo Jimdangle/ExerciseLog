@@ -9,7 +9,7 @@
     }
 
     .modal-card{
-        @apply bg-white rounded-sm shadow-md text-gun z-30 absolute top-5 left-1/4 w-1/2 
+        @apply bg-white rounded-sm shadow-md text-gun z-30 absolute top-5 left-[16.666667%] w-2/3 
     }
 
     .modal-cover{
