@@ -38,7 +38,7 @@
     }
 }
 
-
+/* Slide in from the bottom */
 .slideb {
     animation: 0.6s linear 0s 1 normal slideBottom
 }
@@ -57,6 +57,7 @@
         
     }
 }
+
 
 .slidel2 {
     transform: translateX(0%);

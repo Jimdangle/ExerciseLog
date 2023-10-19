@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import useFetch from '../../hooks/requests/useFetch'
 import { getLog } from '../../utility/storage'
 import Modal from '../../components/modals/Modal'
 import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
-
+import { NotificationContext } from '../PageSelector'
 export default function Workout(){
+
+    const setNotification = useContext(NotificationContext)
+
     const log = getLog()
     const {data,isLoading,error } = useFetch('/workout/get', "p", {'workout_id':log})
-    const [state,setState] = useState({'Test':''})
-    const inputs = {
-        "Test": {
-            type: 'text',
-            value: state['Test'],
-            validation: (v)=>{return true},
-            error: ''
-        }
-    }
+    
 
-    useEffect(()=>{},[data])
+    useEffect(()=>{
+        
+    },[data])
     return(
     <div className='text-white'>
         
