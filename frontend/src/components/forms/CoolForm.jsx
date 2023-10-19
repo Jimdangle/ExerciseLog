@@ -1,8 +1,8 @@
 import { useState } from "react";
 import CoolInput from "./inputs/CoolInput";
 
-export default function CoolForm({name,inputs,setData,action}){
-    
+export default function CoolForm({name,inputs,setData,action,animations}){
+   const {in_anim, but_anim} = animations;
    const [error,setError] = useState("")
 
    function handleChange(event){
@@ -36,12 +36,12 @@ export default function CoolForm({name,inputs,setData,action}){
                 <p className="absolute">{error}</p>
                 {Object.keys(inputs).map((input_name,index)=>{
                 
-                    return <CoolInput key={"cf/"+name+"/"+index} name={input_name}  props={inputs[input_name]} setData={handleChange} ></CoolInput>
+                    return <CoolInput animation={in_anim} key={"cf/"+name+"/"+index} name={input_name}  props={inputs[input_name]} setData={handleChange} ></CoolInput>
                 })}
 
                 {/* Submit (use form action) */}
-                <div className="flex justify-center slideb ">
-                    <button className="button button-e-white disabled:button-d  slideb" disabled={(isValidated)} onClick={action}>Submit {name}</button>
+                <div className={"flex justify-center " + (but_anim)}>
+                    <button className={"button button-e-white disabled:button-d " } disabled={(isValidated)} onClick={action}>Submit {name}</button>
                 </div>
         
             </div>
