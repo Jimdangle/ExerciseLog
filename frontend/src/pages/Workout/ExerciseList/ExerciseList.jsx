@@ -1,19 +1,35 @@
 import SearchableList from "../../../components/lists/SearchableList/SearchableList";
+import useFetch from "../../../hooks/requests/useFetch";
+import { useEffect, useState } from "react";
+import { request } from "../../../utility/request";
+export default function ExerciseList({id}){
+    const {data, isLoading, error} = useFetch('/motion/lsa');
 
-export default function ExerciseList(){
-    const items = [
-        {t:"test1asdasdasd", a: '1'},
-        {t:"test2", a: '2'},
-        {t:"test3", a: '3'},
-        {t:"test4", a: '4'},
-    ]
+    const [postData,setPostData] = useState(null)
+
+
+    useEffect(()=>{
+        
+        if(error)console.log(error)
+    },[data,isLoading,error])
+    
 
     function action(key){
         console.log(`Action id ${key}`)
     }
 
+    async function AddExercise(key){
+       await request('/workout/addEx', setPostData, 'p', {motion_id:key,workout_id:id})
+    }
+
+
+
     return (
-        <SearchableList title={"Test List"} list={items} action={action} fields={{display_field:'t', action_field:'a'}}></SearchableList>
+        (isLoading===false && data && data.motions) ? 
+        <SearchableList title={"Test List"} list={data.motions} action={AddExercise} fields={{display_field:'name', action_field:'_id'}}></SearchableList>
+        :
+        <></>
+        
     )
 
 }
