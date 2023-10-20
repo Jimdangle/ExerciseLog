@@ -20,6 +20,7 @@ async function HandleSignup(req,res,next)
     var pass  = res.locals.bodyData.pass;
     var user  = (res.locals.bodyData.user) ? res.locals.bodyData.user : "";
     if(pass.length < 10){return next("too short of password")}
+    if(email.indexOf('@')===-1){return next('No email provided')}
     const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
     
 

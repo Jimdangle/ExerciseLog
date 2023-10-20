@@ -14,7 +14,7 @@ const LoginRouter = express.Router(); // create our router object
 const REQUIRED_KEYS = {
     "/signup": ["email", "pass"],
     "/u": true,
-    "/login": ["email", "pass"]
+    "/login": ["email", "pass"],
 }
 
 // Attach body parsing middleware

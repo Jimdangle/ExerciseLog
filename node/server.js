@@ -47,18 +47,24 @@ app.use((err,req,res,next) =>
     handleError(err,req,res,next)
 ); // Error handling
 
+
+
 //Listen port
 const PORT = process.env.SERVER_PORT || 3001;
-app.listen(PORT);
+const server = app.listen(PORT);
 console.log(`Running on port ${PORT}`);
 load_mongo();
+
+server.on('close', ()=>{
+    mongoose.connection.close()
+})
 
 const reset_db=true;
 
 async function load_mongo(){
     try {
         await mongoose.connect(process.env.MONGO_URL); //initialize databse here
-        console.log("Connected to Mongodb");
+        
 
         try{
             //make true to reset db. will need to if you have data before this update
@@ -101,7 +107,7 @@ async function load_mongo(){
     
     try{
         const count = await Motion.estimatedDocumentCount();
-        console.log(`Count After adding ${count} / 149`);
+       
     }
     catch(e){
         console.log(e.message);
@@ -115,3 +121,5 @@ function handleError(err, req, res, next) {
     console.log(err);
     res.status(200).send({"message": err});
 }
+
+module.exports = {app,server}
