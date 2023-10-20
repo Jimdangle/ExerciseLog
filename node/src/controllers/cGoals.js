@@ -1,7 +1,7 @@
 const {Goals, Objectives} = require('../models/mGoals');
-const {Workout} = require('../models/mWorkout.js');
+
 const {GenerateSummary} = require('../controllers/cUser');
-const { SummaryData, SummaryAcces } = require('../util/dutil');
+
 const { EX_TYPES, EX_MUSCLES } = require('../util/goalutil');
 
 /**Create a new goal */
