@@ -2,7 +2,7 @@
 //Internal
 //const Exercise = require('../models/mExercise'); // exercise schema
 const {Workout, Exercise, Motion, Set} = require('../models/mWorkout'); // workout schema
-const { GetDate } = require('../util/dateutil');
+
 
 /**
  * Create a new workout attached to a authenticated users token
@@ -11,14 +11,11 @@ async function CreateWorkout(req, res, next) {
     var user = res.locals.user;
     //const userfromDB = await User.findOne({username:}); // search for our user
     const {name,backdate} = res.locals.bodyData;
-    const oldDate = backdate ? GetDate(backdate) : false;
+    
     try {
         var newWorkout = new Workout({user_id: user});
         if(name){
             newWorkout.name = name;
-        }
-        if(backdate){
-            newWorkout.createdAt = oldDate;
         }
         const added = await newWorkout.save(); 
         console.log(added);
