@@ -97,4 +97,11 @@ describe('Exercise Actions', ()=>{
         expect(res.body.added).toBe(true);
         
     })
+
+    it('Remove a invalid exercise', async()=>{
+        const res = await request.delete('/workout/remEx').set('authorization', token).send({workout_id:workout_id, exercise_id: 'notanid'})
+
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('message')
+    })
 })
