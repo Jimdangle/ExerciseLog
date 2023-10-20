@@ -1,13 +1,7 @@
-//External
-const express = require('express');
-const mongoose = require('mongoose');
 
 //Internal
 //const Exercise = require('../models/mExercise'); // exercise schema
 const {Workout, Exercise, Motion, Set} = require('../models/mWorkout'); // workout schema
-const Config = require('../config/cfLogin');
-
-const sutil = require('../util/sutil.js');
 const { GetDate } = require('../util/dateutil');
 
 /**
