@@ -3,17 +3,22 @@ import { FiChevronLeft } from "react-icons/fi";
 import {useState, createContext} from 'react'
 import NavControl from "../Nav";
 import Home from "../Home";
-import LSMain from "../SignupLogin";
+import Notification from "../../components/notifications/Notification";
 import Workout from "../Workout";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
+export const NotificationContext = createContext(null)
 export default function PageSelector({logout}){
 
     /* Currently active page (if we have one get it, if not use home) */
-    
     const pagina = Number(getPage()) > 0 ? Number(getPage()) : 0
     const [active, setActive] = useState(pagina) // state setter for our active page
     const [toggleNav,setToggleNav] = useState(false)
+
+    
+    const [notification,setNotification] = useState(''); // for our notificaiton message
+    const displayNotification = (message) => {setNotification(message)}
+    const clearNotification = () => {setNotification('')}
     
     /* Set our page state, and save our page  */
     function changePage(page){
@@ -33,16 +38,20 @@ export default function PageSelector({logout}){
 
     return (
     <PageContext.Provider value={changePage}>
-        <div className="">
-        
-                {render_page}
+        <NotificationContext.Provider value={displayNotification}>
+            <div className="overflow-x-hidden">
             
-            
-            <div className="absolute top-2 right-2 z-10 overflow-hidden">
-                <FiChevronLeft className={"h1-white w-[8rem]" +(toggleNav? " slidelR" : " slideh")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronLeft>
-                <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
-                    
+                    {render_page}
+                
+                
+                <div className="absolute top-2 right-2 z-10 overflow-hidden">
+                    <FiChevronLeft className={"h1-white w-[8rem]" +(toggleNav? " slidelR" : " slideh")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronLeft>
+                    <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
+                        
+                </div>
+
+                <Notification message={notification} onClose={clearNotification}></Notification>
             </div>
-        </div>
+        </NotificationContext.Provider>
     </PageContext.Provider>)
 }
