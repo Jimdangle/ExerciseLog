@@ -38,7 +38,7 @@ async function DeleteWorkout(req,res,next){
         res.send({deleted:true, count:delWorkout});
     }
     catch(e){
-        res.send({message:e.message});
+        next(e.message)
     }
 }
 

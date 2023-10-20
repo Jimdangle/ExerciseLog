@@ -1,12 +1,12 @@
 
-const { sign } = require('jsonwebtoken');
 const request = require('./setupTests');
 
 
 const user = {email: 'jester@jest.jest', pass:'badasdasdasdasdasd'};
-// Send a bad email
+// Signup testing
 describe('Testing Signup', () => {
-    it('Bad email for signup should not work', async () => {
+    //Dont signup
+    it('Incorrect Email Format', async () => {
         const signup = {email: 'bad', pass:'notabadpassword'};
         const response = await request.post('/login/signup').send(signup)
 
@@ -16,7 +16,8 @@ describe('Testing Signup', () => {
         
     });
 
-    it('Bad password for signup should not work', async () => {
+    //Dont signup
+    it('Bad Password Format', async () => {
         const signup = {email: 'good@email', pass:'bad'};
         const response = await request.post('/login/signup').send(signup)
 
@@ -26,7 +27,8 @@ describe('Testing Signup', () => {
         
     });
 
-    it('Trying to signup with a in use email should not work', async () => {
+    //Dont signup
+    it('In Use Email', async () => {
         const signup = {email: 'admin@a', pass:'badasdasdasdasdasd'};
         const response = await request.post('/login/signup').send(signup)
 
@@ -36,7 +38,8 @@ describe('Testing Signup', () => {
         
     });
 
-    it('Sending Legit Signup Data should work', async () => {
+    //Signup
+    it('Good Data', async () => {
         const signup = user
         
         const response = await request.post('/login/signup').send(signup)
@@ -50,9 +53,10 @@ describe('Testing Signup', () => {
 });
 
 
-// Login failure 
+// Login Testing
 describe('Test Login', () => {
-    it('Sending the wrong password', async () => {
+    //Dont signin
+    it('Wrong Password', async () => {
         const login = {email:user.email, pass:'notmypassword'};
         const response = await request.post('/login/login').send(login)
 
@@ -62,7 +66,8 @@ describe('Test Login', () => {
         
     });
 
-    it('Sending the wrong email', async () => {
+    //Dont signin
+    it('Wrong Email', async () => {
         const login = {email: 'jester@jest.jesticles',pass:user.pass};
         const response = await request.post('/login/login').send(login)
 
@@ -73,8 +78,8 @@ describe('Test Login', () => {
     });
 
     var token = null; // save this for later
-
-    it('Sending correct info', async () => {
+    //Actually signin
+    it('Good Login', async () => {
         const login = user;
         const response = await request.post('/login/login').send(login)
 
@@ -84,7 +89,8 @@ describe('Test Login', () => {
         
     });
 
-    it('Should delete account for jest ', async () => {
+    //Delete the account
+    it('Delete Account ', async () => {
         const response = await request.post('/login/delete').set('authorization', token)
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('deleted')

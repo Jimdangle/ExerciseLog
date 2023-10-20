@@ -65,6 +65,7 @@ function GetSingleWorkoutSummary(workout, summaryData){
     )
 }
 
+//this is really bad imo
 // The sausage gets made here
 function GetExerciseSummary(exercise, summaryData){
     
