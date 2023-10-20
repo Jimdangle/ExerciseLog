@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --silent --detectOpenHandles --verbose"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "mongodb": "^5.8.1",
     "mongoose": "^7.5.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.6.0"
+    "mysql2": "^3.6.0",
+    "supertest": "^6.3.3"
   }
 }
