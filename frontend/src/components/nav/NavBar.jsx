@@ -7,7 +7,7 @@ export default function NavBar({nav, active}){
     
 
     return(
-        <div className={"h-full bg-slate-600 "}>
+        <div className={""}>
             
             {
             Object.keys(nav.links).map( (root_key, index) => {
