@@ -2,6 +2,7 @@
 import NavBar from "../../components/nav/NavBar"
 import { useState } from "react"
 import useAnimation from "../../hooks/animation/useAnimation"
+import '../../styles/animations.css'
 export default function NavControl({active, setActive,show}){
    
     const {animate} = useAnimation(show)
@@ -30,7 +31,7 @@ export default function NavControl({active, setActive,show}){
     }
 
     return(
-        <div className={(show ? 'slidel2' : 'slideh')}>
+        <div className={"absolute top-3 w-full bg-gun " + (show ? " trickyDown" : " hidden" )}>
             <NavBar nav={Nav} active={active}></NavBar>
         </div>
          

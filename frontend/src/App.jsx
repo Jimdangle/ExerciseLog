@@ -26,7 +26,7 @@ function App() {
   
   return (
     
-    <div className="app">
+    <div className="app w-screen h-screen bg-gun">
       {userToken === "" ? <LSMain login={login}></LSMain> : <PageSelector logout={logout}></PageSelector>
       }
       

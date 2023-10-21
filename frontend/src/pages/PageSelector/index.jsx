@@ -1,5 +1,5 @@
 import { setPage, getPage } from "../../utility/storage";
-import { FiChevronLeft } from "react-icons/fi";
+import { FiChevronLeft, FiChevronDown } from "react-icons/fi";
 import {useState, createContext} from 'react'
 import NavControl from "../Nav";
 import Home from "../Home";
@@ -14,6 +14,8 @@ export default function PageSelector({logout}){
     const pagina = Number(getPage()) > 0 ? Number(getPage()) : 0
     const [active, setActive] = useState(pagina) // state setter for our active page
     const [toggleNav,setToggleNav] = useState(false)
+
+    const toggle = () => { setToggleNav((v)=>{return !v})}
 
     
     const [notification,setNotification] = useState(''); // for our notificaiton message
@@ -44,11 +46,10 @@ export default function PageSelector({logout}){
                     {render_page}
                 
                 
-                <div className="absolute top-2 right-2 z-10 overflow-hidden">
-                    <FiChevronLeft className={"h1-white w-[8rem]" +(toggleNav? " slidelR" : " slideh")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronLeft>
-                    <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
+                <FiChevronDown className={"absolute top-3 left-1/2 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
+                <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
                         
-                </div>
+                
 
                 <Notification message={notification} onClose={clearNotification}></Notification>
             </div>

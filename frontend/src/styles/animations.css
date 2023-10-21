@@ -60,7 +60,7 @@
 
 
 .slidel2 {
-    transform: translateX(0%);
+    transform: translateX(50%);
     transition: transform 0.6s;
 }
 
@@ -69,26 +69,19 @@
     transition: transform 0.6s ;
 }
 
-.slidelR {
-    
-    transform: rotate(180deg) translateX(40%);
+
+.slideDownNav{
+    transform: translateY(30vh) rotate(180deg);
     transition: transform 0.6s;
 }
 
-@keyframes slideHide {
-   0%{
-    opacity: 1;
-    transform: translateX(0%);
-   } 
-   99%{
-    opacity: 0;
-    transform: translateX(100%);
-   }
-   100%{
-    display: none;
-   }
-   
+.slideUpNav{
+    transform: translateY(0%);
+    transition: transform 0.6s;
 }
+
+
+
 
 
 .modal-drop {
@@ -108,20 +101,37 @@
 
 }
 
-
-.shrinkAnim{
-    animation: 1s linear 0s 1 normal coolShrink
+.trickyDown{
+    animation: 0.6s ease-out 0s 1 normal trickyDown
 }
 
-@keyframes coolShrink {
+@keyframes trickyDown {
     0%{
-        scale: 100%
-    }
-    99%{
-        scale: 0%
+        display: block;
+        opacity: 0%;
+        transform: translateY(-100%);
     }
     100%{
-        
-        opacity: 0;
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+
+}
+
+
+.trickyUp{
+    animation: 0.6s ease-out 0s 1 normal trickyUp
+}
+
+@keyframes trickyUp {
+    0%{
+        opacity: 100%;
+    }
+    99%{
+        opacity: 0%;
+        transform: translateY(-100%);
+    }
+    100%{
+        display:none;
     }
 }
