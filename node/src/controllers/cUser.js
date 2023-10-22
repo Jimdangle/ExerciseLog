@@ -20,17 +20,22 @@ async function GetUser(req,res,next){
 async function GetWholeSummary(req,res,next){
     const {start,end} = res.locals.bodyData;
     const user = res.locals.user; // get our query data
-    
+    if(start > end){
+        return next({code:416,message:'Dates not in correct order for summary'})
+    }
     const endDate = end !=0 ? new Date(end) : Date.now(); //if end date is default value of 0 just make it current time and find all workouts up to this point
     //Our final result object
     const summaryData = await GenerateSummary(user,start,endDate);
-    if(summaryData){
-        console.log(SummaryAcces(summaryData, ["exercise_summary","Haram Sandwhic", "morgpie"]))
-        res.send({summary:summaryData})
+    if(summaryData instanceof Error){
+        if(summaryData.name === "CastError"){
+            return next({code:400,message:summaryData.message})
+        }
+        return next({code:500,message:summaryData.message})
     }
-    else{
-        next({code:500,message:'Unable to generate summary data'})
+    else if(summaryData && summaryData.total_workouts > 0){
+        return res.send({summary:summaryData})
     }
+    return next({code:204,message:'No data found'}) // no data / nothing found
 }
 
 
@@ -51,18 +56,20 @@ async function GenerateSummary(user,start,end){
         return data;
     }
     catch(e){
-        return null;
+        
+        return e;
     }
 }
 
 // Do what we can on the individual workout level
 function GetSingleWorkoutSummary(workout, summaryData){
-   
-    workout.exercises.forEach( (exercise) => {
-        summaryData.total_exercises+=1; // increment exercise count and defer
-        GetExerciseSummary(exercise,summaryData);
+   if(workout.exercises){
+        workout.exercises.forEach( (exercise) => {
+            summaryData.total_exercises+=1; // increment exercise count and defer
+            GetExerciseSummary(exercise,summaryData);
+        }
+        )
     }
-    )
 }
 
 //this is really bad imo
