@@ -20,7 +20,7 @@ async function AddMotion(req, res, next){
         res.send({created:true});
     }
     catch(e){
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 }
 
@@ -47,7 +47,7 @@ async function RemoveMotion(req,res,next){
         res.send({deleted:true, count:count});
     }
     catch(e){
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 }
 
@@ -61,7 +61,7 @@ async function RemoveAll(res){
         res.send({deleted:true, count:count})
     }
     catch(e){
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 
 }

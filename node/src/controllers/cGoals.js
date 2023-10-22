@@ -19,7 +19,7 @@ async function CreateNewGoal(req,res,next){
         res.send({created:true,baggage:added})
     }
     catch(e){
-        next(e.message)
+        next({message:e.message,code:500});
     }
 
 }
@@ -32,7 +32,7 @@ async function RemoveGoal(req,res,next){
         res.send({deleted:true,baggage:del})
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -45,7 +45,7 @@ async function ListGoals(req,res,next){
         res.send({found:found})
     }
     catch(e){
-        next(e.message)
+        next({message:e.message,code:500});
     }
 
 }
@@ -60,7 +60,7 @@ async function ListGoalsRange(req,res,next){
         res.send({found:found})
     }
     catch(e){
-        next(e.message)
+        next({message:e.message,code:500});
     }
 }
 
@@ -70,15 +70,15 @@ async function GetGoalData(req,res,next){
     try{
         const match = await Goals.findOne({_id:goal_id}).populate("objectives");
         
-        const fuckaround = match.objectives.map((item) => {
+        const translated = match.objectives.map((item) => {
             
             return humanObjective(item)
         })
         
-        res.send({goal:match,translated: fuckaround})
+        res.send({goal:match,translated: translated})
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -90,17 +90,14 @@ async function AddObj(req,res,next){
         const obj = new Objectives({context:context,target:target,value:value});
         const added_obj = await obj.save(); // save our objective
 
-        try{
-            const assocGoal = await Goals.findOneAndUpdate({_id:goal_id,user_id:res.locals.user},{$push: {"objectives" : added_obj._id}});
-            res.send({added:true, objectives:assocGoal.objectives});
-        }
-        catch(e){
-            
-            next(e.message);
-        }
+        
+        const assocGoal = await Goals.findOneAndUpdate({_id:goal_id,user_id:res.locals.user},{$push: {"objectives" : added_obj._id}});
+        res.send({added:true, objectives:assocGoal.objectives});
+        
+        
     }
     catch(e){
-        next(e.message)
+        next({message:e.message,code:500});
     }
 }
 
@@ -115,7 +112,7 @@ async function RemoveObj(req,res,next){
         res.send({deleted:true})
     }
     catch(e){
-        next(e.message)
+        next({message:e.message,code:500});
     }
 }
 
@@ -135,7 +132,7 @@ async function CompareGoal(req,res,next){
     }
     catch(e){
         console.log(e);
-        next(e.message)
+        next({message:e.message,code:500});
     }
 }
 
@@ -160,7 +157,7 @@ async function RecentGoals(req,res,next){
     }
     catch(e)
     {
-        next(e.message)
+        next({message:e.message,code:500});
     }
 }
 

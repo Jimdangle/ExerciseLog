@@ -118,8 +118,9 @@ async function load_mongo(){
 
 function handleError(err, req, res, next) {
     console.log(`Error on path: ${req.path} using ${req.method}`)
-    console.log(err);
-    res.status(200).send({"message": err});
+    console.log(err.code);
+    console.log(err.message);
+    res.status(err.code).send();
 }
 
 module.exports = {app,server}

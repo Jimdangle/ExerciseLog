@@ -15,7 +15,7 @@ async function ListUserMotions(req,res,next){
        res.send({motions:uMotions});    
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -34,7 +34,7 @@ async function ListAllMotions(req,res,next){
     }
     catch(e)
     {
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -57,11 +57,11 @@ async function AddUserMotion(req, res, next){
             res.send({created:true});
         }
         else{
-            next("This Motion already exists in the public motions! Try searching for it");
+            next({message:'Motion already exists',code:409});
         }
     }
     catch(e){
-       next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -75,7 +75,7 @@ async function RemoveUserMotion(req,res,next){
         res.send({deleted: removed})
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 

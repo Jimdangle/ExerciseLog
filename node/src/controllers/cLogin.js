@@ -34,10 +34,10 @@ async function HandleSignup(req,res,next)
         res.send({"created": true, 'access_token': token});
     }
     catch(e){
-        console.log(e);
-        if(e.code == 11000){ res.send({"created": false, "message": "Email already exists! try logging in"}); }
+        
+        if(e.code == 11000){ next({message:'Email exists',code:409}); }
         else{
-            res.send({"created": false, "message": e.message});
+            next({message:e.message,code:500});
         }
     }
 }
@@ -62,21 +62,23 @@ async function HandleLogin(req,res,next){
                     res.send({access_token:token});
                 }
                 catch(e){
-                    next(e.message);
+                    next({message:e.message,code:500});
                 }
 
             }
             else{
-                next("Passwords not a match");
+               
+                next({message:"Passwords not a match",code:403});
             }
         }
         else{
-            next("There is no user with that email");
+            
+            next({message:"There is no user with that email",code:404});
         }
     }
     catch(e)
     {
-        res.status(401).send(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -100,7 +102,7 @@ async function DeleteUser(req,res,next){
         res.send({deleted:true, count:deleteUser});
     }
     catch(e){
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 
 }

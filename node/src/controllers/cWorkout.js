@@ -23,7 +23,7 @@ async function CreateWorkout(req, res, next) {
     }
     catch(e)
     {
-        res.send(e.message);
+        next({message:e.message,code:500});
     }  
 }
 
@@ -44,22 +44,10 @@ async function DeleteWorkout(req,res,next){
     }
     catch(e){
         
-        next((e.message))
+        next({message:e.message,code:500});
     }
 }
 
-/**
- * List all Workouts stored in mongo
- */
-async function ListWorkouts(req,res,next){
-    try{
-        const found = await Workout.find({}).populate({path: "exercises user_id", populate: {path: "motion sets"}});
-        res.send({all: found});
-    }
-    catch(e){
-        res.send({message:e.message});
-    }
-}
 
 /** 
  * List all workouts for a particular user (this will replace ListWorkouts at somepoint)
@@ -71,7 +59,7 @@ async function ListMyWorkouts(req,res,next){
         res.send({all:found});
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -86,7 +74,7 @@ async function GetWorkout(req,res,next){
         res.send({workout:found, workout_id:workout_id});
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -101,20 +89,14 @@ async function AddExercise(req,res,next){
         const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
         
-        try{
-            await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
-            res.send({added:true, exercise_id:newEx._id});
-        }
-        catch(e){
-            console.log('Error fixing to worrkout')
-            console.log(e);
-            res.send({message:e.message});
-        }
+        
+        await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
+        res.send({added:true, exercise_id:newEx._id});
+        
     }
     catch(e){
         console.log('Error creating exercise ')
-        console.log(e);
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
     
     
@@ -146,8 +128,7 @@ async function RemoveExercise(req, res, next) {
     }
     catch (e) {
         console.log('Error removing exercise from workout')
-        console.log(e);
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 
 }
@@ -162,21 +143,15 @@ async function AddSet(req, res, next) {
     try {
         const addedSet = new Set({rep_or_time: rep_or_time, added_weight: weight});
         const newSet = await addedSet.save();
-        try{
-            const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
-            
-            res.send({added:true, set_id:newSet._id});
-        }
-        catch(e){
-            console.log('Error fixing to exercise')
-            console.log(e);
-            res.send({message:e.message});
-        }
+        
+        const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
+        res.send({added:true, set_id:newSet._id});
+        
     }
     catch(e){
-        console.log('Error creating set ')
+        
         console.log(e);
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 }
     
@@ -196,7 +171,7 @@ async function RemoveSet(req, res, next) {
     catch (e) {
         console.log('Error removing set from exercise')
         console.log(e);
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
 
 }
@@ -211,11 +186,11 @@ async function EditWorkoutName(req, res, next) {
     catch (e) {
         console.log('Error editing name for workout')
         console.log(e);
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
 
-module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
