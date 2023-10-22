@@ -21,6 +21,8 @@ after running the docker container type `docker container ls` to find the contai
 
 type `docker exec -it <container id> sh -c "npm run test"`
 
+Windows automatically grab id and run test: `docker exec -it ((docker container ls | findstr "node").split()[0]) sh -c "npm run test"`
+
 ## Exercise Log
 * General plan Trello : https://trello.com/b/Ft4qThw4/exlog
 * Sprint 1 Trello : https://trello.com/b/8lXIDQ55/exlogs1
