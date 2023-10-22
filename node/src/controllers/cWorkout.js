@@ -19,7 +19,7 @@ async function CreateWorkout(req, res, next) {
         }
         const added = await newWorkout.save(); 
         console.log(added);
-        res.send({created:true, id:newWorkout._id});
+        res.send({created:true, workout_id:newWorkout._id});
     }
     catch(e)
     {
@@ -35,10 +35,16 @@ async function DeleteWorkout(req,res,next){
     //console.log(workout_id);
     try{
         const delWorkout = await Workout.deleteOne({_id:workout_id, user_id:res.locals.user});
-        res.send({deleted:true, count:delWorkout});
+        if(delWorkout.deletedCount===1){
+           return  res.send({deleted:true, workout_id:workout_id});
+        }
+        else{
+            return res.send({deleted:false, workout_id:workout_id})
+        }
     }
     catch(e){
-        next(e.message)
+        
+        next((e.message))
     }
 }
 
@@ -77,8 +83,7 @@ async function GetWorkout(req,res,next){
     try{
         console.log(res.locals.user);
         const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
-        console.log(found);
-        res.send({workout:found});
+        res.send({workout:found, workout_id:workout_id});
     }
     catch(e){
         next(e.message);
@@ -95,10 +100,10 @@ async function AddExercise(req,res,next){
         const motion = await Motion.findOne({_id:motion_id})
         const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
-        console.log(newEx);
+        
         try{
-            const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
-            res.send({added:true, exercises:assocWorkout.exercises});
+            await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
+            res.send({added:true, exercise_id:newEx._id});
         }
         catch(e){
             console.log('Error fixing to worrkout')
@@ -130,8 +135,14 @@ async function RemoveExercise(req, res, next) {
 
     try {
         const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$pull: {"exercises" : exercise_id}});
-        await Exercise.deleteOne({_id: exercise_id});
-        res.send({deleted:true, exercises:assocWorkout.exercises});
+        const del = await Exercise.deleteOne({_id: exercise_id});
+        if(del.deletedCount===1){
+            return  res.send({deleted:true, exercise_id:exercise_id, workout_id:assocWorkout._id});
+        }
+        else if(del.deletedCount < 1){
+            return res.send({deleted:false, exercise_id:exercise_id, workout_id:workout_id})
+        }
+       
     }
     catch (e) {
         console.log('Error removing exercise from workout')
@@ -153,8 +164,8 @@ async function AddSet(req, res, next) {
         const newSet = await addedSet.save();
         try{
             const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
-            console.log(assocExercise)
-            res.send({added:true, exercises:assocExercise.sets});
+            
+            res.send({added:true, set_id:newSet._id});
         }
         catch(e){
             console.log('Error fixing to exercise')
@@ -176,8 +187,11 @@ async function RemoveSet(req, res, next) {
 
     try {
         const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$pull: {"sets" : set_id}});
-        await Set.deleteOne({_id: set_id});
-        res.send({deleted:true, sets:assocExercise.sets});
+        const del = await Set.deleteOne({_id: set_id});
+        if(del.deletedCount===1){
+            return res.send({deleted:true, set_id:set_id});
+        }
+        
     }
     catch (e) {
         console.log('Error removing set from exercise')
@@ -192,7 +206,7 @@ async function EditWorkoutName(req, res, next) {
 
     try {
         const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$set: {name:name}});
-        res.send({"updated": true, assocWorkout: assocWorkout});
+        res.send({updated: true, workout_id:assocWorkout._id, workout_name: assocWorkout.name});
     }
     catch (e) {
         console.log('Error editing name for workout')
