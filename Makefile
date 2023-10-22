@@ -19,3 +19,9 @@ buildc:
 
 build:
 	docker-compose build
+
+
+CONTAINER_NAME := $(shell powershell -command "$$(docker container ls | findstr 'node').split()[0]")
+node-test:
+	
+	docker exec -it $(CONTAINER_NAME) sh -c "npm run test"
