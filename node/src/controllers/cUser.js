@@ -12,7 +12,7 @@ async function GetUser(req,res,next){
         res.send({user:foundUser})
     }
     catch(e){
-        next({code:404,message:e.message});
+        next({code:404 ,message:e.message});
     }
 }
 

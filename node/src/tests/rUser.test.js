@@ -16,8 +16,7 @@ describe('User Info', () => {
     it('Try to get our user data with no token', async()=>{
         const res = await request.get('/user/info')
         
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(401);
     })
 
     it('Login to Account', async ()=>{
@@ -33,5 +32,18 @@ describe('User Info', () => {
         
         expect(res.status).toBe(200)
         expect(res.body).toHaveProperty('user')
+    })
+})
+
+/* Change username tests
+    - No token
+    - Mismatched Token (someone elses)
+    - Change username
+*/
+describe('Change username', ()=>{
+    it('Try to change without a token', async ()=> {
+        const res = await request.post('/user/changename').send({username: 'ICantDoThis'})
+        expect(res.status).toBe(401);
+
     })
 })

@@ -19,8 +19,8 @@ async function HandleSignup(req,res,next)
     var email = res.locals.bodyData.email;
     var pass  = res.locals.bodyData.pass;
     var user  = (res.locals.bodyData.user) ? res.locals.bodyData.user : "";
-    if(pass.length < 10){return next("too short of password")}
-    if(email.indexOf('@')===-1){return next('No email provided')}
+    if(pass.length < 10){return next({message:"too short of password",code:400})}
+    if(email.indexOf('@')===-1){next({message:"bad email format",code:400})}
     const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
     
 
@@ -34,7 +34,7 @@ async function HandleSignup(req,res,next)
         res.send({"created": true, 'access_token': token});
     }
     catch(e){
-        
+        console.log(e)
         if(e.code == 11000){ next({message:'Email exists',code:409}); }
         else{
             next({message:e.message,code:500});

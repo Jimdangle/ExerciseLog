@@ -128,6 +128,7 @@ async function RemoveExercise(req, res, next) {
     }
     catch (e) {
         console.log('Error removing exercise from workout')
+        console.log(e.name)
         next({message:e.message,code:500});
     }
 
@@ -145,13 +146,24 @@ async function AddSet(req, res, next) {
         const newSet = await addedSet.save();
         
         const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
+        if(!assocExercise){
+            next({code:404,message:'No exercise to add to'})
+        }
         res.send({added:true, set_id:newSet._id});
         
     }
     catch(e){
-        
+        if(e.code==="ERR_ASSERTION"){
+            return next({code:400,message:'Bad values for reps/weights'})
+        }
+        if(e.name==="ValidationError"){
+            return next({code:422,message:'Unable to validate data but right types'})
+        }
+        if(e.name==="CastError"){
+            return next({code:400,message:'Bad format for data'})
+        }
         console.log(e);
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
     
@@ -163,14 +175,31 @@ async function RemoveSet(req, res, next) {
     try {
         const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$pull: {"sets" : set_id}});
         const del = await Set.deleteOne({_id: set_id});
+        console.log(assocExercise)
+        console.log(del)
+        if(!assocExercise){
+            return next({code:404,message:'No associated exercise'})
+        }
         if(del.deletedCount===1){
             return res.send({deleted:true, set_id:set_id});
+        }
+        if(del.deletedCount===0){
+            return next({code:404,message: 'No Associated set found'})
         }
         
     }
     catch (e) {
         console.log('Error removing set from exercise')
-        console.log(e);
+        console.log(e.name);
+        if(e.code==="ERR_ASSERTION"){
+            return next({code:400,message:'Bad values for reps/weights'})
+        }
+        if(e.name==="ValidationError"){
+            return next({code:422,message:'Unable to validate data but right types'})
+        }
+        if(e.name==="CastError"){
+            return next({code:400,message:'Bad format for data'})
+        }
         next({message:e.message,code:500});
     }
 

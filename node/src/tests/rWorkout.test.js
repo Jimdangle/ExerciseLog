@@ -30,10 +30,8 @@ describe('Workout Actions', ()=> {
     it('Fail to add workout (no token)', async ()=> {
         const response = await request.post('/workout/add')
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('no token recieved');
-        workout_id = response.body.id
+        expect(response.status).toBe(401);
+        
     })
 
     var workout_id = null;
@@ -57,8 +55,8 @@ describe('Workout Actions', ()=> {
     it('Delete a invalid Workout', async()=> {
         const response = await request.delete('/workout/delete').set('authorization', token).send({workout_id:"notarealone"})
         
-        expect(response.status).toBe(200)
-        expect(response.body).toHaveProperty('message')
+        expect(response.status).toBe(500)
+        
         
     })
 
@@ -120,8 +118,8 @@ describe('Exercise Actions', ()=>{
     it('Add a wrong exercise', async()=>{
         const res = await request.post('/workout/addEx').set('authorization', token).send({workout_id: workout_id, motion_id: 'abcdefg'})
 
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(500);
+        
     })
 
     it('Add in a real exercise', async()=>{
@@ -138,8 +136,8 @@ describe('Exercise Actions', ()=>{
     it('Remove a invalid exercise', async()=>{
         const res = await request.delete('/workout/remEx').set('authorization', token).send({workout_id:workout_id, exercise_id: 'notanid'})
 
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(500);
+        
     })
 
     it('Remove the exercise', async()=>{
@@ -176,23 +174,23 @@ describe('Set Tests', () => {
     //Invalid adds
     it('Add a set with bad rep data', async()=>{
         const res = await request.post('/workout/addSet').set('authorization', token).send({rep_or_time:"notanumber",weight:0,exercise_id:exercise_id})
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(422);
+        
     })
     it('Add a set with bad weight', async()=>{
         const res = await request.post('/workout/addSet').set('authorization', token).send({rep_or_time:1,weight:"notanumber",exercise_id:exercise_id})
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(422);
+        
     })
     it('Add a set with invalid exercise id', async()=>{
         const res = await request.post('/workout/addSet').set('authorization', token).send({rep_or_time:1,weight:1,exercise_id:"notid"})
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(400);
+        
     })
     it('Add a set with out of range data', async()=>{
         const res = await request.post('/workout/addSet').set('authorization', token).send({rep_or_time:-1,weight:-1,exercise_id:exercise_id})
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(422);
+        
     })
 
 
@@ -207,13 +205,13 @@ describe('Set Tests', () => {
 
     it('Remove a set with invalid set id', async()=>{
         const res = await request.delete('/workout/remSet').set('authorization', token).send({exercise_id:exercise_id, set_id:'notid'})
-        expect(res.status).toBe(200)
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(400)
+        
     })
     it('Remove a set with invalid exercise id', async()=>{
         const res = await request.delete('/workout/remSet').set('authorization', token).send({exercise_id:'notide', set_id:set_id})
-        expect(res.status).toBe(200)
-        expect(res.body).toHaveProperty('message')
+        expect(res.status).toBe(400)
+        
     })
 
     it('Remove a set', async()=>{

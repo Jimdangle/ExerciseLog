@@ -16,7 +16,7 @@ In order to run the program I recommend having make or mingw32-make installed. Y
 
 If you have `mingw32-make` and Powershell you can alias it to `make` via `Set-Alias -Name make -Value mingw32-make`
 
-## Test 
+## Test
 after running the docker container type `docker container ls` to find the container id for node container
 
 type `docker exec -it <container id> sh -c "npm run test"`
