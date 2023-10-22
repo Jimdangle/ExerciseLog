@@ -37,7 +37,6 @@ describe('User Info', () => {
 
 /* Change username tests
     - No token
-    - Mismatched Token (someone elses)
     - Change username
 */
 describe('Change username', ()=>{
@@ -45,5 +44,10 @@ describe('Change username', ()=>{
         const res = await request.post('/user/changename').send({username: 'ICantDoThis'})
         expect(res.status).toBe(401);
 
+    })
+
+    it('Change name', async()=>{
+        const res = await request.post('/user/changename').set('authorization', token).send({username:"CoolName"})
+        expect(res.status).toBe(200);
     })
 })
