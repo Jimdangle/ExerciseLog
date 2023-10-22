@@ -37,7 +37,7 @@ function Verify (inObj, reqKeys, next)
     next() 
   }
   else {
-    next('missing required keys')
+    next({code:400,message:'Bad Keys'})
   }
 
 }
@@ -50,12 +50,12 @@ function ValidateToken(req, res, next) {
   const token = req.headers['authorization'];
   
   if(!token) {
-    return next('no token recieved');
+    return next({code:401,message:'no token recieved'});
   }
   // should have token here , time to verify
   jwt.verify(token, jwtSecret, (err, user) => {
     if(err) {
-      return next('this token is no longer valid')
+      return next({code:401,message:'this token is no longer valid'})
     }
     // by now the token is valid and we can attatch the user to the request
     console.log(user);

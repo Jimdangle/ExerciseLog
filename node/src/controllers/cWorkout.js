@@ -19,11 +19,11 @@ async function CreateWorkout(req, res, next) {
         }
         const added = await newWorkout.save(); 
         console.log(added);
-        res.send({created:true, id:newWorkout._id});
+        res.send({created:true, workout_id:newWorkout._id});
     }
     catch(e)
     {
-        res.send(e.message);
+        next({message:e.message,code:500});
     }  
 }
 
@@ -35,25 +35,19 @@ async function DeleteWorkout(req,res,next){
     //console.log(workout_id);
     try{
         const delWorkout = await Workout.deleteOne({_id:workout_id, user_id:res.locals.user});
-        res.send({deleted:true, count:delWorkout});
+        if(delWorkout.deletedCount===1){
+           return  res.send({deleted:true, workout_id:workout_id});
+        }
+        else{
+            return res.send({deleted:false, workout_id:workout_id})
+        }
     }
     catch(e){
-        next(e.message)
+        
+        next({message:e.message,code:500});
     }
 }
 
-/**
- * List all Workouts stored in mongo
- */
-async function ListWorkouts(req,res,next){
-    try{
-        const found = await Workout.find({}).populate({path: "exercises user_id", populate: {path: "motion sets"}});
-        res.send({all: found});
-    }
-    catch(e){
-        res.send({message:e.message});
-    }
-}
 
 /** 
  * List all workouts for a particular user (this will replace ListWorkouts at somepoint)
@@ -65,7 +59,7 @@ async function ListMyWorkouts(req,res,next){
         res.send({all:found});
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -77,11 +71,10 @@ async function GetWorkout(req,res,next){
     try{
         console.log(res.locals.user);
         const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
-        console.log(found);
-        res.send({workout:found});
+        res.send({workout:found, workout_id:workout_id});
     }
     catch(e){
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
@@ -95,21 +88,15 @@ async function AddExercise(req,res,next){
         const motion = await Motion.findOne({_id:motion_id})
         const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
-        console.log(newEx);
-        try{
-            const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
-            res.send({added:true, exercises:assocWorkout.exercises});
-        }
-        catch(e){
-            console.log('Error fixing to worrkout')
-            console.log(e);
-            res.send({message:e.message});
-        }
+        
+        
+        await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
+        res.send({added:true, exercise_id:newEx._id});
+        
     }
     catch(e){
         console.log('Error creating exercise ')
-        console.log(e);
-        res.send({message:e.message});
+        next({message:e.message,code:500});
     }
     
     
@@ -130,13 +117,19 @@ async function RemoveExercise(req, res, next) {
 
     try {
         const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$pull: {"exercises" : exercise_id}});
-        await Exercise.deleteOne({_id: exercise_id});
-        res.send({deleted:true, exercises:assocWorkout.exercises});
+        const del = await Exercise.deleteOne({_id: exercise_id});
+        if(del.deletedCount===1){
+            return  res.send({deleted:true, exercise_id:exercise_id, workout_id:assocWorkout._id});
+        }
+        else if(del.deletedCount < 1){
+            return res.send({deleted:false, exercise_id:exercise_id, workout_id:workout_id})
+        }
+       
     }
     catch (e) {
         console.log('Error removing exercise from workout')
-        console.log(e);
-        res.send({message:e.message});
+        console.log(e.name)
+        next({message:e.message,code:500});
     }
 
 }
@@ -151,21 +144,26 @@ async function AddSet(req, res, next) {
     try {
         const addedSet = new Set({rep_or_time: rep_or_time, added_weight: weight});
         const newSet = await addedSet.save();
-        try{
-            const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
-            console.log(assocExercise)
-            res.send({added:true, exercises:assocExercise.sets});
+        
+        const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
+        if(!assocExercise){
+            next({code:404,message:'No exercise to add to'})
         }
-        catch(e){
-            console.log('Error fixing to exercise')
-            console.log(e);
-            res.send({message:e.message});
-        }
+        res.send({added:true, set_id:newSet._id});
+        
     }
     catch(e){
-        console.log('Error creating set ')
+        if(e.code==="ERR_ASSERTION"){
+            return next({code:400,message:'Bad values for reps/weights'})
+        }
+        if(e.name==="ValidationError"){
+            return next({code:422,message:'Unable to validate data but right types'})
+        }
+        if(e.name==="CastError"){
+            return next({code:400,message:'Bad format for data'})
+        }
         console.log(e);
-        res.send({message:e.message});
+        return next({message:e.message,code:500});
     }
 }
     
@@ -176,13 +174,33 @@ async function RemoveSet(req, res, next) {
 
     try {
         const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$pull: {"sets" : set_id}});
-        await Set.deleteOne({_id: set_id});
-        res.send({deleted:true, sets:assocExercise.sets});
+        const del = await Set.deleteOne({_id: set_id});
+        console.log(assocExercise)
+        console.log(del)
+        if(!assocExercise){
+            return next({code:404,message:'No associated exercise'})
+        }
+        if(del.deletedCount===1){
+            return res.send({deleted:true, set_id:set_id});
+        }
+        if(del.deletedCount===0){
+            return next({code:404,message: 'No Associated set found'})
+        }
+        
     }
     catch (e) {
         console.log('Error removing set from exercise')
-        console.log(e);
-        res.send({message:e.message});
+        console.log(e.name);
+        if(e.code==="ERR_ASSERTION"){
+            return next({code:400,message:'Bad values for reps/weights'})
+        }
+        if(e.name==="ValidationError"){
+            return next({code:422,message:'Unable to validate data but right types'})
+        }
+        if(e.name==="CastError"){
+            return next({code:400,message:'Bad format for data'})
+        }
+        next({message:e.message,code:500});
     }
 
 }
@@ -192,16 +210,16 @@ async function EditWorkoutName(req, res, next) {
 
     try {
         const assocWorkout = await Workout.findOneAndUpdate({_id:workout_id},{$set: {name:name}});
-        res.send({"updated": true, assocWorkout: assocWorkout});
+        res.send({updated: true, workout_id:assocWorkout._id, workout_name: assocWorkout.name});
     }
     catch (e) {
         console.log('Error editing name for workout')
         console.log(e);
-        next(e.message);
+        next({message:e.message,code:500});
     }
 }
 
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
 
-module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, ListWorkouts:ListWorkouts, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    

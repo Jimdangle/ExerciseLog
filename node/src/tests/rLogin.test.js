@@ -10,9 +10,8 @@ describe('Testing Signup', () => {
         const signup = {email: 'bad', pass:'notabadpassword'};
         const response = await request.post('/login/signup').send(signup)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('No email provided')
+        expect(response.status).toBe(400);
+        
         
     });
 
@@ -21,9 +20,8 @@ describe('Testing Signup', () => {
         const signup = {email: 'good@email', pass:'bad'};
         const response = await request.post('/login/signup').send(signup)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('too short of password')
+        expect(response.status).toBe(400);
+        
         
     });
 
@@ -32,9 +30,7 @@ describe('Testing Signup', () => {
         const signup = {email: 'admin@a', pass:'badasdasdasdasdasd'};
         const response = await request.post('/login/signup').send(signup)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('Email already exists! try logging in')
+        expect(response.status).toBe(409);
         
     });
 
@@ -60,9 +56,8 @@ describe('Test Login', () => {
         const login = {email:user.email, pass:'notmypassword'};
         const response = await request.post('/login/login').send(login)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('Passwords not a match')
+        expect(response.status).toBe(403);
+        
         
     });
 
@@ -71,9 +66,8 @@ describe('Test Login', () => {
         const login = {email: 'jester@jest.jesticles',pass:user.pass};
         const response = await request.post('/login/login').send(login)
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message')
-        expect(response.body.message).toBe('There is no user with that email')
+        expect(response.status).toBe(404);
+        
         
     });
 

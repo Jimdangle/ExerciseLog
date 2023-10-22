@@ -14,7 +14,6 @@ const WorkoutRouter = express.Router(); // create our router object
 const REQUIRED_KEYS = {
     "/add": true,
     "/delete": ["workout_id"],
-    "ls": true,
     "/addEx": ["motion_id", "workout_id"],
     "/remEx": ["exercise_id", "workout_id"],
     "/addSet": ["rep_or_time", "weight", "exercise_id"],
@@ -59,10 +58,6 @@ WorkoutRouter.delete('/remEx', async(req, res, next) => {
     WorkoutControllers.RemoveExercise(req, res, next);
 })
 
-// list all workouts
-WorkoutRouter.get('/ls', async(req,res,next) => {
-    WorkoutControllers.ListWorkouts(req,res,next);
-})
 
 // add exercise to workout
 WorkoutRouter.post('/addEx', async(req,res,next) => {

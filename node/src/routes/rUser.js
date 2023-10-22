@@ -10,9 +10,7 @@ const UserRouter = express.Router(); // create our router object
 
 const REQUIRED_KEYS = {
     "/info" : true,
-    "/summary": true,
     "/changename": ["username"],
-    "/csum": ["range"],
     "/wsum": ["start", "end"]
 }
 

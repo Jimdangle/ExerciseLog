@@ -12,7 +12,7 @@ async function GetUser(req,res,next){
         res.send({user:foundUser})
     }
     catch(e){
-        next(e.message);
+        next({code:404 ,message:e.message});
     }
 }
 
@@ -29,7 +29,7 @@ async function GetWholeSummary(req,res,next){
         res.send({summary:summaryData})
     }
     else{
-        next(`Unable to generate summary for ${end}-${start}`)
+        next({code:500,message:'Unable to generate summary data'})
     }
 }
 
@@ -156,7 +156,8 @@ async function ChangeUsername(req,res,next){
         res.send({user:updatedUser});
     }
     catch(e){
-        next(e.message);
+        console.log(e)
+        next({code:404,message:e.message});
     }
 }
 
