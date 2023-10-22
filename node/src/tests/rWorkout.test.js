@@ -219,6 +219,20 @@ describe('Set Tests', () => {
     it('Remove a set', async()=>{
         const res = await request.delete('/workout/remSet').set('authorization', token).send({exercise_id:exercise_id, set_id:set_id})
         expect(res.status).toBe(200)
-        expect(res.body).toHaveProperty('message')
+        expect(res.body).toHaveProperty('deleted')
+        expect(res.body.deleted).toBe(true);
     })
+
+    it('Remove the exercise', async()=>{
+        const res = await request.delete('/workout/remEx').set('authorization',token).send({workout_id:workout_id,exercise_id:exercise_id})
+
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('deleted')
+        expect(res.body).toHaveProperty('exercise_id')
+        expect(res.body).toHaveProperty('workout_id')
+
+        expect(res.body.deleted).toBe(true)
+    })
+
+
 })
