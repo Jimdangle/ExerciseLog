@@ -6,6 +6,13 @@ const GetDate = () => {
     return date.toString();
 }
 
+/* Schema for muscle groups */
+const MuscleSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    }
+})
 
 // Schema to define a exercise movement
 // The name of the motion, 
@@ -21,20 +28,8 @@ const MotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscles: {
-        type: [Number],
-        validate: [
-            function(v){
-                const sum = v.reduce((total,item)=>{
-                    console.log(`\titem:${item} : t:${typeof item}`)
-                    return total+item},0)
-
-                var t = Math.round(sum*10)/10;
-                console.log(`total: ${t}`);
-                return (v.length===7 & 1 === t)
-            },"Sum of muscle impact not equal to 1"
-        ]
-    }
+    muscles:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Muscles'}],
+    desc: String
 })
 
 // These do not need unique names 
@@ -49,20 +44,7 @@ const UserMotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscles: {
-        type: [Number],
-        validate: [
-            function(v){
-                const sum = v.reduce((total,item)=>{
-                    console.log(`\titem:${item} : t:${typeof item}`)
-                    return total+item},0)
-
-                var t = Math.round(sum*10)/10;
-                console.log(`total: ${t}`);
-                return (v.length===7 & 1 === t)
-            },"Sum of muscle impact not equal to 1"
-        ]
-    },
+    muscles:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Muscles'}],
     desc: String,
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
