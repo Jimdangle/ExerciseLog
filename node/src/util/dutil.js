@@ -1,38 +1,25 @@
 //database util
 
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('node:path');
 const { type } = require('os');
 
 
-const pp = path.join(__dirname,'../','config','workouts.txt')
-console.log(pp);
-async function GetMotionArray(){
-    var seen = {}
+async function loadMuscles(){
+    const pp = path.join(__dirname,'../','config','Muscles.json')
     try{
-        const data = fs.readFileSync(pp,'utf-8');
-        //console.log(typeof data);
-        var motionsRaw = data.split('\r\n')
-        motionsRaw.pop();
-
-        //console.log(motionsRaw)
-        const motionsMapped = motionsRaw.map((item)=>{
-            const splitMotion = item.split(":");
-            console.log(splitMotion[2])
-            var muscle_map = splitMotion[2].split(",").map((item)=>{return Number(item)})
-            return {name:splitMotion[0], type: Number(splitMotion[1]), muscles:muscle_map, desc:splitMotion[3]}
-        })
+        const data = await fs.readFile(pp, 'utf8')
         
-
-        return motionsMapped.filter((item)=>{var k = item.name; return seen.hasOwnProperty(k) ? false : (seen[k]=true)})
-       
+        const jsonData = JSON.parse(data);
+            // Use the 'jsonData' object in your code
+        console.log(jsonData);
+        return jsonData
     }
     catch(e){
-        console.log(e.message);
-        return [];
+        console.error('Error reading JSON file:', e);
     }
-}
 
+}
 class SummaryData   {
     constructor(){
         this.total_workouts=0;
@@ -56,7 +43,7 @@ function SummaryAcces(data,keys){
     return typeof val== Number? val : null;
 }
 
-module.exports = {GetMotionArray:GetMotionArray,SummaryData:SummaryData, SummaryAcces:SummaryAcces}
+module.exports = {SummaryData:SummaryData, SummaryAcces:SummaryAcces,loadMuscles}
 const p2p = path.join(__dirname,'../','config','workouts_out.txt')
 async function WriteArray(){
     const inp = await GetMotionArray();

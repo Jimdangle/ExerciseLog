@@ -1,18 +1,11 @@
 const mongoose = require('mongoose');
-
+const MuscleInformation = require('../config/Muscles')
+const validMuscles = Object.keys(MuscleInformation.Muscles) // List of valid muscles
 //Get the current date as a string
 const GetDate = () => {
     const date = new Date(Date.now());
     return date.toString();
 }
-
-/* Schema for muscle groups */
-const MuscleSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    }
-})
 
 // Schema to define a exercise movement
 // The name of the motion, 
@@ -28,7 +21,24 @@ const MotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscles:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Muscles'}],
+    muscleImpact: {
+        type: Map,
+        of: Number,
+        validate: {
+          validator: function (value) {
+            var sum = 0;
+            for (const key in value) {
+              if (!validMuscles.includes(key)) {
+                return false;
+              }
+              sum+= value[key];
+            }
+            if(sum>1){return false}
+            return true;
+          },
+          message: 'Invalid muscle names in muscleImpact. Or Sum over 1',
+        },
+      },
     desc: String
 })
 
@@ -44,7 +54,24 @@ const UserMotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscles:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Muscles'}],
+    muscleImpact: {
+        type: Map,
+        of: Number,
+        validate: {
+          validator: function (value) {
+            var sum = 0;
+            for (const key in value) {
+              if (!validMuscles.includes(key)) {
+                return false;
+              }
+              sum+= value[key];
+            }
+            if(sum>1){return false}
+            return true;
+          },
+          message: 'Invalid muscle names in muscleImpact. Or Sum over 1',
+        },
+      },
     desc: String,
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
@@ -107,5 +134,6 @@ const Set = mongoose.model("Set", SetSchema);
 const Exercise = mongoose.model("Exercise", ExerciseSchema);
 const Workout = mongoose.model("Workout", WorkoutSchema);
 const UserMotion = mongoose.model("UserMotion", UserMotionSchema);
+const Muscles = mongoose.model("Muscles", MuscleSchema)
 
 module.exports = {Workout: Workout, Motion: Motion, Exercise:Exercise, Set: Set, UserMotion: UserMotion}

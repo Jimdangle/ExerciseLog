@@ -1,6 +1,0 @@
-Push Up:0:0.5,0.2,0,0,0.1,0.1,0.1:A bodyweight exercise primarily targeting the chest muscles
-Bench Press:0:0.6,0.2,0,0,0,0.1,0.1:A weighted barbell exercise that focuses on pectoral expansion and contraction
-Squat:0:0,0,0.6,0.4,0,0,0:A weighted barbell exercise focusing on Quads and Hamstrings
-Running:1:0,0,0.5,0.5,0,0,0:The Second oldest form of cardio
-Swimming:1:0.1,0.5,0.3,0,0.1,0,0:The oldest form of cardio
-Plank:2:0.3,0.3,0.1,0.1,0.1,0.1,0:Great core hold!

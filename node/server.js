@@ -65,40 +65,7 @@ async function load_mongo(){
     try {
         await mongoose.connect(process.env.MONGO_URL); //initialize databse here
         
-
-        try{
-            //make true to reset db. will need to if you have data before this update
-            if(false){
-                try{
-                    await mUser.deleteMany({});
-                    await Exercise.deleteMany({});
-                    await Workout.deleteMany({})
-                    await Motion.deleteMany({});
-                    await UserMotion.deleteMany({});
-                   
-
-                }
-                catch(e){
-                    console.error(e.message);
-                }
-                console.log("adding in motions");
-                try{
-                    const input = await dutil.GetMotionArray();
-                    Motion.create(input)
-
-                    //Admin account creation: email=admin@a password=a
-                    const adminpass = await bcrypt.hash("a", 10)
-                    const admin = new mUser({email:"admin@a",password:adminpass});
-                    await admin.save();
-                    
-                }
-                catch(e){console.log(e.message)}
-            }
-        }
-        catch(e){
-            console.log(e.message);
-        }
-        
+        const d = await dutil.loadMuscles();
 
       }
       catch(er){
