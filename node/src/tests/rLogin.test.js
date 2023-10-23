@@ -9,7 +9,7 @@ describe('Testing Signup', () => {
     it('Incorrect Email Format', async () => {
         const signup = {email: 'bad', pass:'notabadpassword'};
         const response = await request.post('/login/signup').send(signup)
-
+1
         expect(response.status).toBe(400);
         
         
