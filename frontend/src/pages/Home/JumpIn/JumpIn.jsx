@@ -9,7 +9,7 @@ export default function JumpIn(){
     return (
         <div>
             <p className="text-white">Want to jump back in?</p>
-            <button className="button-e-blue disabled:button-d" disabled={curLog === null ? true : false} onClick={()=>{console.log('suh');setPage(1)}}>Last Workout </button>
+            <button className="button-e-blue disabled:button-d" disabled={curLog === null || curLog==="" ? true : false} onClick={()=>{console.log('suh');setPage(1)}}>Last Workout </button>
         </div>
     )
 }

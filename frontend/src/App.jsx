@@ -1,7 +1,7 @@
 import LSMain from "./pages/SignupLogin/index"
 import Home from "./pages/Home/index"
 import NavControl from "./pages/Nav"
-import { setToken, getToken } from "./utility/storage"
+import { setToken, getToken,setLog, setPage } from "./utility/storage"
 import { useState} from 'react'
 import PageSelector from "./pages/PageSelector"
 
@@ -16,6 +16,8 @@ function App() {
   function logout(){
     setToken("")
     setUserToken("")
+    setLog("")
+    setPage(0)
   }
 
   function login(token){
