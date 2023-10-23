@@ -30,10 +30,10 @@ async function ClearModel(req,res,next){
     const {model_name} = res.locals.bodyData;
     const error = await deleteItemsByModel(model_name);
     if(error instanceof Error){
-        next({code:500,message:"Model clearing problem"})
+        return next({code:500,message:"Model clearing problem"})
     }
     else{
-        res.send({deleted:true})
+        return res.send({deleted:true})
     }
 }
 
@@ -46,10 +46,10 @@ async function Load(req,res,next){
             const added = await MakeNewUser(item.email,item.password,item.username)
         }
 
-        res.send({loaded:true, motion_ids: loadMotions.insertedIds })
+        return res.send({loaded:true, motion_ids: loadMotions.insertedIds })
     }
     catch(e){
-        next({code:500,message:e.message})
+        return next({code:500,message:e.message})
     }
 }
 

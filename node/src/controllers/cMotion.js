@@ -4,7 +4,7 @@ const {Motion, UserMotion} = require("../models/mWorkout");
 async function ListMotions(req,res,next){
     const motions = await Motion.find({});
    // console.log(motions);
-    res.send({motions:motions});
+    return res.send({motions:motions});
 }
 
 // List Only User Defined Motions
@@ -12,10 +12,10 @@ async function ListUserMotions(req,res,next){
     const user = res.locals.user;
     try{
        const uMotions = await UserMotion.find({user_id:user});
-       res.send({motions:uMotions});    
+       return res.send({motions:uMotions});    
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -24,17 +24,17 @@ async function ListUserMotions(req,res,next){
 async function ListAllMotions(req,res,next){
     const user = res.locals.user;
     try{
-        const motions = await Motion.find({},"name type");
-        const uMotions = await UserMotion.find({user_id:user},"name type");
+        const motions = await Motion.find({},"name type muscles")
+        const uMotions = await UserMotion.find({user_id:user},"name type muscles");
         
         
         const cated = motions.concat(uMotions) // combine results 
-        console.log(cated[cated.length-1]);
-        res.send({motions: cated})
+       
+        return res.send({motions: cated})
     }
     catch(e)
     {
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -54,14 +54,14 @@ async function AddUserMotion(req, res, next){
             var motion = new UserMotion({name:name,type:type, muscles:muscles,desc:description,user_id:user});
             await motion.save();
 
-            res.send({created:true});
+            return res.send({created:true});
         }
         else{
-            next({message:'Motion already exists',code:409});
+            return next({message:'Motion already exists',code:409});
         }
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -72,10 +72,10 @@ async function RemoveUserMotion(req,res,next){
     const user = res.locals.user;
     try{
         var removed = UserMotion.deleteOne({_id:umotion_id, user_id:user});
-        res.send({deleted: removed})
+        return res.send({deleted: removed})
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 

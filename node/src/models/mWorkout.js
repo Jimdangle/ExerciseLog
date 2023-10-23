@@ -22,22 +22,25 @@ const MotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscleImpact: {
+    muscles: {
         type: Map,
         of: Number,
         validate: {
           validator: function (value) {
-            var sum = 0;
-            for (const key in value) {
+            
+            for (const key in value.keys()) {
+              
+              sum+=value[key];
               if (!validMuscles.includes(key)) {
+                console.log(`${key} not found in muscle data`)
                 return false;
               }
-              sum+= value[key];
+              console.log(`${key} : ${sum}`)
             }
-            if(sum>1){return false}
+            
             return true;
           },
-          message: 'Invalid muscle names in muscleImpact. Or Sum over 1',
+          message: 'Invalid muscle names in muscles',
         },
       },
     desc: String

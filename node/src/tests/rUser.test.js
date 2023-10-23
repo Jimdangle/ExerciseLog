@@ -20,7 +20,7 @@ describe('User Info', () => {
     })
 
     it('Login to Account', async ()=>{
-        const response = await request.post('/login/login').send({email:'admin@a', pass:'a'})
+        const response = await request.post('/login/login').send({email:'e@evil.com', pass:'e'})
         
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('access_token')

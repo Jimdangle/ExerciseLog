@@ -5,7 +5,7 @@ class SummaryData   {
         this.total_exercises=0
         this.total_sets=0
         this.exercise_totals=[0,0,0]
-        this.muscles=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
+        this.muscles=[{},{},{}] // 3 objects keys = muscle name,  value = impact, position in array = type  
         this.exercise_summary={}
     }
 }

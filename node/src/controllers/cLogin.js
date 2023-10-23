@@ -26,18 +26,18 @@ async function HandleSignup(req,res,next)
 
     try{
         var newUser = await MakeNewUser(email,pass,user)
-        
+        if(newUser instanceof Error){throw newUser}
       
 
         var token = jwt.sign({id:newUser._id},Config.jwtSecret);
 
-        res.send({"created": true, 'access_token': token});
+        return res.send({"created": true, 'access_token': token});
     }
     catch(e){
         console.log(e)
         if(e.code == 11000){ next({message:'Email exists',code:409}); }
         else{
-            next({message:e.message,code:500});
+            return next({message:e.message,code:500});
         }
     }
 }
@@ -53,6 +53,7 @@ async function MakeNewUser(email,pass,user){
         return newUser;
     }
     catch(e){
+        console.log(e)
         return e
     }
 }
@@ -74,26 +75,26 @@ async function HandleLogin(req,res,next){
                 console.log(user);
                 try{
                     var token = jwt.sign({id:user._id},Config.jwtSecret);
-                    res.send({access_token:token});
+                    return res.send({access_token:token});
                 }
                 catch(e){
-                    next({message:e.message,code:500});
+                    return next({message:e.message,code:500});
                 }
 
             }
             else{
                
-                next({message:"Passwords not a match",code:403});
+                return next({message:"Passwords not a match",code:403});
             }
         }
         else{
             
-            next({message:"There is no user with that email",code:404});
+            return next({message:"There is no user with that email",code:404});
         }
     }
     catch(e)
     {
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -103,7 +104,7 @@ async function HandleLogin(req,res,next){
 async function GetAllUsers(req,res,next){
     const users = await User.find({});
     console.log(users);
-    res.send(JSON.stringify(users));
+    return res.send(JSON.stringify(users));
 
 }
 
@@ -114,10 +115,10 @@ async function DeleteUser(req,res,next){
     const user = res.locals.user;
     try{
         const deleteUser = await User.deleteOne({_id:user});
-        res.send({deleted:true, count:deleteUser});
+        return res.send({deleted:true, count:deleteUser});
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 
 }

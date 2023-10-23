@@ -27,7 +27,7 @@ describe('Testing Signup', () => {
 
     //Dont signup
     it('In Use Email', async () => {
-        const signup = {email: 'admin@a', pass:'badasdasdasdasdasd'};
+        const signup = {email: 'e@evil.com', pass:'badasdasdasdasdasd'};
         const response = await request.post('/login/signup').send(signup)
 
         expect(response.status).toBe(409);

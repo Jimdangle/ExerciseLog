@@ -57,6 +57,7 @@ load_mongo();
 
 server.on('close', ()=>{
     mongoose.connection.close()
+    console.log('should close!')
 })
 
 const reset_db=true;
@@ -76,7 +77,7 @@ function handleError(err, req, res, next) {
     console.log(`Error on path: ${req.path} using ${req.method}`)
     console.log(err.code);
     console.log(err.message);
-    res.status(err.code).send();
+    return res.status(err.code).send();
 }
 
 module.exports = {app,server}

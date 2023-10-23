@@ -9,10 +9,10 @@ async function GetUser(req,res,next){
     try{
         const foundUser = await User.findOne({_id:user},"email username");
         console.log(`User: ${user} : ${foundUser}`);
-        res.send({user:foundUser})
+       return res.send({user:foundUser})
     }
     catch(e){
-        next({code:404 ,message:e.message});
+       return next({code:404 ,message:e.message});
     }
 }
 
@@ -85,8 +85,13 @@ function GetExerciseSummary(exercise, summaryData){
     },0)
     
     //calculate muscle impact
-    var impact = motion.muscles.map( (val) => { return Math.round(val*sum)}) // rounding to avoid wack extra decimals
-    summaryData.muscles[motion.type] = summaryData.muscles[motion.type].map( (item,index) => {return item+impact[index]}) // add in our impact
+    Object.keys(motion.muscles).forEach( (key) => { 
+        const percent = motion.muscles[key]
+        const impact = Math.round(percent*sum);
+        const stored = summaryData.muscles[motion.type][key] ?? 0;
+        summaryData.muscles[motion.type][key] = impact + stored
+    }) // rounding to avoid wack extra decimals
+    
     summaryData.exercise_totals[motion.type] += sum; // add our total 
     //For storing values as we average and access later
     const minValue = 1000000;
