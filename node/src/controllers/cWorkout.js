@@ -19,11 +19,11 @@ async function CreateWorkout(req, res, next) {
         }
         const added = await newWorkout.save(); 
         console.log(added);
-        res.send({created:true, workout_id:newWorkout._id});
+        return res.send({created:true, workout_id:newWorkout._id});
     }
     catch(e)
     {
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }  
 }
 
@@ -44,7 +44,7 @@ async function DeleteWorkout(req,res,next){
     }
     catch(e){
         
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -56,10 +56,10 @@ async function ListMyWorkouts(req,res,next){
     try{
         const found = await  Workout.find({user_id:res.locals.user})//.populate({path: "exercises", populate: {path: "motion sets"}});
         console.log(found);
-        res.send({all:found});
+        return res.send({all:found});
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -71,10 +71,10 @@ async function GetWorkout(req,res,next){
     try{
         console.log(res.locals.user);
         const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
-        res.send({workout:found, workout_id:workout_id});
+        return res.send({workout:found, workout_id:workout_id});
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -91,12 +91,12 @@ async function AddExercise(req,res,next){
         
         
         await Workout.findOneAndUpdate({_id:workout_id,user_id:res.locals.user},{$push: {"exercises" : newEx._id}});
-        res.send({added:true, exercise_id:newEx._id});
+        return res.send({added:true, exercise_id:newEx._id});
         
     }
     catch(e){
         console.log('Error creating exercise ')
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
     
     
@@ -129,7 +129,7 @@ async function RemoveExercise(req, res, next) {
     catch (e) {
         console.log('Error removing exercise from workout')
         console.log(e.name)
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 
 }
@@ -147,9 +147,9 @@ async function AddSet(req, res, next) {
         
         const assocExercise = await Exercise.findOneAndUpdate({_id:exercise_id},{$push: {"sets" : newSet._id}});
         if(!assocExercise){
-            next({code:404,message:'No exercise to add to'})
+            return next({code:404,message:'No exercise to add to'})
         }
-        res.send({added:true, set_id:newSet._id});
+        return res.send({added:true, set_id:newSet._id});
         
     }
     catch(e){

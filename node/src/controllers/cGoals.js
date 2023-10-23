@@ -16,10 +16,10 @@ async function CreateNewGoal(req,res,next){
         const newGoal = new Goals({user_id:user,name:name,start:new Date(start),end:new Date(end)})
 
         const added = await newGoal.save();
-        res.send({created:true,baggage:added})
+        return res.send({created:true,baggage:added})
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 
 }
@@ -29,10 +29,10 @@ async function RemoveGoal(req,res,next){
     const {goal_id} = res.locals.bodyData;
     try{
         const del = await Goals.deleteOne({_id:goal_id});
-        res.send({deleted:true,baggage:del})
+        return res.send({deleted:true,baggage:del})
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -42,10 +42,10 @@ async function ListGoals(req,res,next){
 
     try{
         const found = await Goals.find({user_id:user})
-        res.send({found:found})
+        return res.send({found:found})
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 
 }
@@ -57,10 +57,10 @@ async function ListGoalsRange(req,res,next){
 
     try{
         const found = await Goals.find({user_id:user, createdAt:{$gte: new Date(start), $lte: endDate}})
-        res.send({found:found})
+        return res.send({found:found})
     }
     catch(e){
-        next({message:e.message,code:500});
+       return next({message:e.message,code:500});
     }
 }
 
@@ -75,10 +75,10 @@ async function GetGoalData(req,res,next){
             return humanObjective(item)
         })
         
-        res.send({goal:match,translated: translated})
+       return res.send({goal:match,translated: translated})
     }
     catch(e){
-        next({message:e.message,code:500});
+       return next({message:e.message,code:500});
     }
 }
 
@@ -92,12 +92,12 @@ async function AddObj(req,res,next){
 
         
         const assocGoal = await Goals.findOneAndUpdate({_id:goal_id,user_id:res.locals.user},{$push: {"objectives" : added_obj._id}});
-        res.send({added:true, objectives:assocGoal.objectives});
+        return res.send({added:true, objectives:assocGoal.objectives});
         
         
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -109,10 +109,10 @@ async function RemoveObj(req,res,next){
     try{
         const goal = await Goals.findOneAndUpdate({_id:goal_id,user_id:user}, {$pull: {"objectives" : objective_id}})// pull objective off the goal
         await Objectives.deleteOne({_id:objective_id}) // delete the objective
-        res.send({deleted:true})
+        return res.send({deleted:true})
     }
     catch(e){
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -127,12 +127,12 @@ async function CompareGoal(req,res,next){
         
         const goal_data = await CompareAGoal(goal,user);
 
-        res.send({difference: goal_data});
+        return res.send({difference: goal_data});
 
     }
     catch(e){
         console.log(e);
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 
@@ -152,12 +152,12 @@ async function RecentGoals(req,res,next){
             const english_objectives = goal.objectives.map((objective) => {return humanObjective(objective)})
             out_data.push({name:goal.name, data:data, objectives: english_objectives, end: goal.end})
         }
-        res.send({goal_data:out_data})
+        return res.send({goal_data:out_data})
         
     }
     catch(e)
     {
-        next({message:e.message,code:500});
+        return next({message:e.message,code:500});
     }
 }
 

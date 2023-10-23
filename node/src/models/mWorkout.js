@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const MuscleInformation = require('../config/Muscles').MuscleInformation
 
+const validMuscles = Object.keys(MuscleInformation.Muscles) // List of valid muscles
 //Get the current date as a string
 const GetDate = () => {
     const date = new Date(Date.now());
     return date.toString();
 }
-
 
 // Schema to define a exercise movement
 // The name of the motion, 
@@ -22,19 +23,27 @@ const MotionSchema = new mongoose.Schema({
         max:2
     },
     muscles: {
-        type: [Number],
-        validate: [
-            function(v){
-                const sum = v.reduce((total,item)=>{
-                    console.log(`\titem:${item} : t:${typeof item}`)
-                    return total+item},0)
-
-                var t = Math.round(sum*10)/10;
-                console.log(`total: ${t}`);
-                return (v.length===7 & 1 === t)
-            },"Sum of muscle impact not equal to 1"
-        ]
-    }
+        type: Map,
+        of: Number,
+        validate: {
+          validator: function (value) {
+            
+            for (const key in value.keys()) {
+              
+              sum+=value[key];
+              if (!validMuscles.includes(key)) {
+                console.log(`${key} not found in muscle data`)
+                return false;
+              }
+              console.log(`${key} : ${sum}`)
+            }
+            
+            return true;
+          },
+          message: 'Invalid muscle names in muscles',
+        },
+      },
+    desc: String
 })
 
 // These do not need unique names 
@@ -49,20 +58,24 @@ const UserMotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscles: {
-        type: [Number],
-        validate: [
-            function(v){
-                const sum = v.reduce((total,item)=>{
-                    console.log(`\titem:${item} : t:${typeof item}`)
-                    return total+item},0)
-
-                var t = Math.round(sum*10)/10;
-                console.log(`total: ${t}`);
-                return (v.length===7 & 1 === t)
-            },"Sum of muscle impact not equal to 1"
-        ]
-    },
+    muscleImpact: {
+        type: Map,
+        of: Number,
+        validate: {
+          validator: function (value) {
+            var sum = 0;
+            for (const key in value) {
+              if (!validMuscles.includes(key)) {
+                return false;
+              }
+              sum+= value[key];
+            }
+            if(sum>1){return false}
+            return true;
+          },
+          message: 'Invalid muscle names in muscleImpact. Or Sum over 1',
+        },
+      },
     desc: String,
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
@@ -125,5 +138,6 @@ const Set = mongoose.model("Set", SetSchema);
 const Exercise = mongoose.model("Exercise", ExerciseSchema);
 const Workout = mongoose.model("Workout", WorkoutSchema);
 const UserMotion = mongoose.model("UserMotion", UserMotionSchema);
+
 
 module.exports = {Workout: Workout, Motion: Motion, Exercise:Exercise, Set: Set, UserMotion: UserMotion}

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 //User Schema
 // Users must have a unique email, and minimum 9 char password. Username is optional
 const UserSchema = new mongoose.Schema({
@@ -19,5 +19,6 @@ const UserSchema = new mongoose.Schema({
         minLength: 9,
      }
 })
+
 
 module.exports = mongoose.model("Users", UserSchema);
