@@ -12,7 +12,7 @@ export default function useFetch(url, method='g', payload=null){
         async function(){
             console.log(`Attempting to make ${method} request on ${url} with Payload: ${payload!=null}`)
             try{
-                
+                setData(null)
                 setIsLoading(true)
                 
                 const request = await fetch(base_url+url, {
@@ -22,7 +22,7 @@ export default function useFetch(url, method='g', payload=null){
                         'Content-Type': 'application/json',
                         'authorization': getToken()
                     },
-                    body: (payload ? JSON.stringify(payload) : "")
+                    body: (payload ? JSON.stringify(payload) : null)
                 })
                
                 
@@ -30,7 +30,7 @@ export default function useFetch(url, method='g', payload=null){
                 if(request.ok){
                     const body = await request.json(); 
                     
-                    setData({workout: body.workout});
+                    setData(body);
                     
                 }
                 else{

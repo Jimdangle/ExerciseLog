@@ -29,7 +29,7 @@ export default function MakeWorkout(){
        
         if(response && response.data && response.data.created){
             setPage(1) // set our page
-            setLog(response.data.id)
+            setLog(response.data.workout_id)
         }
     }, [response]) // this is only called when the response object has been changed 
 
