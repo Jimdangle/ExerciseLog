@@ -19,7 +19,7 @@ export default function ExerciseList(){
     }
 
     return (
-        <div>
+        <div className="h-64 overflow-y-scroll">
             {!isLoading && data && data.motions ? 
             <SearchableList title={"Test List"} list={data.motions} action={action} fields={{display_field:'name', action_field:'_id'}}></SearchableList>
             :

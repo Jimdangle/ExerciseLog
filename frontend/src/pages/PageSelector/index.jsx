@@ -46,7 +46,7 @@ export default function PageSelector({logout}){
                     {render_page}
                 
                 
-                <FiChevronDown className={"absolute top-3 left-1/2 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
+                <FiChevronDown className={"absolute top-3 left-4 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
                 <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
                         
                 

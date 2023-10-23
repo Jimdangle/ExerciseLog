@@ -13,14 +13,11 @@ export default function Workout(){
     const {data,isLoading,error } = useFetch('/workout/get', "p", {'workout_id':log})
     
 
-    useEffect(()=>{
-        
-    },[data])
     return(
     <div className='text-white'>
         
-        {isLoading ? "Loading Data" : "Done"}
-        {data && data.workout ? <p>{data.workout.name}</p> : <></>}
+        
+        {data && data.workout ? <p className='text-center my-2'>{data.workout.name}</p> : <></>}
 
         <ModalContainer>
             {(closeModal,toggleModal) => (
