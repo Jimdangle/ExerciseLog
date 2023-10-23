@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const MuscleInformation = require('../config/Muscles')
+const MuscleInformation = require('../config/Muscles').MuscleInformation
+
 const validMuscles = Object.keys(MuscleInformation.Muscles) // List of valid muscles
 //Get the current date as a string
 const GetDate = () => {
@@ -134,6 +135,6 @@ const Set = mongoose.model("Set", SetSchema);
 const Exercise = mongoose.model("Exercise", ExerciseSchema);
 const Workout = mongoose.model("Workout", WorkoutSchema);
 const UserMotion = mongoose.model("UserMotion", UserMotionSchema);
-const Muscles = mongoose.model("Muscles", MuscleSchema)
+
 
 module.exports = {Workout: Workout, Motion: Motion, Exercise:Exercise, Set: Set, UserMotion: UserMotion}

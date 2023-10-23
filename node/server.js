@@ -64,17 +64,6 @@ const reset_db=true;
 async function load_mongo(){
     try {
         await mongoose.connect(process.env.MONGO_URL); //initialize databse here
-        
-        const d = await dutil.loadMuscles();
-
-      }
-      catch(er){
-        console.log(er);
-      }
-    
-    try{
-        const count = await Motion.estimatedDocumentCount();
-       
     }
     catch(e){
         console.log(e.message);

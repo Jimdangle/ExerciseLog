@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
-
+const DefaultUsers = require('../config/SeedData').DefaultUsers;
+const DefaultWorkouts = require('../config/SeedData').DefaultWorkouts;
+const Motion = require('../models/mWorkout').Motion;
+const mUser = require('../models/mUsers');
 
 async function Wipe(req,res,next){
     const allModels = mongoose.modelNames();
-    const results = allModels.map(async(model_name)=>{await deleteItemsByModel(model_name)})
+    const results = Promise.all(allModels.map(async(model_name)=>{await deleteItemsByModel(model_name)}))
 
     const error = results.reduce((acum,val)=> {
         if(acum instanceof Error || val instanceof Error){
@@ -22,6 +25,7 @@ async function Wipe(req,res,next){
     }
 }
 
+/* Request Controller for clearing a specified model*/
 async function ClearModel(req,res,next){
     const {model_name} = res.locals.bodyData;
     const error = await deleteItemsByModel(model_name);
@@ -30,6 +34,19 @@ async function ClearModel(req,res,next){
     }
     else{
         res.send({deleted:true})
+    }
+}
+
+/* Request controller for loading seed data */
+async function Load(req,res,next){
+    try{
+        const loadMotions = await Motion.insertMany(DefaultWorkouts);
+        const loadUsers = await mUser.insertMany(DefaultUsers);
+
+        res.send({loaded:true, motion_ids: loadMotions.insertedIds, user_ids: loadUsers.insertedIds })
+    }
+    catch(e){
+        next({code:500,message:e.message})
     }
 }
 
@@ -45,4 +62,5 @@ async function deleteItemsByModel(model_name){
     }
 }
 
-module.exports = {Wipe, ClearModel}
+
+module.exports = {Wipe, ClearModel,Load}

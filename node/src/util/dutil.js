@@ -1,25 +1,4 @@
-//database util
 
-const fs = require('fs').promises;
-const path = require('node:path');
-const { type } = require('os');
-
-
-async function loadMuscles(){
-    const pp = path.join(__dirname,'../','config','Muscles.json')
-    try{
-        const data = await fs.readFile(pp, 'utf8')
-        
-        const jsonData = JSON.parse(data);
-            // Use the 'jsonData' object in your code
-        console.log(jsonData);
-        return jsonData
-    }
-    catch(e){
-        console.error('Error reading JSON file:', e);
-    }
-
-}
 class SummaryData   {
     constructor(){
         this.total_workouts=0;
@@ -43,15 +22,4 @@ function SummaryAcces(data,keys){
     return typeof val== Number? val : null;
 }
 
-module.exports = {SummaryData:SummaryData, SummaryAcces:SummaryAcces,loadMuscles}
-const p2p = path.join(__dirname,'../','config','workouts_out.txt')
-async function WriteArray(){
-    const inp = await GetMotionArray();
-    var map = inp.map( (item) => {
-       return `${item.name}\n\t${item.p_group}\n\t[${item.s_groups}]\n\t${item.desc}\n\n`
-    })
-    map = map.join("\n")
-   
-
-    fs.writeFileSync(p2p,map, (err)=> {throw err})
-}
+module.exports = {SummaryData:SummaryData, SummaryAcces:SummaryAcces}
