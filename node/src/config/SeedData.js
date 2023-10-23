@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const DefaultWorkouts= {
   "workouts": [
     {
@@ -175,8 +176,9 @@ const DefaultWorkouts= {
   ]
 }
 
+
 const DefaultUsers = {
-  "users": [
+  users: [
     {
       "email": "john.doe@example.com",
       "username": "johndoe",
@@ -203,6 +205,7 @@ const DefaultUsers = {
       "password": "e"
     }
   ]
+  
 }
 
 

@@ -21,15 +21,15 @@ async function HandleSignup(req,res,next)
     var user  = (res.locals.bodyData.user) ? res.locals.bodyData.user : "";
     if(pass.length < 10){return next({message:"too short of password",code:400})}
     if(email.indexOf('@')===-1){next({message:"bad email format",code:400})}
-    const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
+    
     
 
     try{
-        var newUser = new User({email:email,password:hashPass,username:user});//Generate a new User based on the User Schema
+        var newUser = await MakeNewUser(email,pass,user)
         
-        await newUser.save(); // save it to our db
+      
 
-        var token = jwt.sign({id:user._id},Config.jwtSecret);
+        var token = jwt.sign({id:newUser._id},Config.jwtSecret);
 
         res.send({"created": true, 'access_token': token});
     }
@@ -39,6 +39,21 @@ async function HandleSignup(req,res,next)
         else{
             next({message:e.message,code:500});
         }
+    }
+}
+
+async function MakeNewUser(email,pass,user){
+    const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
+    
+
+    try{
+        var newUser = new User({email:email,password:hashPass,username:user});//Generate a new User based on the User Schema
+        
+        await newUser.save(); // save it to our db
+        return newUser;
+    }
+    catch(e){
+        return e
     }
 }
 
@@ -108,4 +123,4 @@ async function DeleteUser(req,res,next){
 }
 
 
-module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers, HandleLogin: HandleLogin, DeleteUser:DeleteUser}
+module.exports = {HandleSignup: HandleSignup, GetAllUsers: GetAllUsers, HandleLogin: HandleLogin, DeleteUser:DeleteUser,MakeNewUser}

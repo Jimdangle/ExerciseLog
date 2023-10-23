@@ -3,26 +3,26 @@ const DefaultUsers = require('../config/SeedData').DefaultUsers;
 const DefaultWorkouts = require('../config/SeedData').DefaultWorkouts;
 const Motion = require('../models/mWorkout').Motion;
 const mUser = require('../models/mUsers');
+const { MakeNewUser } = require('./cLogin');
 
 async function Wipe(req,res,next){
     const allModels = mongoose.modelNames();
-    const results = Promise.all(allModels.map(async(model_name)=>{await deleteItemsByModel(model_name)}))
-
-    const error = results.reduce((acum,val)=> {
-        if(acum instanceof Error || val instanceof Error){
-            return acum
+    try{
+        const models = mongoose.modelNames();
+        for(const modelName of models){
+            const del = await deleteItemsByModel(modelName) 
+            if(!del.acknowledged){
+                return next({code:500,message:'Couldnt ack'});
+            }
         }
-        else{
-            return false
-        }
-    })
-
-    if(error){
-        next({code:500,message:"problem wiping"})
+        return res.send({deleted:true})
     }
-    else{
-        res.send({deleted:true})
+    catch(e)
+    {
+        console.log(e)
+        return next({code:500,message:"Could not wipe"})   
     }
+    
 }
 
 /* Request Controller for clearing a specified model*/
@@ -40,10 +40,13 @@ async function ClearModel(req,res,next){
 /* Request controller for loading seed data */
 async function Load(req,res,next){
     try{
-        const loadMotions = await Motion.insertMany(DefaultWorkouts);
-        const loadUsers = await mUser.insertMany(DefaultUsers);
+        const loadMotions = await Motion.insertMany(DefaultWorkouts.workouts);
+        for(const user in DefaultUsers.users){
+            const item = DefaultUsers.users[user]
+            const added = await MakeNewUser(item.email,item.password,item.username)
+        }
 
-        res.send({loaded:true, motion_ids: loadMotions.insertedIds, user_ids: loadUsers.insertedIds })
+        res.send({loaded:true, motion_ids: loadMotions.insertedIds })
     }
     catch(e){
         next({code:500,message:e.message})
@@ -55,9 +58,10 @@ async function deleteItemsByModel(model_name){
     try{
         const model = mongoose.model(model_name)
         const all = await model.deleteMany({});
-        return (all.deletedCount > 0 ? true : false)
+        return all
     }
     catch(e){
+        console.log(e)
         return e
     }
 }

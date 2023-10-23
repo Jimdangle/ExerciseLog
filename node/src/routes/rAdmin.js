@@ -15,6 +15,7 @@ const REQUIRED_KEYS = {
     "/cl": ["model_name"]
 }
 
-//AdminRouter.get('/wipe', AdminController.Wipe)
+AdminRouter.get('/wipe', AdminController.Wipe)
 AdminRouter.post('cl', AdminController.ClearModel)
+AdminRouter.get('/load', AdminController.Load)
 module.exports = {AdminRouter: AdminRouter}
