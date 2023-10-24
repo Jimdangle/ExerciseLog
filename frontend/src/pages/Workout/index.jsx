@@ -4,6 +4,7 @@ import { getLog } from '../../utility/storage'
 import Modal from '../../components/modals/Modal'
 import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
+import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext } from '../PageSelector'
 export default function Workout(){
 
@@ -37,13 +38,7 @@ export default function Workout(){
         <div>
          <p className='text-center my-2'>{data.workout.name}</p> 
          <p className='text-center my-2'>{data.workout.exercises.length}</p>
-            {data.workout.exercises ? 
-                data.workout.exercises.map((item) => {
-                    return <p key={`${item._id}`}>{(item.motion.motion ? item.motion.motion.name : item.motion.umotion.name)}</p>
-                })
-                :
-                <></> 
-            }
+         <ExerciseDisplay exercises={data.workout.exercises}></ExerciseDisplay>
         </div>
          : <></>}
         
