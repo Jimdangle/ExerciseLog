@@ -31,10 +31,13 @@ export function useRequest(url,method='g',payload=null) {
       if(response.status!==200){throw new Error('Erorr fetching!')}
       const workoutLogData = await response.json();
       setData(workoutLogData);
-      setLoading(false);
+      
     } catch (error) {
       
       setError(error)
+      
+    }
+    finally{
       setLoading(false);
     }
   };

@@ -4,19 +4,20 @@ import { useEffect, useState } from "react";
 import { useRequest } from "../../../hooks/requests/useRequest";
 export default function ExerciseList({log_id,refresh,closeModal}){
 
-    const {data,isLoading,error, fetchData} = useRequest('/motion/ls')
+    const {data,isLoading,error, fetchData:getData} = useRequest('/motion/ls')
     
 
     const {fetchData:postFetchData} = useRequest('/workout/addEx','p',{workout_id:log_id})
 
     useEffect(()=>{
-        fetchData();
+        if(!isLoading)
+            getData();
     },[])
 
     
     async function action(key){
-        postFetchData({motion_id:key})
-        refresh();
+        await postFetchData({motion_id:key})
+        await refresh();
         closeModal();
     }
 
