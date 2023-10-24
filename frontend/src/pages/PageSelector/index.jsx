@@ -48,11 +48,9 @@ export default function PageSelector({logout}){
                 
                 <FiChevronDown className={"absolute top-3 left-4 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
                 <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
-                        
-                
-
-                <Notification message={notification} onClose={clearNotification}></Notification>
+                <Notification message={notification} onClose={clearNotification}></Notification>       
             </div>
+            
         </NotificationContext.Provider>
     </PageContext.Provider>)
 }

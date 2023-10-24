@@ -6,7 +6,7 @@ export default function ModalContainer({children}){
     const closeModal = () => {setToggleModal(false)}
 
     return (
-        <div className=''>
+        <div className='flex justify-center'>
             <button className='button button-e-white content-end' onClick={openModal}>Open Modal</button>
             {children(closeModal,toggleModal)}
         </div>

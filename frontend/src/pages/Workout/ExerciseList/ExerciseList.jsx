@@ -1,22 +1,27 @@
 import SearchableList from "../../../components/lists/SearchableList/SearchableList";
 import useFetch from '../../../hooks/requests/useFetch'
-import { useEffect } from "react";
-export default function ExerciseList(){
+import { useEffect, useState } from "react";
+import { useRequest } from "../../../hooks/requests/useRequest";
+export default function ExerciseList({log_id,refresh,closeModal}){
 
-    const {data,isLoading,error} = useFetch('/motion/ls');
+    const {data,isLoading,error, fetchData} = useRequest('/motion/ls')
+    
 
-    useEffect(()=>{console.log(data)},[data])
+    const {fetchData:postFetchData} = useRequest('/workout/addEx','p',{workout_id:log_id})
 
-    const items = [
-        {t:"test1asdasdasd", a: '1'},
-        {t:"test2", a: '2'},
-        {t:"test3", a: '3'},
-        {t:"test4", a: '4'},
-    ]
+    useEffect(()=>{
+        fetchData();
+    },[])
 
-    function action(key){
-        console.log(`Action id ${key}`)
+    
+    async function action(key){
+        postFetchData({motion_id:key})
+        refresh();
+        closeModal();
     }
+
+    
+    
 
     return (
         <div className="h-64 overflow-y-scroll">
