@@ -5,9 +5,6 @@ import useAnimation from "../../hooks/animation/useAnimation"
 import '../../styles/animations.css'
 export default function NavControl({active, setActive,show}){
    
-    const {animate} = useAnimation(show)
-    
-
 
     const Nav = {
         links: {

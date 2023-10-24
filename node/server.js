@@ -77,7 +77,7 @@ function handleError(err, req, res, next) {
     console.log(`Error on path: ${req.path} using ${req.method}`)
     console.log(err.code);
     console.log(err.message);
-    return res.status(err.code).send();
+    return res.status(err.code).send({});
 }
 
 module.exports = {app,server}
