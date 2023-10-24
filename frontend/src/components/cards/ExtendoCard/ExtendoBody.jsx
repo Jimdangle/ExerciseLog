@@ -1,8 +1,11 @@
 /*  */
+import '../../../styles/animations.css'
 export default function ExtendoBody({toggleContent,children}){
-    return (
-        <div className={(toggleContent ? "block" : "hidden")}>
+    return (toggleContent ? 
+        <div className="cardDown">
             {children}
         </div>
+        :
+        <></>
     )
 }
