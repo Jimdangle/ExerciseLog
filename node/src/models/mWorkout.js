@@ -103,7 +103,8 @@ const ExerciseSchema = new mongoose.Schema({
         motion: {type: mongoose.Schema.Types.ObjectId, ref: 'Motion' },
         umotion: {type: mongoose.Schema.Types.ObjectId, ref: 'UserMotion'}
     },
-    sets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Set'}]
+    sets: [{type: mongoose.Schema.Types.ObjectId, ref: 'Set'}],
+    user_id: {type: mongoose.Schema.Types.ObjectId,ref:'Users'}
 
 })
 

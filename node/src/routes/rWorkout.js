@@ -20,6 +20,7 @@ const REQUIRED_KEYS = {
     "/remSet": ["set_id", "exercise_id"],
     "/get": ["workout_id"],
     "/editName": ["workout_id", "name"],
+    "/getEx": ["exercise_id"]
 }
 
 WorkoutRouter.use(bodyParser.json());
@@ -63,6 +64,10 @@ WorkoutRouter.delete('/remEx', async(req, res, next) => {
 WorkoutRouter.post('/addEx', async(req,res,next) => {
     WorkoutControllers.AddExercise(req,res,next);
 })
+
+//Get a single exercises data
+WorkoutRouter.post('/getEx', WorkoutControllers.GetExercise);
+
 
 //add set to Exercise 
 WorkoutRouter.post('/addSet', async(req, res, next) => {

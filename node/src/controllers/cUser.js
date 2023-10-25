@@ -84,14 +84,21 @@ function GetExerciseSummary(exercise, summaryData){
         return total + (set.rep_or_time*weight);
     },0)
     
+   
     //calculate muscle impact
-    Object.keys(motion.muscles).forEach( (key) => { 
-        const percent = motion.muscles[key]
-        const impact = Math.round(percent*sum);
+    const impacts = {}
+    const keys = Array.from(motion.muscles.keys());
+    console.log(keys)
+    console.log(sum)
+    keys.forEach( (key) => { 
+        const percent = motion.muscles.get(key)
+        const impact = Math.round(percent*sum*100)/100;
+        impacts[key] = impact;
         const stored = summaryData.muscles[motion.type][key] ?? 0;
         summaryData.muscles[motion.type][key] = impact + stored
     }) // rounding to avoid wack extra decimals
     
+    console.log(impacts)
     summaryData.exercise_totals[motion.type] += sum; // add our total 
     //For storing values as we average and access later
     const minValue = 1000000;
@@ -124,16 +131,17 @@ function GetExerciseSummary(exercise, summaryData){
     const m = exercise.sets.length;
     summaryData.total_sets+=m;
     
-
+    // we have data for this motion already so update it
     if(summaryData.exercise_summary[motion.name]){
-        // we have data for this motion already so update it
-        const cur_sum = summaryData.exercise_summary[motion.name];
-        summaryData.exercise_summary[motion.name] = {
-            n: cur_sum.n+m,
-            type: cur_sum.type,
+        
+        const cur_sum = summaryData.exercise_summary[motion.name]; // get the current data
+        const cur_keys = Array.from(cur_sum.muscles.keys());
+        summaryData.exercise_summary[motion.name] = { // update
+            n: cur_sum.n+m, //increment sets
+            type: cur_sum.type, // this should be the same
             values: {
-                min: (cur_sum.values.min[0] > value.min[0] ? value.min : cur_sum.values.min),
-                max: (value.max[0] > cur_sum.values.max[0] ? value.max : cur_sum.values.max),
+                min: (cur_sum.values.min[0] > value.min[0] ? value.min : cur_sum.values.min), // checking if our mins/maxs
+                max: (value.max[0] > cur_sum.values.max[0] ? value.max : cur_sum.values.max), // update avg
                 avg: ((cur_sum.values.avg*cur_sum.n) +(value.avg*m))/(m+cur_sum.n)
             },
             weights: {
@@ -141,7 +149,7 @@ function GetExerciseSummary(exercise, summaryData){
                 max: (weight.max[1] > cur_sum.weights.max[1] ? weight.max : cur_sum.weights.max),
                 avg: ((cur_sum.weights.avg*cur_sum.n) +(weight.avg*m))/(m+cur_sum.n)
             },
-            muscles: cur_sum.muscles.map ((item,index) => {return item+impact[index]})
+            muscles: cur_keys.map((key,index) => {return cur_sum.muscles.get(key)+impacts[key]}) // update overall muscle impact from workout
         }
     }
     else{ // no data for this motion stored so set it
@@ -150,7 +158,7 @@ function GetExerciseSummary(exercise, summaryData){
             type:motion.type,
             values:value,
             weights:weight,
-            muscles: impact
+            muscles: impacts
         }
     }
     

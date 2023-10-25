@@ -84,9 +84,10 @@ async function GetWorkout(req,res,next){
  */
 async function AddExercise(req,res,next){
     const {workout_id,motion_id} = res.locals.bodyData;
+    const user = res.locals.user;
     try{
         const motion = await Motion.findOne({_id:motion_id})
-        const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id}}) : new Exercise({motion: {umotion: motion_id}}) ;
+        const addedExercise = (motion) ? new Exercise({motion: {motion: motion_id},user_id:user}) : new Exercise({motion: {umotion: motion_id}}) ;
         const newEx = await addedExercise.save();
         
         
@@ -132,6 +133,20 @@ async function RemoveExercise(req, res, next) {
         return next({message:e.message,code:500});
     }
 
+}
+
+
+async function GetExercise(req,res,next){
+    const {exercise_id} = res.locals.bodyData;
+    const user = res.locals.user;
+
+    try{
+        const found = await Exercise.findOne({_id:exercise_id,user_id:user}).populate({path: 'sets motion.motion motion.umotion'})
+        res.send({exercise:found, exercise_id:exercise_id})
+    }
+    catch(e){
+        next({code:500,message:e.message})
+    }
 }
 
 // add set to an exercise 
@@ -222,4 +237,4 @@ async function EditWorkoutName(req, res, next) {
 // maybe a finish exercise function which would flag the workout as completed so that new exercises arent added //
 
 
-module.exports = {EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
+module.exports = {GetExercise,EditWorkoutName:EditWorkoutName, GetWorkout:GetWorkout, ListMyWorkouts:ListMyWorkouts, CreateWorkout: CreateWorkout,  DeleteWorkout:DeleteWorkout, AddExercise:AddExercise, RemoveExercise:RemoveExercise, AddSet:AddSet , RemoveSet: RemoveSet}    
