@@ -1,8 +1,11 @@
 import ExtendoCard from "../../../components/cards/ExtendoCard/ExtendoCard"
 import SetDisplay from "./SetDisplay";
+import { useRequest } from "../../../hooks/requests/useRequest";
 /* Display all exercises */
 import { FaDumbbell, FaClock } from "react-icons/fa6";
 export default function ExerciseDisplay({exercises}){
+
+
     return( 
         exercises.map((item)=> {
             return <ExerciseItem key={item._id} exercise={item}></ExerciseItem>
@@ -35,6 +38,7 @@ function ExerciseHeader({name,setCount}){
 
 /* This should be a seperate component later called Set Display or something */
 function ExerciseBody({exercise}){
+    
     return (
         <SetDisplay exercise={exercise}/>
     )

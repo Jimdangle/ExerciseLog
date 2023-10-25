@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext,createContext } from 'react'
 import { useRequest } from '../../hooks/requests/useRequest'
 import { getLog,removeLog } from '../../utility/storage'
 import Modal from '../../components/modals/Modal'
@@ -7,11 +7,13 @@ import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
 
+export const RefreshContext = createContext(null);
 export default function Workout(){
 
     const setNotification = useContext(NotificationContext)
     const setPage = useContext(PageContext)
     const log = getLog()
+
     //const {data,isLoading,error } = useFetch('/workout/get', "p", {'workout_id':log})
     
     const {data,error,isLoading,fetchData} = useRequest('/workout/get','p',{workout_id:log});
@@ -40,28 +42,30 @@ export default function Workout(){
     }
 
     return(
-    <div className='text-white'>
-        
-        
-        {data && data.workout && !error?
-        <div>
-         <p className='text-center my-2'>{data.workout.name}</p> 
-         <p className='text-center my-2'>{data.workout.exercises.length}</p>
-         <ExerciseDisplay exercises={data.workout.exercises}></ExerciseDisplay>
-        </div>
-         : <></>}
-        
-        {/* Exercise Adding */}
-        <ModalContainer title={"Add Exercise"}>
-            {(closeModal,toggleModal) => (
-                <Modal title={"Stinker"} isOpen={toggleModal} onClose={closeModal}>
-                    <ExerciseList log_id={log} refresh={refresh} closeModal={closeModal}></ExerciseList>
-                </Modal>
-                
-            )}
-        </ModalContainer>
+    <RefreshContext.Provider value={refresh}>
+        <div className='text-white'>
+            
+            
+            {data && data.workout && !error?
+            <div>
+            <p className='text-center my-2'>{data.workout.name}</p> 
+            <p className='text-center my-2'>{data.workout.exercises.length}</p>
+            <ExerciseDisplay exercises={data.workout.exercises}></ExerciseDisplay>
+            </div>
+            : <></>}
+            
+            {/* Exercise Adding */}
+            <ModalContainer title={"Add Exercise"}>
+                {(closeModal,toggleModal) => (
+                    <Modal title={"Stinker"} isOpen={toggleModal} onClose={closeModal}>
+                        <ExerciseList log_id={log} refresh={refresh} closeModal={closeModal}></ExerciseList>
+                    </Modal>
+                    
+                )}
+            </ModalContainer>
 
-        
-        
-    </div>)
+            
+            
+        </div>
+    </RefreshContext.Provider>)
 }
