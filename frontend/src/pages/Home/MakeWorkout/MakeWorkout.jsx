@@ -3,15 +3,18 @@ import CoolForm from '../../../components/forms/CoolForm';
 import { request } from '../../../utility/request';
 import { setLog } from '../../../utility/storage';
 import { PageContext } from '../../PageSelector';
+import { useRequest } from '../../../hooks/requests/useRequest';
 export default function MakeWorkout(){
     const setPage = useContext(PageContext)
     const [state,setState] = useState({'New Workout': ''}) // user readable state corresponds to inputs
     const payload = {name:state['New Workout']}; // actual payload for request
     const [response,setResponse] = useState(null); // response data object
 
+    const {data,isLoading,error,fetchData} = useRequest('/workout/add','p',payload)
+
     // Action for the form
     async function HandleNewWorkout(){
-        await request('/workout/add', setResponse,'p',payload);
+        await fetchData();
     }
 
     // input for the form
@@ -27,13 +30,13 @@ export default function MakeWorkout(){
     // handle the response
     useEffect(()=> {
        
-        if(response && response.data && response.data.created){
+        if(data && data.created){
             setPage(1) // set our page
-            setLog(response.data.workout_id)
+            setLog(data.workout_id)
         }
-    }, [response]) // this is only called when the response object has been changed 
+    }, [data]) // this is only called when the response object has been changed 
 
-
+    
 
 
     return (

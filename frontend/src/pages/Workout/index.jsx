@@ -42,7 +42,8 @@ export default function Workout(){
         </div>
          : <></>}
         
-        <ModalContainer>
+        {/* Exercise Adding */}
+        <ModalContainer title={"Add Exercise"}>
             {(closeModal,toggleModal) => (
                 <Modal title={"Stinker"} isOpen={toggleModal} onClose={closeModal}>
                     <ExerciseList log_id={log} refresh={refresh} closeModal={closeModal}></ExerciseList>
