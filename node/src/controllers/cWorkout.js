@@ -71,6 +71,7 @@ async function GetWorkout(req,res,next){
     try{
         console.log(res.locals.user);
         const found = await Workout.findOne({_id:workout_id, user_id:res.locals.user}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
+        if(!found){return next({code:404,message:'No Workout found'})}
         return res.send({workout:found, workout_id:workout_id});
     }
     catch(e){

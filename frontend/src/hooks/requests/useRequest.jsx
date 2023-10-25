@@ -28,7 +28,11 @@ export function useRequest(url,method='g',payload=null) {
                     },
                     body: (Object.keys(sendData).length!==0 ? JSON.stringify(sendData) : null)
       });
-      if(response.status!==200){throw new Error('Erorr fetching!')}
+      if(response.status!==200){
+        const err = new Error('Problem with request!')
+        err.code = response.status;
+        throw err;
+      }
       const workoutLogData = await response.json();
       setData(workoutLogData);
       

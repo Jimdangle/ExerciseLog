@@ -1,15 +1,15 @@
 import { useEffect, useState, useContext } from 'react'
 import { useRequest } from '../../hooks/requests/useRequest'
-import { getLog } from '../../utility/storage'
+import { getLog,removeLog } from '../../utility/storage'
 import Modal from '../../components/modals/Modal'
 import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
-import { NotificationContext } from '../PageSelector'
+import { NotificationContext, PageContext } from '../PageSelector'
 export default function Workout(){
 
     const setNotification = useContext(NotificationContext)
-
+    const setPage = useContext(PageContext)
     const log = getLog()
     //const {data,isLoading,error } = useFetch('/workout/get', "p", {'workout_id':log})
     
@@ -22,8 +22,16 @@ export default function Workout(){
 
     useEffect(()=>{
         if(error)
-            setNotification(error.message)
-    },[error])
+        {
+            // We have an old log
+            if(error.code===404){
+                removeLog();
+                setPage(0);
+            }
+            console.log(error)
+            setNotification('Error Loading Workout\n\t' + error.message + '\n\tcode:' + error.code)
+        }
+    },[error,data])
 
     async function refresh(){
         if(!isLoading)
