@@ -42,9 +42,7 @@ export function useRequest(url,method='g',payload=null) {
     }
   };
 
-  useEffect(() => {
-    fetchData(); // Fetch the initial workout log data
-  }, []);
+  
 
   return {
     data,
