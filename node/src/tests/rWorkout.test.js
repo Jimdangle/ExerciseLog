@@ -133,6 +133,14 @@ describe('Exercise Actions', ()=>{
         
     })
 
+    it('Get the exercise', async()=>{
+        const res = await request.post('/workout/getEx').set('authorization',token).send({exercise_id:exercise_id})
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('exercise');
+        expect(res.body).toHaveProperty('exercise_id');
+        expect(res.body.exercise).toHaveProperty('sets')
+    })
+
     it('Remove a invalid exercise', async()=>{
         const res = await request.delete('/workout/remEx').set('authorization', token).send({workout_id:workout_id, exercise_id: 'notanid'})
 

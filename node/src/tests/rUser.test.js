@@ -80,15 +80,6 @@ describe('Summary Tests', ()=>{
         expect(res.status).toBe(416);
     })
 
-    it('Add a new Workout', async ()=> {
-        const response =  await request.post('/workout/add').set('authorization',token)
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('created')
-        expect(response.body).toHaveProperty('workout_id')
-        expect(response.body.created).toBe(true);
-        workout_id = response.body.workout_id
-    })
 
     it('Valid summary generation', async () => {
         const time = Date.now()+1000000;
