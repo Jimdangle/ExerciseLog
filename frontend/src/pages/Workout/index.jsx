@@ -6,6 +6,7 @@ import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
+
 export default function Workout(){
 
     const setNotification = useContext(NotificationContext)

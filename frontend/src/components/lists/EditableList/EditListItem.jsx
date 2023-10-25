@@ -1,14 +1,16 @@
 import React from "react"
 import {FaTrash} from 'react-icons/fa6'
-export default function EditListItem(object,component,removeAction,editMode){
+export default function EditListItem({object,componentType,removeAction,editMode,index}){
+    
     return(
         <div className="flex">
+            <p className="pr-2">{index}</p>
             <div class="w-3/4">
-                {React.createElement(component, {object})}
+                {React.createElement(componentType, object)}
             </div>
             {editMode ?
-            <div class="w-auto mr-auto">
-                <FaTrash onClick={removeAction}/>
+            <div class="w-1/4 ml-auto flex justify-center">
+                <FaTrash onClick={()=>{removeAction(object)}}/>
             </div>
             :
             <></>
