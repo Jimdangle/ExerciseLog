@@ -1,6 +1,13 @@
 import {useState, useEffect} from 'react'
 import { base_url } from '../../utility/request';
 import { getToken } from '../../utility/storage';
+/**
+ * **Old** initial attempt at a custom hook that can fetch data, could only do so statically / non-conditionally
+ * @param {string} url - url to make request on
+ * @param {string} method - method to use from [g,p,x] : Get,Post,Delete
+ * @param {Object} payload - Payload to send with request if applicable
+ * @returns {{Object,boolean,Object}} 
+ */
 export default function useFetch(url, method='g', payload=null){
     const [data,setData] = useState(null)
     const [isLoading,setIsLoading] = useState(false)

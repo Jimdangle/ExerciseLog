@@ -18,8 +18,9 @@ export default function ExerciseDisplay({exercises}){
     )
 }
 
-/* Display a single exercise item
-    - need to make body(display current set information, and add new set ability), and footer(icon for type of workout or other info)
+/** 
+ * Display a single exercise item
+*    - need to make body(display current set information, and add new set ability), and footer(icon for type of workout or other info)
 */
 function ExerciseItem({exercise}){
     const motion = exercise.motion.motion ? exercise.motion.motion : exercise.motion.umotion;
@@ -29,7 +30,7 @@ function ExerciseItem({exercise}){
     )
 }
 
-/* 
+/** 
     a header(exercise name, set count),
  */
 function ExerciseHeader({name,setCount}){
@@ -41,7 +42,9 @@ function ExerciseHeader({name,setCount}){
     )
 }
 
-/* This should be a seperate component later called Set Display or something */
+/**
+ * Body element for our card 
+ *  */
 function ExerciseBody({exercise}){
     
     return (
@@ -49,6 +52,10 @@ function ExerciseBody({exercise}){
     )
 }
 
+/**
+ * In House footer component for our card
+ * @param {number} type - Number from [0,1,2] : Lift, Cardio, Hold
+ */
 function ExerciseFooter({type}){
     
     return (type===0 ? <FaDumbbell/> : <FaClock/>)

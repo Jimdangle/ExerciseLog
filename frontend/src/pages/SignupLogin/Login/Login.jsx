@@ -2,7 +2,12 @@ import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect} from 'react'
 
-
+/**
+ * Login Screen 
+ * @param {{function}} props 
+ * @param {function} props.login - function to log us into the application  
+ * @returns 
+ */
 export default function Login({login}){
     const [state,setState] = useState({"Email":"","Password": ""})
     

@@ -8,6 +8,13 @@ import Workout from "../Workout";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export const NotificationContext = createContext(null)
+
+/**
+ * PageSelector, used to Render the currently selected page, as well as provide notifcation, and page setting functions to the rest of the application
+ * @param {{function}} props  
+ * @param {function} props.logout - Logout method
+ * @description **note** the variable `pages` controls what the NavControl will point to
+ */
 export default function PageSelector({logout}){
 
     /* Currently active page (if we have one get it, if not use home) */

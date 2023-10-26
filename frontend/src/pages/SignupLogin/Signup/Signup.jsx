@@ -6,7 +6,12 @@ import {useState, useEffect, useCallback} from 'react'
 //Contain Calls to handle the rendering of components that can make up the 
 
 
-
+/**
+ * Signup Screen, Allow users to input information to create a new account
+ * @param {{function}} props 
+ * @param {function} props.login - function to log us into the application  
+ * 
+ */
 export default function Signup({login}){
     const [state, setState ] = useState({Email:'',Username:'', Password:'', Confirm: ''});
     const [response,setResponse] = useState(null)

@@ -2,6 +2,12 @@
 import { getLog } from "../../../utility/storage";
 import { PageContext } from "../../PageSelector";
 import { useContext } from "react";
+
+/**
+ * JumpIn component allows users to jump back into an exercise
+ * @component
+ * 
+ */
 export default function JumpIn(){
     const curLog = getLog() 
     const setPage = useContext(PageContext);

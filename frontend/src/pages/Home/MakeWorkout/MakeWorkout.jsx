@@ -4,6 +4,11 @@ import { request } from '../../../utility/request';
 import { setLog } from '../../../utility/storage';
 import { PageContext } from '../../PageSelector';
 import { useRequest } from '../../../hooks/requests/useRequest';
+
+/**
+ * Main Landing page component to allow users to name and create a new workout
+ * @component
+ */
 export default function MakeWorkout(){
     const setPage = useContext(PageContext)
     const [state,setState] = useState({'New Workout': ''}) // user readable state corresponds to inputs

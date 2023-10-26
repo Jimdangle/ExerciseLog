@@ -1,5 +1,12 @@
 import { FiChevronDown } from "react-icons/fi";
-/* The header content will take up 2/3 of the box with the toggle button taking the remaining 3rd */
+
+/**
+ * Header for ExtendoCard. Let children content take up 2/3s the box, and the toggle button takes remaining third
+ * @param {{function, components}} props
+ * @param {function} props.toggle - function to toggle the body of ExtendoCard
+ * @param {components} props.children - children to render between tags 
+ * @returns 
+ */
 export default function ExtendoHeader({toggle,children}){
     return(
         <div className="flex">

@@ -8,6 +8,10 @@ import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
 
 export const RefreshContext = createContext(null);
+/**
+ * Display information for our currently stored workout. Render exercise info and set info 
+ * @component
+ */
 export default function Workout(){
 
     const setNotification = useContext(NotificationContext)
