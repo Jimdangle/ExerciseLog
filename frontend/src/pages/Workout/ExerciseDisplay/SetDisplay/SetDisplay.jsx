@@ -1,7 +1,8 @@
-import EditableList from "../../../components/lists/EditableList/EditableList";
+import EditableList from "../../../../components/lists/EditableList/EditableList";
 import { useMemo, useContext, useEffect, useState } from "react";
-import {useRequest} from '../../../hooks/requests/useRequest'
-import { RefreshContext } from "..";
+import {useRequest} from '../../../../hooks/requests/useRequest'
+import { RefreshContext } from "../..";
+import CoolForm from "../../../../components/forms/CoolForm";
 
 /**
  * Component to display sets 
@@ -20,7 +21,9 @@ export default function SetDisplay({exercise}){
 
     //Make our request to remove the set from the list 
     const {data:removeData,isLoading:removeLoading,error:removeError,fetchData:removeFetch} = useRequest('/workout/remSet', 'x', {exercise_id:exercise._id})
-    
+    const {data:addData, isLoading:addLoading, error:addError, fetchData:addFetch} = useRequest('/workout/addSet', 'p', {exercise_id:exercise._id})
+
+
     // request to fetch our sets for this exercise
     const {data:getData, isLoading:getIsLoading, error:getError, fetchData:getFetch} = useRequest('/workout/getEx', 'p', {exercise_id:exercise._id})
     
@@ -47,10 +50,42 @@ export default function SetDisplay({exercise}){
         await getFetch();
     }
 
+   
 
+
+    const [state,setData] = useState({"Reps": 0,"Weight": 0})
+    const payload = {rep_or_time: state['Reps'], added_weight: state['Weight']}
+    //Form inputs 
+    const inputs = {
+        "Reps":{
+            
+            type: "number",
+            value: state['Reps'],
+            validation: (v)=>{return v>0},
+            placeholder:"Reps",
+            error: "Make sure reps are greater than 0"
+        },
+        "Weight":{
+           
+            type: "number",
+            value: state['Weight'],
+            validation: (v)=>{return (v > -1 && v < 1000);},
+            placeholder:"Weight",
+            error: "Make sure weight is atleast 0"
+        },
+    }
+
+    async function add(){
+        await addFetch(payload)
+        getFetch();
+    }
 
     return (
-        <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={SetComponent}/>
+        <div>
+            <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={SetComponent}/>
+            <CoolForm name={"Set Input"} inputs={inputs} setData={setData} action={add} animations={{in_anim:'',but_anim:''}} ></CoolForm>
+        </div>
+        
     )
 }
 
@@ -65,8 +100,8 @@ export default function SetDisplay({exercise}){
 function SetComponent({rep_or_time,added_weight}){
     return (
         <div className="flex justify-between">
-            <p>{rep_or_time}</p>
-            <p className="ml-auto">{added_weight}</p>
+            <p className="text-end">{rep_or_time}</p>
+            <p className="text-center">{added_weight}</p>
         </div>
     )
 }
