@@ -1,8 +1,13 @@
 import ExtendoCard from "../../../components/cards/ExtendoCard/ExtendoCard"
 import SetDisplay from "./SetDisplay";
 import { useRequest } from "../../../hooks/requests/useRequest";
-/* Display all exercises */
 import { FaDumbbell, FaClock } from "react-icons/fa6";
+
+/**
+ * Display an exercise, display info about the exercise and it's sets
+ * @param {{Object}} props - Main props component 
+ * @param {Object} props.exercise - exercise to display
+ */
 export default function ExerciseDisplay({exercises}){
 
 
