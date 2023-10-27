@@ -24,14 +24,14 @@ The Node container has access to the mongo connection string via a environment v
 
 ## Make Commands
 In order to run the program I recommend having make or mingw32-make installed. You can then do `make start` or `make stop` to control the execution. 
-`start` : runs containers
-`startb`: Builds and runs the containers
-`startd`: run containers in detached mode
-`stop`  : stops running containers
-`clean` : removes containers from docker
-`buildc`: builds the containers ignoring cached information
-`build` : build containers using cached information
-`node-test` : Windows specific, automatically finds node container, and runs tests on it
+* `start` : runs containers
+* `startb`: Builds and runs the containers
+* `startd`: run containers in detached mode
+* `stop`  : stops running containers
+* `clean` : removes containers from docker
+* `buildc`: builds the containers ignoring cached information
+* `build` : build containers using cached information
+* `node-test` : Windows specific, automatically finds node container, and runs tests on it
 
 If you have `mingw32-make` and Powershell you can alias it to `make` via `Set-Alias -Name make -Value mingw32-make`
 
