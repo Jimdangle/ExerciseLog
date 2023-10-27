@@ -42,6 +42,14 @@ async function HandleSignup(req,res,next)
     }
 }
 
+/**
+ * Create a new user given credentials
+ * @param {string} email - Email for new user
+ * @param {string} pass - Pass for new user
+ * @param {string} user - username for new user
+ * @returns {Object} The New user Object
+ * @throws Mongoose save errors
+ */
 async function MakeNewUser(email,pass,user){
     const hashPass = await bcrypt.hash(pass, 10);//Hash the user password before we store it
     
@@ -104,7 +112,7 @@ async function HandleLogin(req,res,next){
 async function GetAllUsers(req,res,next){
     const users = await User.find({});
     console.log(users);
-    return res.send(JSON.stringify(users));
+    return res.send({users:JSON.stringify(users)});
 
 }
 
