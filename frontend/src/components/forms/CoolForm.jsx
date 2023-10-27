@@ -1,6 +1,18 @@
 import { useState } from "react";
 import CoolInput from "./inputs/CoolInput";
 
+/**
+ * Form made up of CoolInputs, input information passed to us from Logical component
+ * @param {{string,Object,function,function,Object}} props
+ * @param {string} props.name - name for the form 
+ * @param {Object} props.inputs - Object of inputs to render with CoolInputs, contains validation and other misc stuff 
+ * @param {function} props.setData - function to set our form data somewhere else 
+ * @param {function} props.action - action to perform on form submission 
+ * @param {Object} props.animations - Object containing animations for elements
+ * @param {string} animations.in_anim - Input animation
+ * @param {string} animations.but_anim - Button animation 
+ * @returns 
+ */
 export default function CoolForm({name,inputs,setData,action,animations}){
    const {in_anim, but_anim} = animations;
    const [error,setError] = useState("")

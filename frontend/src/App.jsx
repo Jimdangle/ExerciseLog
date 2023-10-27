@@ -9,6 +9,10 @@ import PageSelector from "./pages/PageSelector"
 more customized, also considering making the muscles array into just a mixed obj with certain valid keys we could send over
 so like store things only for the muscles they have instead of alloc a 7 size arr, and we can expand how we want */
 
+/**
+ * Main App Component
+ * 
+ */
 function App() {
   
   const [userToken, setUserToken] = useState(getToken())

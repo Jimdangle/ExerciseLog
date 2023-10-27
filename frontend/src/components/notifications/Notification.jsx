@@ -1,12 +1,13 @@
-/* A notification component for rendering hints, or helpful notifications lmao
-    I am thinking it will need some kind of controller / dispatcher 
-    That controller should be able to close and open the notification but instead of a button like modal
-    we just want to be able to share some function others can use to turn it on
-
-    okay honestly I just want a single notification to be able to be dropped down from the main screen
-*/
 import '../../styles/animations.css'
 import { IoIosCloseCircleOutline } from "react-icons/io";
+
+/**
+ * Notification component to render notifications on the screen, very similar to a modal
+ * @param {{string, function}} props
+ * @param {string} props.message - message to display on the notification
+ * @param {function} props.onClose - function to perform when closed 
+ * @component 
+ */
 export default function Notification({message,onClose}){
     const display = ( message !== "" )
     return (
