@@ -18,8 +18,8 @@ The Node container has access to the mongo connection string via a environment v
 
 
 ## New Packages
-In order to change the packages contained in the node directory cd into the the directory and use your npm commands before running the container.
-You can type `npm i --package-lock-only <package_name>` to add the dependency to the `package-lock.json` file only and Docker will install the package for you. Same applies to the react container
+1. In order to change the packages cd into either the frontend or backend directory.
+2. You can type `npm i --package-lock-only <package_name>` to add the dependency to the `package-lock.json` file only and Docker will install the package for you
 
 
 ## Make Commands
