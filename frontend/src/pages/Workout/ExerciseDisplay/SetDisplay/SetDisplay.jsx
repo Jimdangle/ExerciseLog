@@ -4,6 +4,7 @@ import {useRequest} from '../../../../hooks/requests/useRequest'
 import { RefreshContext } from "../..";
 import CoolForm from "../../../../components/forms/CoolForm";
 
+
 /**
  * Component to display sets 
  * @param {{Object}} props - main property object
@@ -19,12 +20,11 @@ export default function SetDisplay({exercise}){
 
     
 
-    //Make our request to remove the set from the list 
+    // Request to remove a set
     const {data:removeData,isLoading:removeLoading,error:removeError,fetchData:removeFetch} = useRequest('/workout/remSet', 'x', {exercise_id:exercise._id})
+    // Request to add a set
     const {data:addData, isLoading:addLoading, error:addError, fetchData:addFetch} = useRequest('/workout/addSet', 'p', {exercise_id:exercise._id})
-
-
-    // request to fetch our sets for this exercise
+    // Request to fetch our sets for this exercise
     const {data:getData, isLoading:getIsLoading, error:getError, fetchData:getFetch} = useRequest('/workout/getEx', 'p', {exercise_id:exercise._id})
     
     // One use effect for when data is changed
@@ -33,6 +33,7 @@ export default function SetDisplay({exercise}){
             setSets(getData.exercise.sets)
         }
     },[getData])
+
     //use effect to get data first
     useEffect(()=>{
         getFetch();
@@ -50,40 +51,15 @@ export default function SetDisplay({exercise}){
         await getFetch();
     }
 
-   
-
-
-    const [state,setData] = useState({"Reps": 0,"Weight": 0})
-    const payload = {rep_or_time: state['Reps'], added_weight: state['Weight']}
-    //Form inputs 
-    const inputs = {
-        "Reps":{
-            
-            type: "number",
-            value: state['Reps'],
-            validation: (v)=>{return v>0},
-            placeholder:"Reps",
-            error: "Make sure reps are greater than 0"
-        },
-        "Weight":{
-           
-            type: "number",
-            value: state['Weight'],
-            validation: (v)=>{return (v > -1 && v < 1000);},
-            placeholder:"Weight",
-            error: "Make sure weight is atleast 0"
-        },
+    async function addSet(data){
+        await addFetch(data);
+        await getFetch();
     }
 
-    async function add(){
-        await addFetch(payload)
-        getFetch();
-    }
 
     return (
         <div>
             <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={SetComponent}/>
-            <CoolForm name={"Set Input"} inputs={inputs} setData={setData} action={add} animations={{in_anim:'',but_anim:''}} ></CoolForm>
         </div>
         
     )
