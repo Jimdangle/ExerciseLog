@@ -1,10 +1,13 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { timeToSec } from '../../../../../utility/time';
 import NumberInput from '../../../../../components/forms/inputs/NumberInput';
 export default function CardioAdder({addFetch}){
     const [newSet,setNewSet] = useState({rep_or_time:0,weight:0})
     const [time,setTime] = useState({h:0,m:0,s:0}); //state for our new set
 
+    useEffect(()=>{
+        setNewSet({...newSet,rep_or_time:timeToSec(time)})
+    },[time])
 
     //updating functions
     const updateDistance = (event) => {setNewSet({...newSet,weight:event.target.value})}
@@ -16,16 +19,15 @@ export default function CardioAdder({addFetch}){
                 ...time,
                 [t.name]: t.value
             })
-            setNewSet({...newSet,rep_or_time:timeToSec(time)})
         }   
     }
 
     return(
         <div>
             <div className='flex'>
-                <NumberInput styles="w-12" name="h" value={time.h} onChange={updateTime} />
-                <NumberInput styles="w-12" name="m" value={time.m} onChange={updateTime}/>
-                <NumberInput styles="w-12" name="s" value={time.s} onChange={updateTime}/>
+                <NumberInput placeholder="hh" styles="w-12" name="h" value={time.h} onChange={updateTime} />
+                <NumberInput placeholder="mm" styles="w-12" name="m" value={time.m} onChange={updateTime}/>
+                <NumberInput placeholder="ss" styles="w-12" name="s" value={time.s} onChange={updateTime}/>
             </div>
             <div>
                 <NumberInput name="weight" value={newSet.weight} onChange={updateDistance}/>
