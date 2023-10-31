@@ -1,20 +1,20 @@
 import EditableList from "../../../../components/lists/EditableList/EditableList";
 import { useMemo, useContext, useEffect, useState } from "react";
 import {useRequest} from '../../../../hooks/requests/useRequest'
-import { RefreshContext } from "../..";
 import CoolForm from "../../../../components/forms/CoolForm";
-
-
+import SetLift from "./SetTypes/SetLift";
+import SetCardio from "./SetTypes/SetCardio";
 /**
  * Component to display sets 
  * @param {{Object}} props - main property object
  * @param {Object} props.exercise - Exercise Object returned from outer get request
+ * @param {function} props.refresh - Exercise Object returned from outer get request
  * @component
  * @description Render sets from an exercise and allow us to remove, and add more sets onto it
  */
-export default function SetDisplay({exercise}){
+export default function SetDisplay({exercise, type}){
 
-    const refresh = useContext(RefreshContext)
+    
     const [sets,setSets] = useState([]);
     
 
@@ -59,25 +59,9 @@ export default function SetDisplay({exercise}){
 
     return (
         <div>
-            <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={SetComponent}/>
+            <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={(type===0 ? SetLift : SetCardio)}/>
         </div>
         
     )
 }
 
-
-/**
- * In house component that serves as the class the editable list will render for us
- * @param {{number,number}} props 
- * @param {number} props.rep_or_time - rep or time value from the set
- * @param {number} props.added_weight - additional weight for the exercise
- * @description **Note** these parameters match the set object we are sending to editable list
- */
-function SetComponent({rep_or_time,added_weight}){
-    return (
-        <div className="flex justify-between">
-            <p className="text-end">{rep_or_time}</p>
-            <p className="text-center">{added_weight}</p>
-        </div>
-    )
-}
