@@ -17,3 +17,10 @@ export function convertSecondsTime(val){
 
     return `${hours}:${min}:${sec}`
 }
+
+export function timeToSec(time){
+    const h = time.h ? time.h : 0
+    const m = time.m ? time.m : 0
+    const s = time.s ? time.s : 0
+    return Number((h*60*60)) + Number((m*60)) + Number(s)
+}

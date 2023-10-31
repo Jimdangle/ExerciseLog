@@ -4,6 +4,9 @@ import {useRequest} from '../../../../hooks/requests/useRequest'
 import CoolForm from "../../../../components/forms/CoolForm";
 import SetLift from "./SetTypes/SetLift";
 import SetCardio from "./SetTypes/SetCardio";
+import LiftAdder from "./SetAdders/LiftAdder";
+import CardioAdder from "./SetAdders/CardioAdder";
+import SetAdder from "./SetAdders/SetAdder";
 /**
  * Component to display sets 
  * @param {{Object}} props - main property object
@@ -60,6 +63,7 @@ export default function SetDisplay({exercise, type}){
     return (
         <div>
             <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={(type===0 ? SetLift : SetCardio)}/>
+            <SetAdder type={type} addSet={addSet}/>
         </div>
         
     )
