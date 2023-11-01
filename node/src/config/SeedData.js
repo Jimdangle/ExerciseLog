@@ -172,6 +172,15 @@ const DefaultWorkouts= {
         "Adductors": 0.3
       },
       "type": 0
+    },
+    {
+      "name": "Treadmill Running",
+      "muscles": {
+        "Quads": 0.5,
+        "Adductors": 0.3,
+        "Hamstrings": 0.2
+      },
+      "type": 1
     }
   ]
 }

@@ -9,7 +9,7 @@ import { FiChevronDown } from "react-icons/fi";
  */
 export default function ExtendoHeader({toggle,children}){
     return(
-        <div className="flex">
+        <div className="flex border-solid border-b-2 border-gun" onClick={toggle}>
             <div className="w-2/3">
                 {children}
             </div>

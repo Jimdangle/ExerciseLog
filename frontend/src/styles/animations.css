@@ -101,6 +101,24 @@
 
 }
 
+
+.card-drop {
+    animation: 0.4s ease-out 0s 1 normal cardDrop
+}
+
+@keyframes cardDrop {
+    0%{
+        opacity: 0%;
+        transform: translateY(-30%);
+    }
+    100%{
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+
+
+}
+
 .trickyDown{
     animation: 0.4s ease-out 0s 1 normal trickyDown
 }
@@ -138,18 +156,5 @@
 
 
 
-.cardDown{
-    animation: 0.4s ease-out 0s 1 normal cardDown
-}
-
-@keyframes cardDown {
-    0%{
-        transform: scale(0);
-    }
-    100%{
-        transform: scale(1);
-    }
-
-}
 
 
