@@ -12,8 +12,10 @@ export default function({addFetch}){
     
     return(
         <div>
-            <NumberInput name="rep_or_time" value={newSet.rep_or_time} onChange={onChange}/>
-            <NumberInput name="weight" value={newSet.weight} onChange={onChange}/>
+            <div className="flex justify-between">
+                <NumberInput styles="w-8" name="rep_or_time" value={newSet.rep_or_time} onChange={onChange}/>
+                <NumberInput styles="w-8" name="weight" value={newSet.weight} onChange={onChange}/>
+            </div>
             <button onClick={()=>{addFetch(newSet)}}>Add</button>
         
         </div>

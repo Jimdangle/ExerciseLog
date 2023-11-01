@@ -17,7 +17,7 @@ export default function EditListItem({object,componentType,removeAction,editMode
     return(
         <div className="flex">
             <p className="pr-2">{index}</p>
-            <div className="w-3/4">
+            <div className={editMode ? "w-3/4" : "w-full"}>
                 {React.createElement(componentType, object)}
             </div>
             {editMode ?

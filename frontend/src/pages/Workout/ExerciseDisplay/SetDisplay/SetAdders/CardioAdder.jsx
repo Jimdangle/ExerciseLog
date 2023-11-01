@@ -24,15 +24,18 @@ export default function CardioAdder({addFetch}){
 
     return(
         <div>
-            <div className='flex'>
-                <NumberInput placeholder="hh" styles="w-12" name="h" value={time.h} onChange={updateTime} />
-                <NumberInput placeholder="mm" styles="w-12" name="m" value={time.m} onChange={updateTime}/>
-                <NumberInput placeholder="ss" styles="w-12" name="s" value={time.s} onChange={updateTime}/>
+            <div className='flex justify-between'>
+                <div className='flex w-32'>
+                    <NumberInput label="hh" styles="w-8" name="h" value={time.h} onChange={updateTime} />
+                    :<NumberInput label="mm" styles="w-8" name="m" value={time.m} onChange={updateTime}/>
+                    :<NumberInput label="ss" styles="w-8" name="s" value={time.s} onChange={updateTime}/>
+                </div>
+                <div>
+                    <NumberInput label="Dist" name="weight" styles="w-8" value={newSet.weight} onChange={updateDistance}/>
+                </div>
+            
             </div>
-            <div>
-                <NumberInput name="weight" value={newSet.weight} onChange={updateDistance}/>
-            </div>
-            <button onClick={()=>{addFetch(newSet)}}>Add</button>
+        <button onClick={()=>{addFetch(newSet)}}>Add</button>
         </div>
     )
 
