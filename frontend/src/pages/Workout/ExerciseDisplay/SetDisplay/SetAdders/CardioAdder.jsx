@@ -13,7 +13,7 @@ export default function CardioAdder({addFetch}){
     const updateDistance = (event) => {setNewSet({...newSet,weight:event.target.value})}
     const updateTime = (event) => {
         const t = event.target
-        if((Number(t.value) && Number(t.value) < 60 && Number(t.value) > -1) || t.value==="")
+        if((Number(t.value)!==null && Number(t.value) < 60 && Number(t.value) > -1) || t.value==="")
         {
             setTime({
                 ...time,
@@ -33,7 +33,7 @@ export default function CardioAdder({addFetch}){
                 <div>
                     <NumberInput label="Dist" name="weight" styles="w-8" value={newSet.weight} onChange={updateDistance}/>
                 </div>
-            
+                
             </div>
         <button onClick={()=>{addFetch(newSet)}}>Add</button>
         </div>

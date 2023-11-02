@@ -2,6 +2,7 @@ import JumpIn from "./JumpIn/JumpIn";
 import MakeWorkout from "./MakeWorkout/MakeWorkout";
 import {createContext} from 'react'
 
+
 export const LogoutContext = createContext(null);
 
 /**
@@ -11,7 +12,7 @@ export const LogoutContext = createContext(null);
  * @returns 
  */
 export default function Home({logout}){
-
+    
 
     return (
         <div>
