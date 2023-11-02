@@ -21,7 +21,7 @@ export default function SearchableList({title,list,action,fields }){
 
     return(
         <div className="text-center">
-            <input type='search' onChange={(e)=>{setSearchString(e.target.value)}}></input>
+            <input type='search' className='text-center focus:font-bold px-2' placeholder='search' onChange={(e)=>{setSearchString(e.target.value)}}></input>
             {list.filter(
                 (object)=>{
                     const name = object[display_field].toLowerCase();

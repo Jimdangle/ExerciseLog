@@ -40,7 +40,10 @@ export default function ExerciseAdder({}){
     
         }
     }
-    const addMuscle = (muscle) => {setState({...state,muscles:{...state.muscles,[muscle]:0}})}
+    const addMuscle = (muscle) => {
+        setState({...state,muscles:{...state.muscles,[muscle]:0}})
+        
+    }
 
 
     
@@ -56,9 +59,9 @@ export default function ExerciseAdder({}){
             <DropInput name="type" styles="text-gun" value={state.type} onChange={onChange} items={dropDownOptions}/>
             {
                 state.muscles ? 
-                Object.keys(state.muscles).map((item)=>{
-                    console.log(state.muscles[item])
-                   return <SliderInput key={item+"mli"} name={item} value={state.muscles[item]} onChange={changeMuscles} min={0} max={1} step={0.05}/>
+                Object.keys(state.muscles).map((item, index)=>{
+                    //console.log(state.muscles[item])
+                   return <SliderInput key={item+"mli"} name={item} label={index+''.padStart(3,' ') + item.padStart(18,' ')} value={state.muscles[item]} onChange={changeMuscles} min={0} max={1} step={0.05}/>
                 })
                 :
                 <></>
@@ -68,7 +71,7 @@ export default function ExerciseAdder({}){
                 <ModalContainer title={"Add Muscle"}>
                      {(closeModal,toggleModal) => (
                         <Modal title={"Add Muscle"} isOpen={toggleModal} onClose={closeModal}>
-                           <MuscleList list={muscleData.muscles} action={addMuscle}/>
+                           <MuscleList list={muscleData.muscles} action={addMuscle} closeModal={closeModal}/>
                         </Modal>
                     )}
                 </ModalContainer>
