@@ -17,7 +17,8 @@ const REQUIRED_KEYS = {
     "/lsm": true,
     "/lsa": true,
     "/add": ["name", "muscles", "type"],
-    "/rem": ["umotion"]
+    "/rem": ["umotion"],
+    "/musc": true
 }
 
 
@@ -46,5 +47,6 @@ MotionRouter.post('/add', MotionControllers.AddUserMotion);
 //Remove a user motion
 MotionRouter.delete('/rem', MotionControllers.RemoveUserMotion);
 
+MotionRouter.get('/musc', MotionControllers.GetMuscles);
 
 module.exports = {MotionRouter: MotionRouter}
