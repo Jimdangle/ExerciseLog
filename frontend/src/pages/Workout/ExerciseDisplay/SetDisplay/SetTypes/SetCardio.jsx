@@ -4,7 +4,7 @@ export default function SetCardio({rep_or_time,added_weight}){
     const time_string = convertSecondsTime(rep_or_time);
 
     return(
-        <div className="flex justify-between">
+        <div className="flex justify-between mx-2">
             <p>{time_string}</p>
             <p>{added_weight}mi</p>
         </div>
