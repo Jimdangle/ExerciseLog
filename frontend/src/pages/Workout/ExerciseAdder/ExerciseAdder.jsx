@@ -5,6 +5,7 @@ import ModalContainer from "../../../components/modals/ModalContainer"
 import Modal from "../../../components/modals/Modal"
 import MuscleList from "./MuscleList";
 
+import {FaTrash} from 'react-icons/fa6'
 import {useState, useEffect, useMemo} from 'react'
 import { useRequest } from "../../../hooks/requests/useRequest";
 export default function ExerciseAdder({}){
@@ -12,17 +13,16 @@ export default function ExerciseAdder({}){
     const [state,setState] = useState({name:'',type:0,muscles:null,desc:''});
     const {data:muscleData,isLoading,error:muscleError,fetchData:muscleFetch} = useRequest('/motion/musc');
     
-    const muscleSum = useMemo(()=>{
+    const muscleSum = useMemo(()=>{ // if we have changed our muscles and have muscles to look at calculate the sum
         if(state.muscles){
             const out = Object.keys(state.muscles).reduce((acum,key)=>{return acum + state.muscles[key]},0)
-            console.log(`Sum of mucsles: ${out}`)
             return out;
         }
         return 0;
     },[state.muscles])
   
 
-    useEffect(()=>{
+    useEffect(()=>{ // get all the muscles on init
         muscleFetch();
 
     },[])
@@ -32,21 +32,28 @@ export default function ExerciseAdder({}){
     // update the normal easy values
     const onChange = (event) => {setState({...state,[event.target.name]:event.target.value})}
     const changeMuscles = (event) => { // Update our muscle values from the sliders
-        const curVal = state.muscles[event.target.name] ? Number(state.muscles[event.target.name]) : 0;
-        if(muscleSum + Number(event.target.value) - curVal <= 1 ){
+        const curVal = state.muscles[event.target.name] ? Number(state.muscles[event.target.name]) : 0; // see if we have a value for the updated one
+        if(muscleSum + Number(event.target.value) - curVal <= 1 ){ // ensure we are under or equal to one
             setState((old)=> {
-                return {...old, muscles:{...old.muscles,[event.target.name]: Number(event.target.value)}}
+                return {...old, muscles:{...old.muscles,[event.target.name]: Number(event.target.value)}} // update old state
             })
     
         }
     }
-    const addMuscle = (muscle) => {
-        setState({...state,muscles:{...state.muscles,[muscle]:0}})
-        
+    const addMuscle = (muscle) => { // add in a new muscle and set it to 0
+        setState({...state,muscles:{...state.muscles,[muscle]:0}}) 
+    }
+
+    const removeMuscle = (muscle) => { // Remove Muscle from the muscle object 
+        setState((old)=>{ // get the old one 
+            const copy = {...old}; // copy it 
+            delete copy.muscles[muscle]; // delete the muscle we dont want 
+            return {...copy}; // return the modified version 
+        })
     }
 
 
-    
+    // Options for our drop down select input
     const dropDownOptions = [
         {name: "Lift", value: 0},
         {name: "Cardio", value: 1},
@@ -59,23 +66,23 @@ export default function ExerciseAdder({}){
             <DropInput name="type" styles="text-gun" value={state.type} onChange={onChange} items={dropDownOptions}/>
             {
                 state.muscles ? 
-                Object.keys(state.muscles).map((item, index)=>{
-                    //console.log(state.muscles[item])
-                   return <SliderInput key={item+"mli"} name={item} label={index+''.padStart(3,' ') + item.padStart(18,' ')} value={state.muscles[item]} onChange={changeMuscles} min={0} max={1} step={0.05}/>
-                })
-                :
-                <></>
+                    Object.keys(state.muscles).map((item, index)=>{
+                        //console.log(state.muscles[item])
+                    return(
+                        <div key={item+"mli"} className="flex ">
+                            <SliderInput  name={item} label={item} value={state.muscles[item]} onChange={changeMuscles} min={0} styles="my-2 w-[80%]" max={1} step={0.05}/>
+                            <FaTrash className="mx-2" onClick={()=>{removeMuscle(item)}}/>
+                        </div>
+                    )})
+                    :
+                    <></>
             }
             
-            {muscleData && muscleData.muscles ? 
-                <ModalContainer title={"Add Muscle"}>
-                     {(closeModal,toggleModal) => (
-                        <Modal title={"Add Muscle"} isOpen={toggleModal} onClose={closeModal}>
-                           <MuscleList list={muscleData.muscles} action={addMuscle} closeModal={closeModal}/>
-                        </Modal>
-                    )}
-                </ModalContainer>
-                :<></>
+            {
+                muscleData && muscleData.muscles ? 
+                    <MuscleList list={muscleData.muscles} action={addMuscle} />
+                    :
+                    <></>       
             }
         </div>
     )
