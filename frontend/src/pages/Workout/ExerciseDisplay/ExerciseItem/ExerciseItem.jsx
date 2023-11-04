@@ -6,6 +6,7 @@ export default function ExerciseItem({exercise}){
     const motion = exercise.motion.motion ? exercise.motion.motion : exercise.motion.umotion;
 
     
+    
 
     return(
         <ExtendoCard styles={"bg-white text-gun shadow-lg rounded-sm my-2 mx-2"} header={<ExerciseHeader name={motion.name} setCount={exercise.sets.length}/>} body={<SetDisplay exercise={exercise} type={motion.type}/>} footer={<ExerciseFooter type={motion.type}/>}/>

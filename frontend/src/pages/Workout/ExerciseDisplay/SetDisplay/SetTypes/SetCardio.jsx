@@ -5,8 +5,7 @@ export default function SetCardio({rep_or_time,added_weight}){
 
     return(
         <div className="flex justify-between mx-2">
-            <p>{time_string}</p>
-            <p>{added_weight}mi</p>
+            <p>({time_string},{added_weight}mi)</p>
         </div>
     )
 }

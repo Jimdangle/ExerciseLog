@@ -10,7 +10,7 @@ import '../../../styles/animations.css'
  */
 export default function ExtendoBody({toggleContent,children}){
     return (toggleContent ? 
-        <div className="card-drop">
+        <div className="card-drop rounded-md border-solid border-b-2 border-t-2 border-slate-300">
             {children}
         </div>
         :
