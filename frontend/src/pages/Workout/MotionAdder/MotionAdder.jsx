@@ -8,11 +8,11 @@ import MuscleList from "./MuscleList";
 import {FaTrash} from 'react-icons/fa6'
 import {useState, useEffect, useMemo} from 'react'
 import { useRequest } from "../../../hooks/requests/useRequest";
-export default function MotionAdder({}){
+export default function MotionAdder({closeModal,getData}){
     
     const [state,setState] = useState({name:'',type:0,muscles:null,desc:''});
     const {data:muscleData,isLoading,error:muscleError,fetchData:muscleFetch} = useRequest('/motion/musc');
-    
+    const {data:addData, isLoading:addLoading, error:addError, fetchData:addFetch} = useRequest('/motion/add', 'p', {name:state.name,type:state.type,muscles:state.muscles,desc:state.desc})
     const muscleSum = useMemo(()=>{ // if we have changed our muscles and have muscles to look at calculate the sum
         if(state.muscles){
             const out = Object.keys(state.muscles).reduce((acum,key)=>{return acum + state.muscles[key]},0)
@@ -52,6 +52,14 @@ export default function MotionAdder({}){
         })
     }
 
+    
+    async function addMotion(){
+        await addFetch();
+        await getData();
+        closeModal();
+    }
+
+
 
     // Options for our drop down select input
     const dropDownOptions = [
@@ -85,6 +93,10 @@ export default function MotionAdder({}){
                     :
                     <></>       
             }
+
+            <div className="flex justify-center">
+                <button onClick={addMotion} className="button button-e-green">Add</button>
+            </div>
         </div>
     )
 
