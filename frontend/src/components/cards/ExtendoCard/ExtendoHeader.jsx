@@ -7,14 +7,14 @@ import { FiChevronDown } from "react-icons/fi";
  * @param {components} props.children - children to render between tags 
  * @returns 
  */
-export default function ExtendoHeader({toggle,children}){
+export default function ExtendoHeader({toggle,isToggled,children}){
     return(
-        <div className="flex border-solid border-b-2 border-slate-300" onClick={toggle}>
-            <div className="w-2/3">
+        <div className="flex " >
+            <div className="w-2/3" onClick={toggle}>
                 {children}
             </div>
-            <div className="w-1/3 flex justify-end">
-                <FiChevronDown onClick={toggle}/>
+            <div className="w-1/3 flex justify-end" onClick={toggle}>
+                <FiChevronDown className={isToggled? "rotate-180": "rotate-0"} />
             </div>
             
         </div>

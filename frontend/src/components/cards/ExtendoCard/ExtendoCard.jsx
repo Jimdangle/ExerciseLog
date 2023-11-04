@@ -17,8 +17,8 @@ export default function ExtendoCard({header,body,footer,styles}){
     const [toggleContent,setToggleContent] = useState(false);
     const toggle = ()=>{setToggleContent((v)=>{return !v})}
     return(
-        <div className={"flex flex-col " + styles}>
-            <ExtendoHeader toggle={toggle}>{header}</ExtendoHeader>
+        <div className={"flex flex-col shadow-md " + styles}>
+            <ExtendoHeader toggle={toggle} isToggled={toggleContent}>{header}</ExtendoHeader>
             <ExtendoBody toggleContent={toggleContent}>{body}</ExtendoBody>
             <ExtendoFooter>{footer}</ExtendoFooter>
         </div>

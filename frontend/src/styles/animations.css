@@ -156,5 +156,12 @@
 
 
 
-
+.rotate-180{
+    transform: rotate(180deg);
+    transition: transform 0.4s;
+}
+.rotate-0{
+    transform: rotate(0deg);
+    transition: transform 0.4s;
+}
 
