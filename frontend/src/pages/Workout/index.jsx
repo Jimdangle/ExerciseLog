@@ -55,7 +55,7 @@ export default function Workout(){
             <div>
             <p className='text-center my-2'>{data.workout.name}</p> 
             <p className='text-center my-2'>{data.workout.exercises.length}</p>
-            <ExerciseDisplay exercises={data.workout.exercises}></ExerciseDisplay>
+            <ExerciseDisplay exercises={data.workout.exercises} refresh={refresh}></ExerciseDisplay>
             </div>
             : <></>}
             
