@@ -26,12 +26,12 @@ export default function CardioAdder({addFetch}){
         <div>
             <div className='flex justify-between mx-2'>
                 <div className='flex w-32'>
-                    <NumberInput label="hh" styles="w-8" name="h" value={time.h} onChange={updateTime} />
-                    :<NumberInput label="mm" styles="w-8" name="m" value={time.m} onChange={updateTime}/>
-                    :<NumberInput label="ss" styles="w-8" name="s" value={time.s} onChange={updateTime}/>
+                    <NumberInput label="time" styles="w-8" name="h" value={time.h} onChange={updateTime} />
+                    :<NumberInput  styles="w-8" name="m" value={time.m} onChange={updateTime}/>
+                    :<NumberInput  styles="w-8" name="s" value={time.s} onChange={updateTime}/>
                 </div>
                 <div>
-                    <NumberInput label="Dist" name="weight" styles="w-8" value={newSet.weight} onChange={updateDistance}/>
+                    <NumberInput label="distance" name="weight" styles="w-8" value={newSet.weight} onChange={updateDistance}/>
                 </div>
                 
             </div>
