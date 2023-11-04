@@ -14,11 +14,11 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 export default function Modal({title, isOpen, onClose, children}){
 
     return (
-        <div>
+        <div className='modal-cont'>
             <div className={'modal-card '+(isOpen ? ' modal-drop' : ' hidden')}>
                 <div className="flex">
-                    <p className="modal-title">{title}</p>
-                    <IoIosCloseCircleOutline onClick={onClose}></IoIosCloseCircleOutline>
+                    <p className="modal-title w-3/4">{title}</p>
+                    <IoIosCloseCircleOutline className='w-1/4 text-2xl my-2 font-semibold' onClick={onClose}></IoIosCloseCircleOutline>
                 </div>
                 <div>
                     {children}

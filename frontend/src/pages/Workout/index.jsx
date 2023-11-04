@@ -6,7 +6,7 @@ import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
-import ExerciseAdder from './ExerciseAdder/ExerciseAdder'
+import MotionModal from './MotionAdder/MotionModal'
 
 export const RefreshContext = createContext(null);
 /**
@@ -69,7 +69,7 @@ export default function Workout(){
                 )}
             </ModalContainer>
 
-            
+            <MotionModal/>
             
             
         </div>

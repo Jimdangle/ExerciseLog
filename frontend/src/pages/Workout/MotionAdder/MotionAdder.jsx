@@ -8,7 +8,7 @@ import MuscleList from "./MuscleList";
 import {FaTrash} from 'react-icons/fa6'
 import {useState, useEffect, useMemo} from 'react'
 import { useRequest } from "../../../hooks/requests/useRequest";
-export default function ExerciseAdder({}){
+export default function MotionAdder({}){
     
     const [state,setState] = useState({name:'',type:0,muscles:null,desc:''});
     const {data:muscleData,isLoading,error:muscleError,fetchData:muscleFetch} = useRequest('/motion/musc');
@@ -62,6 +62,7 @@ export default function ExerciseAdder({}){
 
     return(
         <div>
+            
             <TextInput name="name" styles="text-gun" value={state.name} onChange={onChange}/>
             <DropInput name="type" styles="text-gun" value={state.type} onChange={onChange} items={dropDownOptions}/>
             {
