@@ -69,7 +69,7 @@ export default function Workout(){
                 )}
             </ModalContainer>
 
-            <MotionModal/>
+            
             
             
         </div>
