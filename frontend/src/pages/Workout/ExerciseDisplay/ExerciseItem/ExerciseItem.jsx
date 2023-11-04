@@ -19,7 +19,7 @@ function ExerciseHeader({name,setCount}){
     return (
         <div className="flex justify-between p-2">
             <p>{name}</p>
-            <p className="ml-auto">Sets: {setCount}</p>
+           
         </div>
     )
 }

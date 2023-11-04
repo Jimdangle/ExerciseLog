@@ -6,6 +6,7 @@ import SetLift from "./SetTypes/SetLift";
 import SetCardio from "./SetTypes/SetCardio";
 import LiftAdder from "./SetAdders/LiftAdder";
 import CardioAdder from "./SetAdders/CardioAdder";
+import ExtendoCard from "../../../../components/cards/ExtendoCard/ExtendoCard";
 import SetAdder from "./SetAdders/SetAdder";
 /**
  * Component to display sets 
@@ -62,10 +63,17 @@ export default function SetDisplay({exercise, type}){
 
     return (
         <div>
-            <EditableList title={"Sets"} list={sets} removeAction={remove} componentType={(type===0 ? SetLift : SetCardio)}/>
+            <ExtendoCard header={<SetDisplayHeader/>} body={<EditableList title={"Sets"} list={sets} removeAction={remove} componentType={(type===0 ? SetLift : SetCardio)}/>} footer={<></>}/>
+            
             <SetAdder type={type} addSet={addSet}/>
         </div>
         
     )
+}
+
+
+function SetDisplayHeader()
+{
+    return <p>Old Sets</p>
 }
 
