@@ -79,7 +79,7 @@ export default function MotionAdder({closeModal,getData}){
                         //console.log(state.muscles[item])
                     return(
                         <div key={item+"mli"} className="flex ">
-                            <SliderInput  name={item} label={item} value={state.muscles[item]} onChange={changeMuscles} min={0} styles="my-2 w-[80%]" max={1} step={0.05}/>
+                            <SliderInput inStyle="bg-gun"  name={item} label={item} value={state.muscles[item]} onChange={changeMuscles} min={0} styles="my-2 w-[80%]" max={1} step={0.05}/>
                             <FaTrash className="mx-2" onClick={()=>{removeMuscle(item)}}/>
                         </div>
                     )})
