@@ -1,3 +1,4 @@
+const { MuscleInformation } = require("../config/Muscles");
 const {Motion, UserMotion} = require("../models/mWorkout");
 
 //List Server Approved Motions
@@ -79,8 +80,13 @@ async function RemoveUserMotion(req,res,next){
     }
 }
 
+async function GetMuscles(req,res,next){
+    const muscles = Object.keys(MuscleInformation.Muscles).map((item)=>{
+        return {muscle:item}
+    })
+    return res.send({muscles:muscles});
+}
 
 
 
-
-module.exports = {ListMotions: ListMotions, ListUserMotions:ListUserMotions, ListAllMotions:ListAllMotions,AddUserMotion:AddUserMotion, RemoveUserMotion:RemoveUserMotion}
+module.exports = {GetMuscles,ListMotions: ListMotions, ListUserMotions:ListUserMotions, ListAllMotions:ListAllMotions,AddUserMotion:AddUserMotion, RemoveUserMotion:RemoveUserMotion}
