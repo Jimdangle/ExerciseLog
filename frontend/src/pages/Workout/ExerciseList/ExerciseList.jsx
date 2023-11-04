@@ -2,7 +2,7 @@ import SearchableList from "../../../components/lists/SearchableList/SearchableL
 import useFetch from '../../../hooks/requests/useFetch'
 import { useEffect, useState } from "react";
 import { useRequest } from "../../../hooks/requests/useRequest";
-
+import MotionModal from "../MotionAdder/MotionModal";
 /**
  * A list of exercises for users to choose from to add onto their workout
  * @param {{string,function,function}} props
@@ -13,7 +13,7 @@ import { useRequest } from "../../../hooks/requests/useRequest";
  */
 export default function ExerciseList({log_id,refresh,closeModal}){
 
-    const {data,isLoading,error, fetchData:getData} = useRequest('/motion/ls')
+    const {data,isLoading,error, fetchData:getData} = useRequest('/motion/lsa')
     
 
     const {fetchData:postFetchData} = useRequest('/workout/addEx','p',{workout_id:log_id})
@@ -35,6 +35,7 @@ export default function ExerciseList({log_id,refresh,closeModal}){
 
     return (
         <div className="h-64 overflow-y-scroll">
+            <MotionModal getData={getData}/>
             {!isLoading && data && data.motions ? 
             <SearchableList title={"Test List"} list={data.motions} action={action} fields={{display_field:'name', action_field:'_id'}}></SearchableList>
             :

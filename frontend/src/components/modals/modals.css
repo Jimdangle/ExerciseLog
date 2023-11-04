@@ -9,12 +9,15 @@
     }
 
     .modal-card{
-        @apply bg-white rounded-sm shadow-md text-gun z-30 absolute top-5 left-[16.666667%] w-2/3 
+        @apply bg-white rounded-sm shadow-md text-gun z-30  w-[66vw] 
     }
 
     .modal-cover{
-        @apply absolute top-0 left-0 bg-gun opacity-80 w-screen h-screen z-20
+        @apply absolute  bg-slate-600 opacity-80 w-screen h-screen z-20
     }
 
+    .modal-cont{
+        @apply flex justify-center absolute top-5
+    }
     
 }

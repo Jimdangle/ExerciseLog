@@ -8,11 +8,11 @@ import MuscleList from "./MuscleList";
 import {FaTrash} from 'react-icons/fa6'
 import {useState, useEffect, useMemo} from 'react'
 import { useRequest } from "../../../hooks/requests/useRequest";
-export default function ExerciseAdder({}){
+export default function MotionAdder({closeModal,getData}){
     
     const [state,setState] = useState({name:'',type:0,muscles:null,desc:''});
     const {data:muscleData,isLoading,error:muscleError,fetchData:muscleFetch} = useRequest('/motion/musc');
-    
+    const {data:addData, isLoading:addLoading, error:addError, fetchData:addFetch} = useRequest('/motion/add', 'p', {name:state.name,type:state.type,muscles:state.muscles,desc:state.desc})
     const muscleSum = useMemo(()=>{ // if we have changed our muscles and have muscles to look at calculate the sum
         if(state.muscles){
             const out = Object.keys(state.muscles).reduce((acum,key)=>{return acum + state.muscles[key]},0)
@@ -52,6 +52,14 @@ export default function ExerciseAdder({}){
         })
     }
 
+    
+    async function addMotion(){
+        await addFetch();
+        await getData();
+        closeModal();
+    }
+
+
 
     // Options for our drop down select input
     const dropDownOptions = [
@@ -62,6 +70,7 @@ export default function ExerciseAdder({}){
 
     return(
         <div>
+            
             <TextInput name="name" styles="text-gun" value={state.name} onChange={onChange}/>
             <DropInput name="type" styles="text-gun" value={state.type} onChange={onChange} items={dropDownOptions}/>
             {
@@ -70,7 +79,7 @@ export default function ExerciseAdder({}){
                         //console.log(state.muscles[item])
                     return(
                         <div key={item+"mli"} className="flex ">
-                            <SliderInput  name={item} label={item} value={state.muscles[item]} onChange={changeMuscles} min={0} styles="my-2 w-[80%]" max={1} step={0.05}/>
+                            <SliderInput inStyle="bg-gun"  name={item} label={item} value={state.muscles[item]} onChange={changeMuscles} min={0} styles="my-2 w-[80%]" max={1} step={0.05}/>
                             <FaTrash className="mx-2" onClick={()=>{removeMuscle(item)}}/>
                         </div>
                     )})
@@ -84,6 +93,10 @@ export default function ExerciseAdder({}){
                     :
                     <></>       
             }
+
+            <div className="flex justify-center">
+                <button onClick={addMotion} className="button button-e-green">Add</button>
+            </div>
         </div>
     )
 
