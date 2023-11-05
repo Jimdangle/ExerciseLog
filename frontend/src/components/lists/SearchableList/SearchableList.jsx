@@ -1,9 +1,9 @@
 /* Pass in a list of objects, and the field from the object we want to be rendered */
 // Each item will be displayed with a display field from the object
 // Passing the component a function  that can perform an action on a 
-import {useState} from 'react'
+import {useState, useMemo} from 'react'
 import ActionListItem from "./ActionListItem";
-
+import FilterBox from './FilterBox';
 /**
  * A searchable list component, allows users to filter by names
  * @param {{string,Array,function, Object}} props 
@@ -15,14 +15,26 @@ import ActionListItem from "./ActionListItem";
  * @param {string} fields.action_field - field to send to our action function from the object 
  * @component
  */
-export default function SearchableList({title,list,action,fields }){
+export default function SearchableList({title,list,action,fields, filters }){
     const {display_field,action_field} = fields; //fields should be the string access for the objects contained in the list
     const [searchString, setSearchString] = useState('')
+    const [filter, setFilter] = useState(null)
+
+    // Pass our list through the filter if we have one 
+    const displayList = useMemo(()=>{
+        if(!filter){
+            return list;
+        }
+        else{
+            return filter.filter(list) 
+        }
+    },[filter,list])
 
     return(
         <div className="text-center">
             <input type='search' className='text-center focus:font-bold px-2' placeholder='search' onChange={(e)=>{setSearchString(e.target.value)}}></input>
-            {list.filter(
+            <FilterBox filters={filters} setFilter={setFilter} />
+            {displayList.filter(
                 (object)=>{
                     const name = object[display_field].toLowerCase();
                     

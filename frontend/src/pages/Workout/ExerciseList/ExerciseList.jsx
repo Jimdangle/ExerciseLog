@@ -33,6 +33,12 @@ export default function ExerciseList({log_id,refresh,closeModal}){
         closeModal();
     }
 
+    const filters = [
+        {name:"lifts", filter: (list)=>{return list.filter((item)=>{return (item.type===0)})}},
+        {name:"cardio", filter: (list)=>{return list.filter((item)=>{return (item.type===1)})}},
+        {name:"holds", filter: (list)=>{return list.filter((item)=>{return (item.type===2)})}}
+    ]
+
     
     
 
@@ -40,7 +46,7 @@ export default function ExerciseList({log_id,refresh,closeModal}){
         <div className="h-64 overflow-y-scroll">
             <MotionModal getData={getData}/>
             {!isLoading && data && data.motions ? 
-            <SearchableList title={"Test List"} list={data.motions} action={action} fields={{display_field:'name', action_field:'_id'}}></SearchableList>
+            <SearchableList title={"Test List"} filters={filters} list={data.motions} action={action} fields={{display_field:'name', action_field:'_id'}}></SearchableList>
             :
             <></>
         }    

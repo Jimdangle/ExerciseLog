@@ -18,6 +18,8 @@ import EditListItem from "./EditListItem";
 export default function EditableList({title,list,removeAction,componentType}){
     const [isEditing,setIsEditing] = useState(false); // enable editing via the edit button, when editing enabled produce a removal button for the objects produced
     const toggle=()=>{setIsEditing((v)=>{return !v})}
+
+    
     return(
         <div className="flex flex-col">
             <div className="flex justify-end mr-2">
