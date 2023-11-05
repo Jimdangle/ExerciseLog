@@ -142,7 +142,10 @@ async function GetExercise(req,res,next){
     const user = res.locals.user;
 
     try{
-        const found = await Exercise.findOne({_id:exercise_id,user_id:user}).populate({path: 'sets motion.motion motion.umotion'})
+        const found = await Exercise.findOne({_id:exercise_id}).populate({path: 'sets motion.motion motion.umotion'})
+        if(!found){
+            return next({code:404})
+        }
         res.send({exercise:found, exercise_id:exercise_id})
     }
     catch(e){

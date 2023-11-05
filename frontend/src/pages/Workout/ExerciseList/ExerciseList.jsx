@@ -16,12 +16,15 @@ export default function ExerciseList({log_id,refresh,closeModal}){
     const {data,isLoading,error, fetchData:getData} = useRequest('/motion/lsa')
     
 
-    const {fetchData:postFetchData} = useRequest('/workout/addEx','p',{workout_id:log_id})
+    const {data:postData,fetchData:postFetchData} = useRequest('/workout/addEx','p',{workout_id:log_id})
 
     useEffect(()=>{
         if(!isLoading)
             getData();
     },[])
+
+    
+    
 
     
     async function action(key){

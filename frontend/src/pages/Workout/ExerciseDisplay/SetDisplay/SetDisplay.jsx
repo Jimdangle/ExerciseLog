@@ -22,8 +22,6 @@ export default function SetDisplay({exercise, type}){
     const [sets,setSets] = useState([]);
     
 
-    
-
     // Request to remove a set
     const {data:removeData,isLoading:removeLoading,error:removeError,fetchData:removeFetch} = useRequest('/workout/remSet', 'x', {exercise_id:exercise._id})
     // Request to add a set
@@ -86,5 +84,9 @@ function SetDisplayHeader({setCount})
 }
 
 function SetDisplayFooter({last, type}){
-    return (<>{type===0 ? <SetLift {...last}/> : <SetCardio{...last}/>}</>)
+    if(last)
+        return (<>{type===0 ? <SetLift {...last}/> : <SetCardio{...last}/>}</>)
+    else{
+        return <></>
+    }
 }

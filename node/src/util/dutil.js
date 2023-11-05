@@ -1,12 +1,12 @@
 
 class SummaryData   {
     constructor(){
-        this.total_workouts=0;
-        this.total_exercises=0
-        this.total_sets=0
-        this.exercise_totals=[0,0,0]
-        this.muscles=[{},{},{}] // 3 objects keys = muscle name,  value = impact, position in array = type  
-        this.exercise_summary={}
+        this.total_workouts=0; // total amount of workouts
+        this.total_exercises=0 // total amount of exercises
+        this.total_sets=0 // total amount of sets
+        this.exercise_totals=[0,0,0] // Calculated by summing the product of values*weights for all exercises and assign them to a position in the array based on the type of exercise (lift,cardio,hold)
+        this.muscles=[{},{},{}] //   contains impact using the exercise total * the value contained in each exercises muscle array, allocated per exercise type in the array
+        this.exercise_summary={} // contains key value pairs of the following type : <exercise_name:string> : { values: {min:Number,max:Number,avg:Number}, weights: {min:Number,max:Number,avg:Number}, muscles: {<muscle_name:string>:Number,...}}
     }
 }
 
