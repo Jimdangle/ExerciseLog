@@ -8,6 +8,7 @@ export default function CardioAdder({addFetch}){
 
     useEffect(()=>{
         setNewSet({...newSet,rep_or_time:timeToSec(time)})
+        console.log(time)
     },[time])
 
     //updating functions
