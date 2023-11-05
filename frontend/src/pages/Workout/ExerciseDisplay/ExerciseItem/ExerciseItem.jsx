@@ -5,6 +5,7 @@ import { FaDumbbell, FaClock,FaTrash} from "react-icons/fa6";
 
 export default function ExerciseItem({exercise, deleteExercise}){
     const motion = exercise.motion.motion ? exercise.motion.motion : exercise.motion.umotion;
+    
 
     const deleteSelf = () => {
         deleteExercise(exercise._id);
@@ -12,7 +13,14 @@ export default function ExerciseItem({exercise, deleteExercise}){
     
 
     return(
-        <ExtendoCard styles={"bg-white text-gun shadow-lg rounded-sm my-2 mx-2"} header={<ExerciseHeader name={motion.name} setCount={exercise.sets.length}/>} body={<SetDisplay exercise={exercise} type={motion.type}/>} footer={<ExerciseFooter type={motion.type} deleteExercise={deleteSelf}/>}/>
+        <>
+        { !exercise ?
+            <></>
+            :
+            <ExtendoCard styles={"bg-white text-gun shadow-lg rounded-sm my-2 mx-2"} header={<ExerciseHeader name={motion.name} setCount={exercise.sets.length}/>} body={<SetDisplay exercise={exercise} type={motion.type}/>} footer={<ExerciseFooter type={motion.type} deleteExercise={deleteSelf}/>}/>
+        }
+        </>
+        
     )
 }
 
