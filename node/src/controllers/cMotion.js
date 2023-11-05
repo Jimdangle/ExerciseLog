@@ -82,7 +82,7 @@ async function RemoveUserMotion(req,res,next){
 
 async function GetMuscles(req,res,next){
     const muscles = Object.keys(MuscleInformation.Muscles).map((item)=>{
-        return {muscle:item}
+        return {muscle:item, group:MuscleInformation.Muscles[item].group}
     })
     return res.send({muscles:muscles});
 }

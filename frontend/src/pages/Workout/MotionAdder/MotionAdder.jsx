@@ -27,6 +27,9 @@ export default function MotionAdder({closeModal,getData}){
 
     },[])
 
+    useEffect(()=>{
+        console.log(muscleData)        
+    },[muscleData])
     
 
     // update the normal easy values
