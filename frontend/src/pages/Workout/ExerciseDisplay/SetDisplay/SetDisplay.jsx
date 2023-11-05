@@ -46,6 +46,12 @@ export default function SetDisplay({exercise, type}){
         }
     },[])
 
+    useEffect(()=>{
+        if(addError){
+            console.error(addError)
+        }
+    },[addError])
+
     /**
      * removeAction for our editable list
      * @param {Object} object - object from the list to remove

@@ -9,11 +9,11 @@
     }
 
     .modal-card{
-        @apply bg-white rounded-sm shadow-md text-gun z-30  w-[66vw] 
+        @apply bg-white rounded-sm shadow-xl text-gun z-30  w-[66vw] 
     }
 
     .modal-cover{
-        @apply absolute  bg-slate-600 opacity-80 w-screen h-screen z-20
+        @apply absolute top-0 bg-slate-600 opacity-80 w-screen h-screen z-20
     }
 
     .modal-cont{
