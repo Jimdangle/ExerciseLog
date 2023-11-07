@@ -7,7 +7,7 @@ import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
 import MotionModal from './MotionAdder/MotionModal'
-
+import ImageTest from '../Summary/ImageTest'
 export const RefreshContext = createContext(null);
 /**
  * Display information for our currently stored workout. Render exercise info and set info 
@@ -70,6 +70,7 @@ export default function Workout(){
             </ModalContainer>
 
             
+            <ImageTest/>
             
             
         </div>
