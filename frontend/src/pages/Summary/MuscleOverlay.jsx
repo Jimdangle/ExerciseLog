@@ -20,7 +20,7 @@ export default function MuscleOverlay({width=800, muscleData, muscles}){
                     if(muscleData[0][muscle]){
                         return <img className="absolute top-0 left-0" key={muscle+index}  style={{width: width, height: width*IMAGE_R}} src={`MuscleOutlines/${removeSpace(muscle)}${colorByZScore(muscleData[0][muscle])}.png`} alt={`${muscle} outline`}/>
                     }
-                    return <img className="absolute top-0 left-0" key={muscle+index}  style={{width: width, height: width*IMAGE_R}} src={`MuscleOutlines/${removeSpace(muscle)}R.png`} alt={`${muscle} outline`}/>
+                    return <img className="absolute top-0 left-0" key={muscle+index}  style={{width: width, height: width*IMAGE_R}} src={`MuscleOutlines/${removeSpace(muscle)}B.png`} alt={`${muscle} outline`}/>
                 })
                 :
                 <></>
