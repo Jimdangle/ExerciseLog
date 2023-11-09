@@ -58,24 +58,27 @@ const UserMotionSchema = new mongoose.Schema({
         min:0,
         max:2
     },
-    muscleImpact: {
-        type: Map,
-        of: Number,
-        validate: {
-          validator: function (value) {
-            var sum = 0;
-            for (const key in value) {
-              if (!validMuscles.includes(key)) {
-                return false;
-              }
-              sum+= value[key];
+    muscles: {
+      type: Map,
+      of: Number,
+      validate: {
+        validator: function (value) {
+          
+          for (const key in value.keys()) {
+            
+            sum+=value[key];
+            if (!validMuscles.includes(key)) {
+              console.log(`${key} not found in muscle data`)
+              return false;
             }
-            if(sum>1){return false}
-            return true;
-          },
-          message: 'Invalid muscle names in muscleImpact. Or Sum over 1',
+            console.log(`${key} : ${sum}`)
+          }
+          
+          return true;
         },
+        message: 'Invalid muscle names in muscles',
       },
+    },
     desc: String,
     user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 

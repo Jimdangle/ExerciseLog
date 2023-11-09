@@ -1,6 +1,6 @@
 const User = require('../models/mUsers.js')
 const {Workout} = require('../models/mWorkout.js');
-
+const MuscleInformation = require('../config/Muscles.js').MuscleInformation.Muscles
 const {SummaryData, SummaryAcces} = require('../util/dutil.js');
 //Get user information based on the presence of the user token in the header 
 async function GetUser(req,res,next){
@@ -33,7 +33,7 @@ async function GetWholeSummary(req,res,next){
         return next({code:500,message:summaryData.message})
     }
     else if(summaryData && summaryData.total_workouts > 0){
-        return res.send({summary:summaryData})
+        return res.send({summary:summaryData, muscle_list: Object.keys(MuscleInformation)})
     }
     return next({code:204,message:'No data found'}) // no data / nothing found
 }
@@ -43,7 +43,7 @@ async function GetWholeSummary(req,res,next){
 async function GenerateSummary(user,start,end){
     var data = new SummaryData();
     try{
-        const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: new Date(end)}}).populate({path:"exercises", populate: {path: "motion.motion motion.umotion sets"}});
+        const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: new Date(end)}}).populate({path:"exercises", populate: {path: "motion.motion motion.motion.muscles motion.umotion motion.umotion.muscles sets"}});
         
         console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(end).toString()}: found ${workouts.length} workouts`)
         if(workouts.length > 0){
@@ -53,12 +53,60 @@ async function GenerateSummary(user,start,end){
             })
         }
 
+        // Calculate Z-scores for muscles
+        data.muscle_z = GenerateZScores(data);
+        console.log(data.muscle_z)
         return data;
     }
     catch(e){
-        
+        console.log(e)
         return e;
     }
+}
+
+function GenerateZScores(data){
+    console.log('Generating z-scores')
+    // go over each type in the muscles array contained in data
+        // sum up the values contained in each object
+        // calculate the average, and stdeviation
+        // calculate z-score for muscle in type
+        // place in the muscles_z[type] object
+    if(!data.muscles){
+        throw new Error('No Muscles to build from')
+    }
+    const muscle_z = [];
+    data.muscles.forEach((muscle_object,index)=>{
+        // Muscle object contains a object s.t { muscle: impact_value}
+        // Sum all these values to generate a average for this type
+        // calculate
+
+        const sum = Object.keys(muscle_object).reduce((acum,key)=>{
+            return acum + muscle_object[key];
+        },0);
+        
+
+        //average value
+        const average = sum / Object.keys(muscle_object).length;
+
+        // stdev
+        const sigma = Math.sqrt(( Object.keys(muscle_object).reduce((acum,key)=>{
+            
+            const diff = Math.pow(average-muscle_object[key],2);
+            return acum + diff;
+        },0) / Object.keys(muscle_object).length ));
+
+        console.log(`sum: ${sum}, avg: ${average}, sigma: ${sigma}`)
+        const z_score = {}
+        Object.keys(muscle_object).forEach((muscle,index)=>{
+            z_score[muscle] = (muscle_object[muscle]-average) / sigma;
+        })
+
+        muscle_z[index] = z_score;
+
+    })
+
+    return muscle_z;
+    
 }
 
 // Do what we can on the individual workout level
@@ -87,9 +135,8 @@ function GetExerciseSummary(exercise, summaryData){
    
     //calculate muscle impact
     const impacts = {}
+    
     const keys = Array.from(motion.muscles.keys());
-    console.log(keys)
-    console.log(sum)
     keys.forEach( (key) => { 
         const percent = motion.muscles.get(key)
         const impact = Math.round(percent*sum*100)/100;
