@@ -10,10 +10,30 @@ export function removeSpace(string){
 
 
 export function colorByZScore(score){
+    
     if(score >= -1 && score <= 1) // within a single standard deviation
         return 'G';
-    if((score < 2 && score > 1) || (score > -2 && score < -1)) // score is 1-2 stdevs away
+    else if(score > 1 && score < 2){
         return 'Y';
-    else
-        return 'R'; // score is more than 2 stdevs away 
+    }
+    else if(score > 2){
+        return 'R'
+    }
+    else if(score < -1){
+        return 'B'
+    }
+}
+
+export function textColorByZScore(score){
+    if(score >= -1 && score <= 1) // within a single standard deviation
+        return 'text-ogreen';
+    else if(score > 1 && score < 2){
+        return 'text-oyell';
+    }
+    else if(score > 2){
+        return 'text-ored'
+    }
+    else if(score < -1){
+        return 'text-oblue'
+    }
 }

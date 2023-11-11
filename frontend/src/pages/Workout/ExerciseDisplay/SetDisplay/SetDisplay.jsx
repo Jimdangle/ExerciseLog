@@ -6,6 +6,7 @@ import SetLift from "./SetTypes/SetLift";
 import SetCardio from "./SetTypes/SetCardio";
 import LiftAdder from "./SetAdders/LiftAdder";
 import CardioAdder from "./SetAdders/CardioAdder";
+import { SummaryContext } from "../..";
 import ExtendoCard from "../../../../components/cards/ExtendoCard/ExtendoCard";
 import SetAdder from "./SetAdders/SetAdder";
 /**
@@ -20,7 +21,7 @@ export default function SetDisplay({exercise, type}){
 
     
     const [sets,setSets] = useState([]);
-    
+    const sumFetch = useContext(SummaryContext)
 
     // Request to remove a set
     const {data:removeData,isLoading:removeLoading,error:removeError,fetchData:removeFetch} = useRequest('/workout/remSet', 'x', {exercise_id:exercise._id})
@@ -57,11 +58,13 @@ export default function SetDisplay({exercise, type}){
     async function remove(object){
         await removeFetch({set_id:object._id})
         await getFetch();
+        await sumFetch();
     }
 
     async function addSet(data){
         await addFetch(data);
         await getFetch();
+        await sumFetch();
     }
 
 

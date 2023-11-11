@@ -4,7 +4,7 @@ import { useState } from "react"
 export default function({addFetch}){
     const [newSet,setNewSet] = useState({rep_or_time:1,weight:0})
     const onChange = (event) => {
-        console.log(event)
+        
 
         
         setNewSet({

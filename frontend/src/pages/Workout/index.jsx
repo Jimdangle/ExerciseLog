@@ -6,9 +6,11 @@ import ModalContainer from '../../components/modals/ModalContainer'
 import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
+import MuscleOverlayContainer from '../Summary/MuscleOverlayContainer'
 import MotionModal from './MotionAdder/MotionModal'
 import MuscleOverlay from '../Summary/MuscleOverlay'
 export const RefreshContext = createContext(null);
+export const SummaryContext = createContext(null);
 /**
  * Display information for our currently stored workout. Render exercise info and set info 
  * @component
@@ -43,16 +45,10 @@ export default function Workout(){
 
     useEffect(()=>{
         if(data){
-            console.log(data)
             sumFetch({start:data.workout.createdAt, end:data.workout.createdAt})
         }
     },[data])
 
-    useEffect(()=>{
-        if(sumData){
-            console.log(sumData)
-        }
-    },[sumData])
 
     useEffect(()=>{
         if(error)
@@ -73,6 +69,7 @@ export default function Workout(){
     }
 
     return(
+    <SummaryContext.Provider value={()=>{sumFetch({start:data.workout.createdAt, end:data.workout.createdAt})}}>
     <RefreshContext.Provider value={refresh}>
         <div className='text-white'>
             
@@ -98,18 +95,13 @@ export default function Workout(){
             
            
            {sumData && sumData.summary ? 
-            <ModalContainer title={"Workout Summary"}>
-                {(closeModal,toggleModal) => (
-                    <Modal title={"Summary Display"} isOpen={toggleModal} onClose={closeModal}>
-                        <MuscleOverlay width={300} muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list}/>
-                    </Modal>
-                    
-                )}
-            </ModalContainer>
+            <MuscleOverlayContainer sumData={sumData}/>
             :
             <></>
                 }
             
         </div>
-    </RefreshContext.Provider>)
+    </RefreshContext.Provider>
+    </SummaryContext.Provider>
+    )
 }
