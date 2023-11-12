@@ -11,8 +11,8 @@ export default function MuscleOverlayContainer({sumData}){
         <ModalContainer title={"Workout Summary"}>
                 {(closeModal,toggleModal) => (
                     <Modal title={"Summary Display"} isOpen={toggleModal} onClose={closeModal}>
-                        <MuscleOverlay width={300} muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list}/>
-                        <MuscleOverlayInfo muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list}/>
+                        <MuscleOverlay width={200} muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list}/>
+                        <MuscleOverlayInfo muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list} volumeData={sumData.summary.muscles}/>
                     </Modal>
                     
                 )}

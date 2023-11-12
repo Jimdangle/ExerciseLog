@@ -86,7 +86,7 @@ function GenerateZScores(data){
         
 
         //average value
-        const average = sum / Object.keys(muscle_object).length;
+        const average = sum / Object.keys(MuscleInformation).length;
 
         // stdev
         const sigma = Math.sqrt(( Object.keys(muscle_object).reduce((acum,key)=>{
