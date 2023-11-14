@@ -10,7 +10,7 @@ import { getToken } from '../../utility/storage';
  * @returns - data from request, isLoading boolean representing fetch state, error object, and fetchData method to perform the operation
  */
 export function useRequest(url,method='g',payload=null) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error,setError] = useState(null)
 

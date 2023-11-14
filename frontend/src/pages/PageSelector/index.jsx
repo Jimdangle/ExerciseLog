@@ -48,7 +48,7 @@ export default function PageSelector({logout}){
     return (
     <PageContext.Provider value={changePage}>
         <NotificationContext.Provider value={displayNotification}>
-            <div className="overflow-x-hidden">
+            <div className="overflow-x-hidden overflow-y-visible">
             
                     {render_page}
                 

@@ -4,8 +4,8 @@ const DefaultWorkouts= {
     {
       "name": "Push-Ups",
       "muscles": {
-        "Upper Pectoral": 0.4,
-        "Lower Pectoral": 0.4,
+        "Upper Pectorals": 0.4,
+        "Lower Pectorals": 0.4,
         "Triceps": 0.2
       },
       "type": 0
@@ -39,8 +39,8 @@ const DefaultWorkouts= {
     {
       "name": "Bench Press",
       "muscles": {
-        "Upper Pectoral": 0.4,
-        "Lower Pectoral": 0.4,
+        "Upper Pectorals": 0.4,
+        "Lower Pectorals": 0.4,
         "Triceps": 0.2
       },
       "type": 0
@@ -56,9 +56,9 @@ const DefaultWorkouts= {
     {
       "name": "Shoulder Press",
       "muscles": {
-        "Front Deltoid": 0.6,
+        "Front Deltoids": 0.6,
         "Triceps": 0.2,
-        "Lateral Deltoid": 0.2
+        "Rear Deltoids": 0.2
       },
       "type": 0
     },
@@ -66,8 +66,7 @@ const DefaultWorkouts= {
       "name": "Bicep Curls",
       "muscles": {
         "Biceps": 0.6,
-        "Brachialis": 0.2,
-        "Forearm": 0.2
+        "Forearm": 0.4
       },
       "type": 0
     },
@@ -75,8 +74,8 @@ const DefaultWorkouts= {
       "name": "Tricep Dips",
       "muscles": {
         "Triceps": 0.6,
-        "Chest": 0.2,
-        "Front Deltoid": 0.2
+        "Lower Pectorals": 0.2,
+        "Front Deltoids": 0.2
       },
       "type": 0
     },
@@ -110,8 +109,8 @@ const DefaultWorkouts= {
     {
       "name": "Chest Flyes",
       "muscles": {
-        "Upper Pectoral": 0.6,
-        "Lower Pectoral": 0.4
+        "Upper Pectorals": 0.6,
+        "Lower Pectorals": 0.4
       },
       "type": 0
     },
@@ -150,8 +149,8 @@ const DefaultWorkouts= {
     {
       "name": "Arnold Press",
       "muscles": {
-        "Front Deltoid": 0.5,
-        "Lateral Deltoid": 0.3,
+        "Front Deltoids": 0.5,
+        "Middle Deltoid": 0.3,
         "Triceps": 0.2
       },
       "type": 0
@@ -160,8 +159,7 @@ const DefaultWorkouts= {
       "name": "Hammer Curls",
       "muscles": {
         "Biceps": 0.6,
-        "Brachialis": 0.3,
-        "Forearm": 0.1
+        "Forearm": 0.4
       },
       "type": 0
     },

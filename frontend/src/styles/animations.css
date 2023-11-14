@@ -71,7 +71,7 @@
 
 
 .slideDownNav{
-    transform: translateY(30vh) rotate(180deg);
+    transform: translateY(22vh) rotate(180deg);
     transition: transform 0.6s;
 }
 

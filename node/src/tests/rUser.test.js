@@ -82,11 +82,12 @@ describe('Summary Tests', ()=>{
 
 
     it('Valid summary generation', async () => {
-        const time = Date.now()+1000000;
-        const res = await request.post('/user/wsum').set('authorization', token).send({start:0, end:time});
+        
+        const res = await request.post('/user/wsum').set('authorization', token).send({start:0, end:0});
 
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty('summary')
+        expect(res.body.summary).toHaveProperty('muscle_z')
 
     })
 })
