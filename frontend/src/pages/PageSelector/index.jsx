@@ -5,6 +5,7 @@ import NavControl from "../Nav";
 import Home from "../Home";
 import Notification from "../../components/notifications/Notification";
 import Workout from "../Workout";
+import WorkoutHistory from "../History/WorkoutHistory";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export const NotificationContext = createContext(null)
@@ -40,7 +41,8 @@ export default function PageSelector({logout}){
     //these pages should correspond to the numerical values in the NavControl component
     const pages = {
         0: <Home logout={logout}></Home>,
-        1: <Workout></Workout>
+        1: <Workout></Workout>,
+        5: <WorkoutHistory/>
     }
 
     const render_page = pages[active];
@@ -53,7 +55,7 @@ export default function PageSelector({logout}){
                     {render_page}
                 
                 
-                <FiChevronDown className={"absolute top-3 left-4 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
+                <FiChevronDown className={"absolute top-3 left-4 z-20 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
                 <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
                 <Notification message={notification} onClose={clearNotification}></Notification>       
             </div>

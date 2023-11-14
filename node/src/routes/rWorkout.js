@@ -20,7 +20,8 @@ const REQUIRED_KEYS = {
     "/remSet": ["set_id", "exercise_id"],
     "/get": ["workout_id"],
     "/editName": ["workout_id", "name"],
-    "/getEx": ["exercise_id"]
+    "/getEx": ["exercise_id"],
+    "/lsm": true
 }
 
 WorkoutRouter.use(bodyParser.json());

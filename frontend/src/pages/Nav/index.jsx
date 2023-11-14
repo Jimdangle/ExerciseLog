@@ -37,7 +37,7 @@ export default function NavControl({active, setActive,show}){
     }
 
     return(
-        <div className={"absolute top-3 w-full bg-gun " + (show ? " trickyDown" : " hidden" )}>
+        <div className={"absolute top-3 w-full bg-gun h-[33vh] z-10 rounded-b-md " + (show ? " trickyDown" : " hidden" )}>
             <NavBar nav={Nav} active={active}></NavBar>
         </div>
          

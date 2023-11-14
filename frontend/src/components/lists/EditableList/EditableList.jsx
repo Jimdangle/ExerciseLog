@@ -15,7 +15,7 @@ import EditListItem from "./EditListItem";
  * @param {function} props.removeAction - A function / action to do when we remove an object. Takes in an object as input
  * @param {Class} props.componentType - A component class that has properties that align with the object
  */
-export default function EditableList({title,list,removeAction,componentType}){
+export default function EditableList({title,list,removeAction,componentType, tColor='text-gun'}){
     const [isEditing,setIsEditing] = useState(false); // enable editing via the edit button, when editing enabled produce a removal button for the objects produced
     const toggle=()=>{setIsEditing((v)=>{return !v})}
 
@@ -23,7 +23,7 @@ export default function EditableList({title,list,removeAction,componentType}){
     return(
         <div className="flex flex-col">
             <div className="flex justify-end mr-2">
-                <FaEraser onClick={toggle} className={isEditing? ' text-ored' : ' text-gun'}/>
+                <FaEraser onClick={toggle} className={isEditing? ' text-ored' : ` ${tColor}`}/>
             </div>
             {
                 list.map((item,index)=>{
