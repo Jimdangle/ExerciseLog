@@ -4,7 +4,7 @@ export default function MuscleOverlayInfo({muscleData,volumeData,muscles,filter=
     // I want to sort this data
     const displayData = []
     muscles.forEach((muscle,index)=>{
-        console.log(muscle)
+        
         const z = muscleData[filter][muscle] ? muscleData[filter][muscle] : -3
         const vol = volumeData[filter][muscle] ? volumeData[filter][muscle] : 0
         // if there is muscleData there should be volumeData bc the muscleData is made from the volumeData on the backend
@@ -16,20 +16,29 @@ export default function MuscleOverlayInfo({muscleData,volumeData,muscles,filter=
     }),[muscleData,volumeData,filter])
 
 
-    console.log(sorted)
+    
 
     return(
-        <div className="w-auto">
+        <div className="w-auto flex justify-center">
+            <div className="flex flex-col">
                 {
                     muscles && muscleData ?
                     sorted.map((muscle,index) => {
                         return (
-                            <p key={muscle.name+index+"disp"} className={"font-semibold " + textColorByZScore(muscle.z)} >{muscle.name} : {Math.round(muscle.value*10)/10}</p>
+                            <div key={muscle.name+index+"disp"}>
+                                {muscle.value !== 0
+                                    ?
+                                    <p  className={"font-semibold text-center " + textColorByZScore(muscle.z)} >{muscle.name} : {Math.round(muscle.value*10)/10}</p>
+                                    :
+                                    <></>
+                                }
+                            </div>
                         )
                     })
                     :
                     <></>
                 }
             </div>
+        </div>
     )
 }

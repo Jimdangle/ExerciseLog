@@ -92,13 +92,13 @@ export default function Workout(){
                 )}
             </ModalContainer>
 
-            
-           
-           {sumData && sumData.summary ? 
+            {sumData && sumData.summary ? 
             <MuscleOverlayContainer sumData={sumData}/>
             :
             <></>
-                }
+            }
+           
+           
             
         </div>
     </RefreshContext.Provider>

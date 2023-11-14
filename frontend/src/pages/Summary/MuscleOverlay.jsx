@@ -34,6 +34,8 @@ export default function MuscleOverlay({width=800, muscleData, muscles, filter=0}
                     }
                 })
             }
+
+            
         }
 
     }
@@ -48,6 +50,9 @@ export default function MuscleOverlay({width=800, muscleData, muscles, filter=0}
     }
     
 
-    return <canvas onMouseMove={handleMouseMove} ref={canvasRef} width={width} height={width * IMAGE_R} />;
-        
+    return (
+        <div className='flex justify-center'>
+            <canvas onMouseMove={handleMouseMove} ref={canvasRef} width={width} height={width * IMAGE_R} />
+        </div>
+    )       
 }

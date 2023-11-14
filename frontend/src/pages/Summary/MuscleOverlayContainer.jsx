@@ -5,18 +5,20 @@ import MuscleOverlay from "./MuscleOverlay"
 /**
  * Contains the muscle overlay as well as buttons to change what is displayed
  */
+import { useState } from "react"
+import MuscleOverlayFilters from "./MuscleOverlayFilters"
+import MuscleOverlayMeta from "./MuscleOverlayMeta"
 export default function MuscleOverlayContainer({sumData}){
-
+    const [filter,setFilter] = useState(0);
+    console.log(sumData.summary.muscle_z_meta)
     return(
-        <ModalContainer title={"Workout Summary"}>
-                {(closeModal,toggleModal) => (
-                    <Modal title={"Summary Display"} isOpen={toggleModal} onClose={closeModal}>
-                        <MuscleOverlay width={200} muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list}/>
-                        <MuscleOverlayInfo muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list} volumeData={sumData.summary.muscles}/>
-                    </Modal>
-                    
-                )}
-        </ModalContainer>
+        <div className="bg-white text-gun rounded-md shadow-md mx-2">
+            <p className="text-lg font-semibold text-center">Summary</p>
+            <MuscleOverlay width={300} muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list} filter={filter}/>
+            <MuscleOverlayFilters filter={filter} setFilter={setFilter}/>
+            <MuscleOverlayMeta meta={sumData.summary.muscle_z_meta[filter]}/>
+            <MuscleOverlayInfo muscleData={sumData.summary.muscle_z} muscles={sumData.muscle_list} volumeData={sumData.summary.muscles} filter={filter}/>
+        </div>  
     )
     
 }

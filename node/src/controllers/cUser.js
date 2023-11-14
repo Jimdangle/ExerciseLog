@@ -45,7 +45,7 @@ async function GenerateSummary(user,start,end){
     try{
         const workouts = await Workout.find({user_id:user,createdAt:{$gte: new Date(start), $lte: new Date(end)}}).populate({path:"exercises", populate: {path: "motion.motion motion.motion.muscles motion.umotion motion.umotion.muscles sets"}});
         
-        console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(end).toString()}: found ${workouts.length} workouts`)
+        //console.log(`Generating Summary between ${new Date(start).toString()}-${new Date(end).toString()}: found ${workouts.length} workouts`)
         if(workouts.length > 0){
             workouts.forEach( (workout) => {
                 data.total_workouts+=1; //increment workout count
@@ -54,8 +54,8 @@ async function GenerateSummary(user,start,end){
         }
 
         // Calculate Z-scores for muscles
-        data.muscle_z = GenerateZScores(data);
-        console.log(data.muscle_z)
+        GenerateZScores(data);
+        //console.log(data.muscle_z)
         return data;
     }
     catch(e){
@@ -74,19 +74,19 @@ function GenerateZScores(data){
     if(!data.muscles){
         throw new Error('No Muscles to build from')
     }
-    const muscle_z = [];
+    
     data.muscles.forEach((muscle_object,index)=>{
         // Muscle object contains a object s.t { muscle: impact_value}
         // Sum all these values to generate a average for this type
         // calculate
 
-        const sum = Object.keys(muscle_object).reduce((acum,key)=>{
+        const sum = Object.keys(muscle_object).reduce((acum,key)=>{ // get our total volume
             return acum + muscle_object[key];
         },0);
         
 
         //average value
-        const average = sum / Object.keys(MuscleInformation).length;
+        const average = sum / Object.keys(MuscleInformation).length; 
 
         // stdev
         const sigma = Math.sqrt(( Object.keys(muscle_object).reduce((acum,key)=>{
@@ -95,17 +95,18 @@ function GenerateZScores(data){
             return acum + diff;
         },0) / Object.keys(muscle_object).length ));
 
-        console.log(`sum: ${sum}, avg: ${average}, sigma: ${sigma}`)
-        const z_score = {}
+       
+        const z_score = {} // save our z scores
         Object.keys(muscle_object).forEach((muscle,index)=>{
             z_score[muscle] = (muscle_object[muscle]-average) / sigma;
         })
 
-        muscle_z[index] = z_score;
+        data.muscle_z[index] = z_score; // set in data object
+        data.muscle_z_meta[index] = {sum:sum,average:average,sigma:(sigma ? sigma : 0)} // sending additional fields
 
     })
 
-    return muscle_z;
+    
     
 }
 
