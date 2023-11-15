@@ -1,9 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import ExtendoCard from "../../components/cards/ExtendoCard/ExtendoCard";
 import { useRequest } from "../../hooks/requests/useRequest";
 import MuscleOverlayContainer from "../Summary/MuscleOverlayContainer";
+import { PageContext } from "../PageSelector";
+import { setLog } from "../../utility/storage";
 export default function WorkoutCard({_id,name,createdAt,exercises}){
-    return <ExtendoCard header={<Header name={name}/>} body={<Body createdAt={createdAt}/>} footer={<Footer createdAt={createdAt}/>} styles='bg-white text-gun mx-2 my-2 rounded-md'/>
+    const setPage = useContext(PageContext);
+    function setRecent(){
+        setLog(_id);
+        setPage(1);
+    }
+    return <ExtendoCard header={<Header name={name}/>} body={<Body createdAt={createdAt} setRecent={setRecent}/>} footer={<Footer createdAt={createdAt}/>} styles='bg-white text-gun mx-2 my-2 rounded-md'/>
 }
 
 /**
@@ -22,7 +29,7 @@ function Header({name}){
  * Should display a muscle overlay for a summary from this workout as well as some other information
  * @param {*} param0 
  */
-function Body({createdAt}){
+function Body({createdAt, setRecent}){
     const {data:sumData,isLoading,error,fetchData:summaryFetch} = useRequest('/user/wsum', 'p', {start:createdAt,end:createdAt});
     useEffect(()=>{
         if(!sumData){
@@ -32,6 +39,9 @@ function Body({createdAt}){
 
     return(
         <div>
+            <div className="flex justify-center">
+                <button className="button button-e-blue" onClick={setRecent}>Jump In</button>
+            </div>
             {sumData && sumData.summary ? 
             <MuscleOverlayContainer sumData={sumData}/>
             :
