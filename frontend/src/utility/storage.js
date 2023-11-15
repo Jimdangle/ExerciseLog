@@ -40,8 +40,8 @@ export function getLog(){
  * @param {string} log_id - workout log id to be placed as the new workout id 
  */
 export function setLog(log_id){
-    
-    localStorage.setItem(log_name, log_id);
+    if(typeof log_id === "string")
+        localStorage.setItem(log_name, log_id);
 }
 
 /**

@@ -25,11 +25,10 @@ export default function NavControl({active, setActive,show}){
                     "Goal View": 3,
                 }
             },
-            "Summary Generation": 4,
             "History": {
                 children: {
-                    "All Workouts": 5,
-                    "All Goals": 6,
+                    "All Workouts": 4,
+                    "All Goals": 5,
                 }
             },
         },
@@ -37,7 +36,7 @@ export default function NavControl({active, setActive,show}){
     }
 
     return(
-        <div className={"absolute top-3 w-full bg-gun " + (show ? " trickyDown" : " hidden" )}>
+        <div className={"absolute top-3 w-full bg-gun h-[36vh] z-10 rounded-b-md " + (show ? " trickyDown" : " hidden" )}>
             <NavBar nav={Nav} active={active}></NavBar>
         </div>
          

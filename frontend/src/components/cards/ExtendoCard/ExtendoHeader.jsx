@@ -10,10 +10,10 @@ import { FiChevronDown } from "react-icons/fi";
 export default function ExtendoHeader({toggle,isToggled,children}){
     return(
         <div className="flex " >
-            <div className="w-2/3" onClick={toggle}>
+            <div className="w-3/4" onClick={toggle}>
                 {children}
             </div>
-            <div className="w-1/3 flex justify-end" onClick={toggle}>
+            <div className="w-1/4 flex justify-end" onClick={toggle}>
                 <FiChevronDown className={isToggled? "rotate-180": "rotate-0"} />
             </div>
             

@@ -20,7 +20,14 @@ export default function NavParent({name, children, setter,active}){
         {
             toggle ? 
             Object.keys(children).map((child_key,index)=> {
-                return (<NavItem key={`nv-pi-${index}`} name={child_key} page={children[child_key]} active={active} setter={setter}></NavItem>)
+                return (
+                    <div className='flex' key={`nv-pi-${index}`} >
+                        <div className='w-[5%]'></div>
+                        <div>
+                            <NavItem name={child_key} page={children[child_key]} active={active} setter={setter}></NavItem>
+                        </div>
+                    </div>
+                )
             })
             :
             <></>

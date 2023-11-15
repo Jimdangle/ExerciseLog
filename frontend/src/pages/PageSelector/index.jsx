@@ -1,10 +1,12 @@
-import { setPage, getPage } from "../../utility/storage";
+import { setPage, getPage,getLog, setLog } from "../../utility/storage";
 import { FiChevronLeft, FiChevronDown } from "react-icons/fi";
-import {useState, createContext} from 'react'
+import {useState, createContext,useEffect} from 'react'
+import { useRequest } from "../../hooks/requests/useRequest";
 import NavControl from "../Nav";
 import Home from "../Home";
 import Notification from "../../components/notifications/Notification";
 import Workout from "../Workout";
+import WorkoutHistory from "../History/WorkoutHistory";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export const NotificationContext = createContext(null)
@@ -16,6 +18,19 @@ export const NotificationContext = createContext(null)
  * @description **note** the variable `pages` controls what the NavControl will point to
  */
 export default function PageSelector({logout}){
+    //On first load we want to get our users last workout so they can jump back into it
+    const {data,fetchData:getWorkouts} = useRequest('/workout/lsm');
+    useEffect(()=>{
+        getWorkouts();
+    },[])
+    useEffect(()=>{
+        
+        if(data && data.all && data.all.length > 0 && !getLog()){
+            const all = data.all;
+            setLog(all[all.length-1]._id)
+        }
+    },[data])
+
 
     /* Currently active page (if we have one get it, if not use home) */
     const pagina = Number(getPage()) > 0 ? Number(getPage()) : 0
@@ -40,7 +55,8 @@ export default function PageSelector({logout}){
     //these pages should correspond to the numerical values in the NavControl component
     const pages = {
         0: <Home logout={logout}></Home>,
-        1: <Workout></Workout>
+        1: <Workout></Workout>,
+        4: <WorkoutHistory/>
     }
 
     const render_page = pages[active];
@@ -53,7 +69,7 @@ export default function PageSelector({logout}){
                     {render_page}
                 
                 
-                <FiChevronDown className={"absolute top-3 left-4 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
+                <FiChevronDown className={"absolute top-3 left-4 z-20 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
                 <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
                 <Notification message={notification} onClose={clearNotification}></Notification>       
             </div>
