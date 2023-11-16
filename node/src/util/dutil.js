@@ -10,7 +10,29 @@ class SummaryData   {
         this.muscle_z_meta = [{},{},{}]
         this.exercise_summary={} // contains key value pairs of the following type : <exercise_name:string> : { values: {min:Number,max:Number,avg:Number}, weights: {min:Number,max:Number,avg:Number}, muscles: {<muscle_name:string>:Number,...}}
     }
+
+    /**
+     * Search summary data using a list of strings
+     * @param {Array<String>} spec 
+     * @returns {*} what ever is contained at the end or undefined if unable to find anything
+     */
+    search(spec) {
+        let result = this;
+
+        for (const key of spec) {
+            if (result.hasOwnProperty(key)) {
+                result = result[key];
+            } else {
+                console.error(`Property '${key}' not found.`);
+                return undefined;
+            }
+        }
+
+        return result;
+    }
 }
+
+
 
 /**Access the summary object better
  * @param {SummaryData} data : summary data object

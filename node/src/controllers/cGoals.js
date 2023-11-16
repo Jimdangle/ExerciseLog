@@ -264,7 +264,7 @@ function humanObjective(objective){
             else{ // Basically all the options of the select on the front end correspond to this
                 
                 const [key,subkey] = target.subTarget.split(",");
-                const l = (key==="r" ? (target.type===0 ? "Reps" : "Time") :  (target.type===0 ? "Weight" : "Dist")) // if we are looking at values aka reps we want the first element of the array contained in the obj
+                const l = (key==="r" ? (target.type===0 || target.type===2 ? "Reps" : "Time") :  (target.type===0 ? "Weight" : "Dist")) // if we are looking at values aka reps we want the first element of the array contained in the obj
                 return target.exercise_name + " " + l + " " +subkey
             }
     }
