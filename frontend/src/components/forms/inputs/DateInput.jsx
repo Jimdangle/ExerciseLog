@@ -1,11 +1,11 @@
 
 
 export default function DateInput({name,value,onChange,...props}){
-    const {label} = props;
+    const {label,styles} = props;
     return (
         <div className="flex flex-col justify-center">
-            <label htmlFor={name}>{label}</label>
-            <input type="date" id={name} value={value} onChange={onChange}/>
+            <label className="font-semibold my-3 text-center" htmlFor={name}>{label}</label>
+            <input type="date" id={name} value={value} onChange={onChange} className={styles}/>
 
         </div>
     )

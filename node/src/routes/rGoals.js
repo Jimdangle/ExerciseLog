@@ -41,6 +41,4 @@ GoalRouter.get('/ls', GoalContoller.ListGoals);
 GoalRouter.post('/lsr', GoalContoller.ListGoalsRange);
 GoalRouter.post('/addObj', GoalContoller.AddObj);
 GoalRouter.delete('/remObj', GoalContoller.RemoveObj);
-GoalRouter.post('/cmp', GoalContoller.CompareGoal);
-GoalRouter.post('/rec', async(req,res,next) => {await GoalContoller.RecentGoals(req,res,next)});
 module.exports = {GoalRouter:GoalRouter}
