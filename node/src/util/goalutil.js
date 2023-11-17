@@ -2,6 +2,4 @@ const EX_MUSCLES = ["Chest", "Back",  "Hamstrings", "Quads",  "Biceps", "Triceps
 const EX_TYPES = ["Lift", "Cardio", "Hold"]
 
 
-
-
 module.exports = {EX_MUSCLES:EX_MUSCLES, EX_TYPES:EX_TYPES}

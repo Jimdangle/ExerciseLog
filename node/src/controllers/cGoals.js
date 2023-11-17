@@ -78,6 +78,27 @@ async function GetGoalData(req,res,next){
     }
 }
 
+async function CompareObjectiveData(req,res,next){
+    const {goal_id} = res.locals.bodyData;
+    try{
+        const goal = await Goals.findOne({_id:goal_id}).populate("objectives"); // find the goal
+        const {start,end,objectives} = goal; // get vars
+        const summary = await GenerateSummary(res.locals.user,start,end); // create our summary
+        const objectiveCompletion = objectives.map((objective)=>{ // calculate our objective completion %s
+            const val = summary.search(objective.target) ?? 0;
+            return Math.round((objective.value/val)*10)/10;
+        })
+
+        console.log(`Completion`);
+        console.log(objectiveCompletion);
+
+        res.send({objectives:objectives, objectiveCompletion:objectiveCompletion})
+    }
+    catch(e){
+        return next({message:e.message,code:500});
+    }
+}
+
 /**Add an Objective to a goal for a user*/
 async function AddObj(req,res,next){
     const {target,value,goal_id} = res.locals.bodyData;
@@ -112,8 +133,19 @@ async function RemoveObj(req,res,next){
     }
 }
 
+/**
+ * Need to figure out a (good) way to let the users know what kind of things they could set objectives for
+ * - total_workouts,total_exercises, and total_sets are fairly trivial, the problem comes with exercise_summary and muscles/muscle_z because they might have different keys in them
+ * - need 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+async function GetOptions(req,res,next){
+    
+}
 
 
 
 
-module.exports = {CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
+module.exports = {CompareObjectiveData, CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
