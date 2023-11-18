@@ -84,9 +84,12 @@ async function CompareObjectiveData(req,res,next){
         const goal = await Goals.findOne({_id:goal_id}).populate("objectives"); // find the goal
         const {start,end,objectives} = goal; // get vars
         const summary = await GenerateSummary(res.locals.user,start,end); // create our summary
+        
         const objectiveCompletion = objectives.map((objective)=>{ // calculate our objective completion %s
             const val = summary.search(objective.target) ?? 0;
-            return Math.round((objective.value/val)*10)/10;
+            console.log(val)
+            const completion = Math.round((val/objective.value)*10)/10
+            return completion < 1 ? completion : 1
         })
 
         console.log(`Completion`);

@@ -12,7 +12,7 @@ GoalRouter.use(bodyParser.json());
 
 const REQUIRED_KEYS = {
     "/new": ["start","end"],
-    "/addObj": ["context","target","value","goal_id"],
+    "/addObj": ["target","value","goal_id"],
     "/remObj": ["objective_id","goal_id"],
     "/rem": ["goal_id"],
     "/ls": true,

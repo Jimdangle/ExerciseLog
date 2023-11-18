@@ -200,7 +200,7 @@
 
 
     .input-dd-gun{
-        @apply text-white w-1/3 ml-[33%] appearance-none bg-gun border-2 rounded-md
+        @apply text-white appearance-none bg-gun border-2 rounded-md my-3
     }
 
 }

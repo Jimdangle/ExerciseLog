@@ -16,7 +16,10 @@ export default function GoalMaker({}){
 
     const {data:goalData,loading:goalLoading,fetchData:goalFetch} = useRequest('/goals/new','p', {name:goal.name,start: new Date(goal.start), end: new Date(goal.end)})
 
-    const handleEvent = (event) => {setGoal({...goal,[event.target.name]:event.target.value})}
+    const handleEvent = (event) => {
+        const {name, value} = event.target;
+        setGoal({...goal,[name]:value})
+    }
 
     async function submit(){
         await goalFetch();
@@ -27,7 +30,7 @@ export default function GoalMaker({}){
         console.log(goalData)
         if(goalData && goalData.baggage){
             goalStore.set(goalData.baggage._id); // set our goal id
-            //setPage(3); // set our page to the goal view
+            setPage(3); // set our page to the goal view
         }
     },[goalData])
     
@@ -37,7 +40,7 @@ export default function GoalMaker({}){
             
         
             <DateInput name="start" value={goal.start} onChange={handleEvent} label="Start" styles='text-gun'/>
-            <DateInput name="end" value={goal.end} onChange={handleEvent} label="End" styles='text-gun'/> 
+            <DateInput name="end" value={goal.end}  onChange={handleEvent} label="End" styles='text-gun'/> 
             
             
             
