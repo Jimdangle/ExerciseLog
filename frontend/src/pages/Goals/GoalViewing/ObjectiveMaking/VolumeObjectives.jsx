@@ -1,5 +1,10 @@
 import DropInput from "../../../../components/forms/inputs/DropInput"
+import { useEffect } from "react";
 export default function VolumeObjectives({setSpec}){
+    useEffect(()=>{
+        setSpec(['exercise_totals', '0']); // using this to set a default value in spec for when this option is selected (otherwise the user has to click a seperate option and reclick this one)
+    },[])
+
     const inputs = [
         {name:"Lifts", value:'0'},
         {name:"Cardio", value:'1'},
