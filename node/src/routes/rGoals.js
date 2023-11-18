@@ -12,14 +12,14 @@ GoalRouter.use(bodyParser.json());
 
 const REQUIRED_KEYS = {
     "/new": ["start","end"],
-    "/addObj": ["context","target","value","goal_id"],
+    "/addObj": ["target","value","goal_id"],
     "/remObj": ["objective_id","goal_id"],
     "/rem": ["goal_id"],
     "/ls": true,
     "/lsr": ["start","end"],
     "/get": ["goal_id"],
-    "/cmp": ["goal_id"],
-    "/rec": ["n"],
+    '/getObjs': ["goal_id"],
+    "/getOpts": true
 }
 
 
@@ -41,6 +41,5 @@ GoalRouter.get('/ls', GoalContoller.ListGoals);
 GoalRouter.post('/lsr', GoalContoller.ListGoalsRange);
 GoalRouter.post('/addObj', GoalContoller.AddObj);
 GoalRouter.delete('/remObj', GoalContoller.RemoveObj);
-GoalRouter.post('/cmp', GoalContoller.CompareGoal);
-GoalRouter.post('/rec', async(req,res,next) => {await GoalContoller.RecentGoals(req,res,next)});
+GoalRouter.post('/getObjs',GoalContoller.CompareObjectiveData)
 module.exports = {GoalRouter:GoalRouter}

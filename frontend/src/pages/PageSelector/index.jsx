@@ -7,6 +7,8 @@ import Home from "../Home";
 import Notification from "../../components/notifications/Notification";
 import Workout from "../Workout";
 import WorkoutHistory from "../History/WorkoutHistory";
+import GoalMaker from "../Goals/GoalMaking/GoalMaker";
+import GoalViewer from "../Goals/GoalViewing/GoalViewer";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export const NotificationContext = createContext(null)
@@ -56,6 +58,8 @@ export default function PageSelector({logout}){
     const pages = {
         0: <Home logout={logout}></Home>,
         1: <Workout></Workout>,
+        2: <GoalMaker/>,
+        3: <GoalViewer/>,
         4: <WorkoutHistory/>
     }
 

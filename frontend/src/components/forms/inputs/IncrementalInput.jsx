@@ -23,13 +23,13 @@ export default function IncrementalInput({name, value, step, min, max, onChange,
     }
 
     
-    const {label, valueTransform} = props;
+    const {label, valueTransform,styles,bolded=true} = props;
 
 
     return (
-        <div className="flex flex-col">
+        <div className={"flex flex-col "+ styles}>
             <div className="">
-                <p className="font-semibold text-xl text-center">{label}</p>
+                <p className={"text-center " + (bolded ? "font-semibold text-xl" : "")}>{label}</p>
             </div>
             <div className={"flex justify-between "}>
                 <FaMinusSquare className="w-1/3 text-3xl" onClick={()=>{updateVal(-step)}}/>

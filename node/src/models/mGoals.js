@@ -17,15 +17,7 @@ const GetDate = () => {
 // target will be an object (loosely controlled) that will contain target information (how to find the number we want to compare against) for a particular thing, will document as i go lol
 // value will be the value the user wants to assign the target
 const ObjectiveSchema = new mongoose.Schema({
-    context: {
-        type: Number,
-        enum: [0,1,2,3],
-        required: true
-    },
-    target: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true
-    },
+    target: [{type:String,required:true}],
     value:{
         type: Number,
         required: true

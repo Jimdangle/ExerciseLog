@@ -1,7 +1,34 @@
 const token_name = 'exercise_log_token'
 const log_name = 'exercise_log_log'
 const page_name = 'exercise_log_page'
+const goal_name = 'exercise_log_goal'
 
+//New class to handle local storage stuff
+export class StorageItem{
+    constructor(key){
+        this.key = key;
+    }
+
+    get(){
+        return localStorage.getItem(this.key)
+    }
+    set(value){
+        console.log(`Setting ${this.key} to ${value}`)
+        localStorage.setItem(this.key,value)
+    }
+    remove(){
+        localStorage.removeItem(this.key)
+    }
+}
+
+export const logStore = new StorageItem(log_name)
+export const tokenStore = new StorageItem(token_name)
+export const pageStore = new StorageItem(page_name)
+export const goalStore = new StorageItem(goal_name)
+
+
+
+//old stuff gonna keep in for the older code I don't wanna change and works for now
 //User token
 /**
  * Get the users token
