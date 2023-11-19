@@ -27,3 +27,13 @@ export function timeToSec(time){
     console.log(`Making time in sec ${out}`)
     return out;
 }
+
+export function createTimeObject(timeDifference){ // create the time object we want based on miliseconds difference / will build a time object from a number of miliseconds
+    const seconds = Math.floor(timeDifference / 1000);
+    const days = Math.floor(seconds / (3600 * 24));
+    const remainingSeconds = seconds % (3600 * 24);
+    const hours = Math.floor(remainingSeconds / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    return {days:days,hours:hours,minutes:minutes}
+}
+

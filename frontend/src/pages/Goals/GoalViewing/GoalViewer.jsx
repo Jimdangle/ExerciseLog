@@ -4,6 +4,7 @@ import { goalStore } from '../../../utility/storage'
 import TimeRemaining from './TimeRemaining'
 import ObjectiveMaker from './ObjectiveMaking/ObjectiveMaker'
 import ObjectiveViewer from './ObjectiveViewing/ObjectiveViewer'
+import { createTimeObject } from '../../../utility/time'
 
 export default function GoalViewer({}){
     const goal_id = goalStore.get()
@@ -55,14 +56,7 @@ export default function GoalViewer({}){
 
     },[timeDiff])
 
-    function createTimeObject(timeDifference){ // create the time object we want based on miliseconds
-            const seconds = Math.floor(timeDifference / 1000);
-            const days = Math.floor(seconds / (3600 * 24));
-            const remainingSeconds = seconds % (3600 * 24);
-            const hours = Math.floor(remainingSeconds / 3600);
-            const minutes = Math.floor((remainingSeconds % 3600) / 60);
-            return {days:days,hours:hours,minutes:minutes}
-    }
+   
 
 
     return(

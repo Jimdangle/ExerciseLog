@@ -6,9 +6,10 @@ import NavControl from "../Nav";
 import Home from "../Home";
 import Notification from "../../components/notifications/Notification";
 import Workout from "../Workout";
-import WorkoutHistory from "../History/WorkoutHistory";
+import WorkoutHistory from "../History/WorkoutHistory/WorkoutHistory";
 import GoalMaker from "../Goals/GoalMaking/GoalMaker";
 import GoalViewer from "../Goals/GoalViewing/GoalViewer";
+import GoalHistory from "../History/GoalHistory/GoalHistory";
 import '../../styles/animations.css'
 export const PageContext = createContext(null);
 export const NotificationContext = createContext(null)
@@ -60,7 +61,8 @@ export default function PageSelector({logout}){
         1: <Workout></Workout>,
         2: <GoalMaker/>,
         3: <GoalViewer/>,
-        4: <WorkoutHistory/>
+        4: <WorkoutHistory/>,
+        5: <GoalHistory/>
     }
 
     const render_page = pages[active];

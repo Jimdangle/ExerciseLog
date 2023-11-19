@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import EditableList from "../../components/lists/EditableList/EditableList";
-import { useRequest } from "../../hooks/requests/useRequest";
+import EditableList from "../../../components/lists/EditableList/EditableList";
+import { useRequest } from "../../../hooks/requests/useRequest";
 import WorkoutCard from "./WorkoutCard";
 /**
  * Display a list of workouts for the user (im thinking more toggle able cards)

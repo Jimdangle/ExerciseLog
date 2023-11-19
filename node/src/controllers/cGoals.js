@@ -65,6 +65,28 @@ async function ListGoalsRange(req,res,next){
     }
 }
 
+//Get a comprehensive summary of goals 
+async function GetGoalHistory(req,res,next){
+    const user = res.locals.user;
+    try{
+        const found = await Goals.find({user_id:user}).populate('objectives')
+        let objectiveCompletion = []
+        for(let goali in found){
+            const goal = found[goali]
+            const summary = await GenerateSummary(user,goal.start,goal.end);
+            const completion= ObjectiveCompletion(goal.objectives,summary)
+            objectiveCompletion.push(completion)
+        }
+        console.log(objectiveCompletion)
+        return res.send({goals:found,objectiveCompletion:objectiveCompletion})
+
+    }
+    catch(e){
+        return next({message:e.message,code:500})
+    }
+}
+
+
 /**return populated data on a single goal for a user*/
 async function GetGoalData(req,res,next){
     const {goal_id} = res.locals.bodyData;
@@ -78,6 +100,16 @@ async function GetGoalData(req,res,next){
     }
 }
 
+function ObjectiveCompletion(objectives,summary){
+    const objectiveCompletion = objectives.map((objective)=>{ // calculate our objective completion %s
+        const val = summary.search(objective.target) ?? 0;
+        console.log(val)
+        const completion = Math.round((val/objective.value)*10)/10
+        return completion < 1 ? completion : 1
+    })
+    return objectiveCompletion
+}
+
 async function CompareObjectiveData(req,res,next){
     const {goal_id} = res.locals.bodyData;
     try{
@@ -85,13 +117,7 @@ async function CompareObjectiveData(req,res,next){
         const {start,end,objectives} = goal; // get vars
         const summary = await GenerateSummary(res.locals.user,start,end); // create our summary
         
-        const objectiveCompletion = objectives.map((objective)=>{ // calculate our objective completion %s
-            const val = summary.search(objective.target) ?? 0;
-            console.log(val)
-            const completion = Math.round((val/objective.value)*10)/10
-            return completion < 1 ? completion : 1
-        })
-
+        const objectiveCompletion = ObjectiveCompletion(objectives,summary)
         console.log(`Completion`);
         console.log(objectiveCompletion);
 
@@ -151,4 +177,4 @@ async function GetOptions(req,res,next){
 
 
 
-module.exports = {CompareObjectiveData, CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
+module.exports = {GetGoalHistory,CompareObjectiveData, CreateNewGoal:CreateNewGoal,ListGoalsRange:ListGoalsRange,GetGoalData:GetGoalData,AddObj:AddObj,RemoveGoal:RemoveGoal,RemoveObj:RemoveObj, ListGoals:ListGoals}
