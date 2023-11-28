@@ -33,7 +33,7 @@ export default function ObjectiveCard({target,value,percentage}){
 
 
     return(
-        <div className="grid grid-cols-12">
+        <div className="grid grid-cols-12 m-2">
             <p className="col-span-3">{TranslateTarget(target)}</p>
             <p className="col-span-3">{Math.round(value*percentage)}</p>
             <p className="col-span-3">{value}</p>

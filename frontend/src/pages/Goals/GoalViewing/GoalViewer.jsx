@@ -11,14 +11,22 @@ export default function GoalViewer({}){
     
     const {data,fetchData} = useRequest('/goals/get', 'p')
     const {data:objData,fetchData:objFetch} = useRequest('/goals/getObjs','p')
+    const {data:remData, fetchData:remFetch} = useRequest('/goals/remObj','x')
     const [timeDiff,setTimeDiff] = useState(0)
     const [timeRemaining,setTimeRemaining] = useState({days:0,hours:0,minutes:0})
 
     const [goal,setGoal] = useState(null)
+
+    
     
     async function refresh(){
         await fetchData({goal_id:goal_id});
         await objFetch({goal_id:goal_id});
+    }
+
+    const removeObjective = async (objective) => {
+        await remFetch({goal_id:goal_id,objective_id:objective.id})
+        await refresh();
     }
 
     useEffect(()=>{
@@ -66,7 +74,7 @@ export default function GoalViewer({}){
                     <p className='font-semibold text-2xl'>{goal.name}</p>
                     <TimeRemaining timeRemaining={timeRemaining}/>
                     {objData ? 
-                        <ObjectiveViewer objectives={objData.objectives} completion={objData.objectiveCompletion}/>
+                        <ObjectiveViewer objectives={objData.objectives} completion={objData.objectiveCompletion} remove={removeObjective}/>
                         :
                         <></>
                     }

@@ -1,14 +1,20 @@
 import { useRequest } from "../../../hooks/requests/useRequest";
-import {useEffect, useMemo} from 'react'
+import {useEffect, useMemo, useContext} from 'react'
 import GoalCard from "./GoalCard";
 import EditableList from "../../../components/lists/EditableList/EditableList";
-
+import { PageContext } from "../../PageSelector";
 export default function GoalHistory({}){
     const {data:histData,loading:histLoading,fetchData:histFetch} = useRequest('/goals/hist');
+    const {data:remData,loading:remLoading,fetchData:remFetch} = useRequest('/goals/rem','x');
 
+    const setPage = useContext(PageContext)
+    const removeGoal = async (obj) => {await remFetch({goal_id:obj.id}); await histFetch()}
     useEffect(()=>{
         histFetch();
     },[])
+
+
+    const makeGoal = () => {setPage(2)}
 
     const goalCards = useMemo(()=>{
         if(histData){
@@ -28,14 +34,18 @@ export default function GoalHistory({}){
 
 
     return (
-        <div>
-            <p>Goal History</p>
+        <div className="mt-4">
+            <p className="text-center">Goal History</p>
             {goalCards ? 
-                <EditableList title="GoalHistory" list={goalCards} removeAction={()=>{}} componentType={GoalCard}/>
+                <EditableList title="GoalHistory" list={goalCards} removeAction={removeGoal} componentType={GoalCard} tColor='text-white'/>
                 :
                 <></>
 
         }
+
+            <div className="flex justify-center">
+                <button className="button button-e-blue" onClick={makeGoal}>Create Goal</button>
+            </div>
         </div>
     )
 

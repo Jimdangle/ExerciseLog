@@ -24,6 +24,7 @@ class SummaryData   {
                 result = result[key];
             } else {
                 console.error(`Property '${key}' not found.`);
+                console.error(result)
                 return undefined;
             }
         }
