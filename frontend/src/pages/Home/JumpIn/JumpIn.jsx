@@ -11,7 +11,7 @@ import { useContext } from "react";
 export default function JumpIn(){
     const curLog = getLog() 
     const setPage = useContext(PageContext);
-    console.log(curLog)
+    
     return (
         <div>
             <p className="text-white">Want to jump back in?</p>

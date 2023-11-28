@@ -67,12 +67,17 @@ export default function SetDisplay({exercise, type}){
         await sumFetch();
     }
 
-
+    const last = useMemo(()=>{
+        if(sets.length > 0)
+            return sets[sets.length-1]
+        else
+            return {rep_or_time:1,added_weight:0}
+    },[sets])
     return (
         <div>
             <ExtendoCard styles="bg-slate-200 relative left-[12.5%] w-3/4"  header={<SetDisplayHeader setCount={sets.length} />} body={<EditableList title={"Sets"} list={sets} removeAction={remove} componentType={(type===0 ? SetLift : SetCardio)}/>} footer={<SetDisplayFooter last={sets[sets.length-1]} type={type}/>}/>
             
-            <SetAdder type={type} addSet={addSet} last={sets[sets.length-1]}/>
+            <SetAdder type={type} addSet={addSet} last={last}/>
         </div>
         
     )

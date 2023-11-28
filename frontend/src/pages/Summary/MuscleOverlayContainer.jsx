@@ -10,7 +10,7 @@ import MuscleOverlayFilters from "./MuscleOverlayFilters"
 import MuscleOverlayMeta from "./MuscleOverlayMeta"
 export default function MuscleOverlayContainer({sumData}){
     const [filter,setFilter] = useState(0);
-    console.log(sumData.summary.muscle_z_meta)
+    
     return(
         <div className="bg-white text-gun rounded-md shadow-md mx-2">
             <p className="text-lg font-semibold text-center">Summary</p>

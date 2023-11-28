@@ -2,10 +2,9 @@ import NumberInput from "../../../../../components/forms/inputs/NumberInput"
 import IncrementalInput from "../../../../../components/forms/inputs/IncrementalInput"
 import { useState } from "react"
 export default function({addFetch,last}){
-    const lastRep = last && last.rep_or_time ? last.rep_or_time : 1
-    const lastWeight = last && last.added_weight ? last.added_weight : 1
-    console.log(`${lastRep}, ${lastWeight}`)
-    const [newSet,setNewSet] = useState({rep_or_time: lastRep ,weight: lastWeight})
+    
+   
+    const [newSet,setNewSet] = useState({rep_or_time: last.rep_or_time ,weight: last.added_weight})
     const onChange = (event) => {
         setNewSet({
             ...newSet,

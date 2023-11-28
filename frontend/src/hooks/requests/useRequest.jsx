@@ -9,7 +9,7 @@ import { getToken } from '../../utility/storage';
  * @param {Object} payload - Payload to send with request
  * @returns - data from request, isLoading boolean representing fetch state, error object, and fetchData method to perform the operation
  */
-export function useRequest(url,method='g',payload=null) {
+export function useRequest(url,method='g',payload=null,debug=false) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error,setError] = useState(null)
@@ -28,7 +28,7 @@ export function useRequest(url,method='g',payload=null) {
     if(!url){setError(new Error('No Url provided'))}
     invalidate();
     setLoading(true)
-    console.log(`${method} made on ${base_url+url} with payload? ${payload?'yes':'no'}`)
+    if(debug){console.log(`${method} made on ${base_url+url} with payload? ${payload?'yes':'no'}`)}
     const sendData = {...payload,...additional}
     try {
       // Simulate an API call to fetch workout log data
@@ -46,8 +46,9 @@ export function useRequest(url,method='g',payload=null) {
         err.code = response.status;
         throw err;
       }
-      const workoutLogData = await response.json();
-      setData(workoutLogData);
+      const responseData = await response.json();
+      setData(responseData);
+      if(debug){ console.log('response: ', responseData)}
       
     } catch (error) {
       
