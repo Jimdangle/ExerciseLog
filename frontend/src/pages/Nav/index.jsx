@@ -12,7 +12,7 @@ import '../../styles/animations.css'
  * @param {boolean} props.show - Boolean to determine if nav is showing or not 
  * @component
  */
-export default function NavControl({active, setActive,show}){
+export default function NavControl({active, setActive,show,logout}){
    
     // Actually navigation control, items have a page number with them, parents have children items
     const Nav = {
@@ -38,6 +38,7 @@ export default function NavControl({active, setActive,show}){
     return(
         <div className={"absolute top-3 w-full bg-gun h-[36vh] z-10 rounded-b-md " + (show ? " trickyDown" : " hidden" )}>
             <NavBar nav={Nav} active={active}></NavBar>
+            <p className="relative left-[78%] top-[30%] text-sm" onClick={logout}>Logout</p>
         </div>
          
         
