@@ -1,6 +1,9 @@
 /**Filter box that makes a bunch of buttons and each button sets a particular filter */
-export default function FilterBox({filters,setFilter}){
+import { useState } from "react"
 
+export default function FilterBox({filter,filters,setFilter}){
+    const onChange = (event) => {
+        setFilter(filters[event.target.value])}
     return(
         <div>
             {
@@ -9,17 +12,21 @@ export default function FilterBox({filters,setFilter}){
                 :
                 <></>
             }
+            <select id="filters" name="filters" className="w-2/3" onChange={onChange} >
             {
                 filters ? 
                 filters.map((filter,index)=>
                 {
                     return (
-                        <button className="button button-e-green" onClick={()=>{setFilter(filter)}} key={"filter"+index+filter.name}>{filter.name}</button>
+                        <option className="" value={index} key={"filter"+index+filter.name}>{filter.name}</option>
                     )
                 })
                 :
                 <></>
             }
+            </select>
+            <button disabled={!filter} className="button button-e-red disabled:button-d" onClick={()=>{setFilter(null)}}>Clear Filter</button>
+            
         </div>
     )
 }
