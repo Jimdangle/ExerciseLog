@@ -22,17 +22,7 @@ export const NotificationContext = createContext(null)
  */
 export default function PageSelector({logout}){
     //On first load we want to get our users last workout so they can jump back into it
-    const {data,fetchData:getWorkouts} = useRequest('/workout/lsm');
-    useEffect(()=>{
-        getWorkouts();
-    },[])
-    useEffect(()=>{
-        
-        if(data && data.all && data.all.length > 0 && !getLog()){
-            const all = data.all;
-            setLog(all[all.length-1]._id)
-        }
-    },[data])
+    
 
 
     /* Currently active page (if we have one get it, if not use home) */
@@ -76,7 +66,7 @@ export default function PageSelector({logout}){
                 
                 
                 <FiChevronDown className={"absolute top-3 left-4 z-20 " +(toggleNav? " slideDownNav" : " slideUpNav")} onClick={()=>setToggleNav((val)=>{return !val})}></FiChevronDown>   
-                <NavControl  active={active} setActive={changePage} show={toggleNav}></NavControl>
+                <NavControl  active={active} setActive={changePage} show={toggleNav} logout={logout}></NavControl>
                 <Notification message={notification} onClose={clearNotification}></Notification>       
             </div>
             
