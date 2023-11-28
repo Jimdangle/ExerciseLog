@@ -43,7 +43,7 @@ export default function ExerciseList({log_id,refresh,closeModal}){
     
 
     return (
-        <div className="h-64 overflow-y-scroll">
+        <div className="h-96 overflow-y-scroll">
             <MotionModal getData={getData}/>
             {!isLoading && data && data.motions ? 
             <SearchableList title={"Test List"} filters={filters} list={data.motions} action={action} fields={{display_field:'name', action_field:'_id'}}></SearchableList>

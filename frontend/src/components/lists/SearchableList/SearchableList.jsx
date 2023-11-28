@@ -26,6 +26,7 @@ export default function SearchableList({title,list,action,fields, filters }){
             return list;
         }
         else{
+            
             return filter.filter(list) 
         }
     },[filter,list])
@@ -33,7 +34,7 @@ export default function SearchableList({title,list,action,fields, filters }){
     return(
         <div className="text-center">
             <input type='search' className='text-center focus:font-bold px-2' placeholder='search' onChange={(e)=>{setSearchString(e.target.value)}}></input>
-            <FilterBox filters={filters} setFilter={setFilter} />
+            <FilterBox filters={filters} setFilter={setFilter} filter={filter} />
             {displayList.filter(
                 (object)=>{
                     const name = object[display_field].toLowerCase();
