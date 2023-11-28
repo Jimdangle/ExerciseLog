@@ -25,10 +25,10 @@ export default function Home({logout}){
     },[])
     // Set in storage
     useEffect(()=>{
-        if(goalData && goalData.found){
+        if(goalData && goalData.found.length > 0){
             goalStore.set(goalData.found[0]._id)
         }
-        if(workoutData && workoutData.all){
+        if(workoutData && workoutData.all.length >0){
             logStore.set(workoutData.all[0]._id)
         }
     },[goalData,workoutData])

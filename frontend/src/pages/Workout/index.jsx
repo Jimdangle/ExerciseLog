@@ -7,8 +7,6 @@ import ExerciseList from './ExerciseList/ExerciseList'
 import ExerciseDisplay from './ExerciseDisplay/ExerciseDisplay'
 import { NotificationContext, PageContext } from '../PageSelector'
 import MuscleOverlayContainer from '../Summary/MuscleOverlayContainer'
-import MotionModal from './MotionAdder/MotionModal'
-import MuscleOverlay from '../Summary/MuscleOverlay'
 export const RefreshContext = createContext(null);
 export const SummaryContext = createContext(null);
 /**
@@ -28,7 +26,7 @@ const muscleData = {
 export default function Workout(){
 
 
-
+    
     const setNotification = useContext(NotificationContext)
     const setPage = useContext(PageContext)
     const log = getLog()
@@ -56,12 +54,12 @@ export default function Workout(){
             // We have an old log
             if(error.code===404){
                 removeLog();
-                setPage(0);
             }
             console.log(error)
-            setNotification('Error Loading Workout\n\t' + error.message + '\n\tcode:' + error.code)
+            setPage(0); // set our page back to the home page
+            setNotification('This workout does not exist, or has been corrupted\n\t')
         }
-    },[error,data])
+    },[error])
 
     async function refresh(){
         if(!isLoading)
