@@ -1,9 +1,9 @@
 import { useEffect, useContext } from "react";
-import ExtendoCard from "../../components/cards/ExtendoCard/ExtendoCard";
-import { useRequest } from "../../hooks/requests/useRequest";
-import MuscleOverlayContainer from "../Summary/MuscleOverlayContainer";
-import { PageContext } from "../PageSelector";
-import { setLog } from "../../utility/storage";
+import ExtendoCard from "../../../components/cards/ExtendoCard/ExtendoCard";
+import { useRequest } from "../../../hooks/requests/useRequest";
+import MuscleOverlayContainer from "../../Summary/MuscleOverlayContainer";
+import { PageContext } from "../../PageSelector";
+import { setLog } from "../../../utility/storage";
 export default function WorkoutCard({_id,name,createdAt,exercises}){
     const setPage = useContext(PageContext);
     function setRecent(){

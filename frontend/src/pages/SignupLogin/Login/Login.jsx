@@ -1,7 +1,7 @@
 import { request } from '../../../utility/request';
 import CoolForm from '../../../components/forms/CoolForm';
 import {useState, useEffect} from 'react'
-
+import { useRequest } from '../../../hooks/requests/useRequest';
 /**
  * Login Screen 
  * @param {{function}} props 
@@ -17,6 +17,8 @@ export default function Login({login}){
     const emailValidation = (value) => {  return (value ? value.indexOf('@')>0 : false);} // check for @ symbol
 
     const payload = {'email': state.Email, 'pass': state.Password}
+
+    const {data,error,fetchData} = useRequest('/login/login','p',payload)
 
     //Form inputs 
     const inputs = {
@@ -40,18 +42,19 @@ export default function Login({login}){
 
     //Form action
     async function action(){
-        await request('/login/login',setResp,'p',payload);
+        await fetchData()
     }
 
     // Response hanlding
     useEffect(()=>{
-        
-        if(resp && !resp.data.message){
-            if(resp.data.access_token){
-                login(resp.data.access_token)
-            }
+        console.log(data)
+        if(data && data.access_token){
+                login(data.access_token)
         }
-    },[resp])
+        else if(error){
+            console.log(error)
+        }
+    },[data,error])
 
 
     return (
