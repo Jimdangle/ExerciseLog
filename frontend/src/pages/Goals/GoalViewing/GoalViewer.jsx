@@ -41,7 +41,8 @@ export default function GoalViewer({}){
         if(data && data.goal){
            if(timeDiff===0){
                 setTimeDiff(new Date(new Date(data.goal.end).getTime() - Date.now()).getTime()); // set the time difference based on when we load a goal
-           }
+                
+            }
            setGoal(data.goal)
            const timeInterval = setInterval(()=>{
             
@@ -54,6 +55,7 @@ export default function GoalViewer({}){
 
     },[data])
 
+    //console.log(timeDiff/(1000*60*60*24*30))
     useEffect(()=>{
         if(objData){console.log(objData)}
 
@@ -70,7 +72,7 @@ export default function GoalViewer({}){
     return(
         <>
             {goal ? 
-                <div className="flex flex-col my-3 text-center">
+                <div className="flex flex-col my-4 text-center">
                     <p className='font-semibold text-2xl'>{goal.name}</p>
                     <TimeRemaining timeRemaining={timeRemaining}/>
                     {objData ? 
