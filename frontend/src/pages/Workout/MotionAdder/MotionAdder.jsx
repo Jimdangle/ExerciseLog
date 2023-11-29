@@ -70,8 +70,9 @@ export default function MotionAdder({closeModal,getData}){
 
     return(
         <div>
-            
+            <p>Name</p>
             <TextInput name="name" styles="text-gun" value={state.name} onChange={onChange}/>
+            <p>Type</p>
             <DropInput name="type" styles="text-gun" value={state.type} onChange={onChange} items={dropDownOptions}/>
             {
                 state.muscles ? 

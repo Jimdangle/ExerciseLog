@@ -13,7 +13,7 @@ export default function MuscleList({action,list}){
     ]
 
     return(
-        <ModalContainer title={"Add Muscle"}>
+        <ModalContainer title={"Add Muscle"} styles="button-e-blue">
                      {(closeModal,toggleModal) => (
                         <Modal title={"Add Muscle"} isOpen={toggleModal} onClose={closeModal}>
                            <div className="h-64 overflow-y-scroll">

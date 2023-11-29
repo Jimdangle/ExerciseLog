@@ -7,14 +7,14 @@ import {useState} from 'react'
  * @param {children} props.children - **note** react children, do not pass as a property <ModalContainer>{children}</ModalContainer> 
  * @returns 
  */
-export default function ModalContainer({title,children}){
+export default function ModalContainer({title,children, styles='button-e-white'}){
     const [toggleModal, setToggleModal] = useState(false);
     const openModal = () => {setToggleModal(true)}
     const closeModal = () => {setToggleModal(false)}
 
     return (
         <div className='flex justify-center'>
-            <button className='button button-e-white content-end' onClick={openModal}>{title}</button>
+            <button className={'button content-end '+styles} onClick={openModal}>{title}</button>
             {children(closeModal,toggleModal)}
         </div>
     )

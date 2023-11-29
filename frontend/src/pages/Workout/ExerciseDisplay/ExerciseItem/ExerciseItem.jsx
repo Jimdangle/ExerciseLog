@@ -17,7 +17,7 @@ export default function ExerciseItem({exercise, deleteExercise}){
         { !exercise ?
             <></>
             :
-            <ExtendoCard styles={"bg-white text-gun shadow-lg rounded-sm my-2 mx-2"} header={<ExerciseHeader name={motion.name} setCount={exercise.sets.length}/>} body={<SetDisplay exercise={exercise} type={motion.type}/>} footer={<ExerciseFooter type={motion.type} deleteExercise={deleteSelf}/>}/>
+            <ExtendoCard styles={"bg-white text-gun shadow-lg rounded-sm my-2 mx-2"} header={<ExerciseHeader name={motion.name} type={motion.type}/>} body={<SetDisplay exercise={exercise} type={motion.type}/>} footer={<ExerciseFooter type={motion.type} deleteExercise={deleteSelf}/>}/>
         }
         </>
         
@@ -27,11 +27,11 @@ export default function ExerciseItem({exercise, deleteExercise}){
 /** 
     a header(exercise name, set count),
  */
-function ExerciseHeader({name,setCount}){
+function ExerciseHeader({name,type}){
     return (
-        <div className="flex justify-between p-2">
-            <p>{name}</p>
-           
+        <div className="flex w-[80%] rounded-b-md rounded-r-md shadow-md border-r-2 border-b-2 bg-oblue text-white border-gun p-2 justify-between">
+            <p className="text-lg font-semibold">{name} </p>
+            <p className=""> {type===0 ? <FaDumbbell /> : <FaClock/>} </p>
         </div>
     )
 }
@@ -45,9 +45,14 @@ function ExerciseHeader({name,setCount}){
 function ExerciseFooter({type, deleteExercise}){
     
     return (
-        <div>
-            {type===0 ? <FaDumbbell/> : <FaClock/>}
-            <FaTrash onClick={deleteExercise}/>
+        <div className="h-12 w-full mb-1 flex justify-between">
+            <div>
+               
+            </div>
+            <div>
+                <FaTrash className="mt-6 text-xl mr-2" onClick={deleteExercise}/>
+            </div>
+            
         </div>
         )
 }
