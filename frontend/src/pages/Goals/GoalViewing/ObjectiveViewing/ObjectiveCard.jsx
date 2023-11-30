@@ -1,5 +1,8 @@
 
 // Want to translate the target into something readable for people 
+
+import { cssColorByPercent } from "../../../../utility/color"
+
 // Display the current value we are at for our goal, and then divide the percentage to our value
 export default function ObjectiveCard({target,value,percentage}){
     function TranslateTarget(target){
@@ -34,10 +37,10 @@ export default function ObjectiveCard({target,value,percentage}){
 
     return(
         <div className="grid grid-cols-12 m-2">
-            <p className="col-span-3">{TranslateTarget(target)}</p>
-            <p className="col-span-3">{Math.round(value*percentage)}</p>
-            <p className="col-span-3">{value}</p>
-            <p>{percentage*100}%</p>
+            <p className="col-span-3 border-b-2 border-gun">{TranslateTarget(target)}</p>
+            <p className="col-span-3 border-b-2 border-gun ">{Math.round(value*percentage)}</p>
+            <p className="col-span-3 border-b-2 border-gun">{value}</p>
+            <p className={"col-span-3 border-b-2 border-gun " + cssColorByPercent(percentage)}>{percentage*100}%</p>
         </div>
     )
 }
